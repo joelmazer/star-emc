@@ -21,7 +21,7 @@ class StEEmcMatchMaker : public StMaker
     virtual Int_t Make();
     virtual Int_t Finish();
       
-    virtual const char *GetCVS() const {static const char cvs[]="Tag $Name:  $ $Id: StEEmcMatchMaker.h,v 1.1 2005/05/31 18:54:40 wzhang Exp $ built "__DATE__" "__TIME__ ; return cvs;}
+    virtual const char *GetCVS() const {static const char cvs[]="Tag $Name:  $ $Id: StEEmcMatchMaker.h,v 1.1.1.1 2005/05/31 18:54:40 wzhang Exp $ built "__DATE__" "__TIME__ ; return cvs;}
 
   ClassDef(StEEmcMatchMaker,0) 
 };
@@ -29,10 +29,10 @@ class StEEmcMatchMaker : public StMaker
 
 ///////////////////////////////////////////////////////////////////////////
 //
-// $Id: StEEmcMatchMaker.h,v 1.1 2005/05/31 18:54:40 wzhang Exp $
+// $Id: StEEmcMatchMaker.h,v 1.1.1.1 2005/05/31 18:54:40 wzhang Exp $
 // $Log: StEEmcMatchMaker.h,v $
-// Revision 1.1  2005/05/31 18:54:40  wzhang
-// Initial revision
+// Revision 1.1.1.1  2005/05/31 18:54:40  wzhang
+// First version
 //
 //
 ///////////////////////////////////////////////////////////////////////////

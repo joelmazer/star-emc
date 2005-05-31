@@ -241,10 +241,10 @@ class StEEmcAssociationMaker : public StMaker
 /*******************************************************************************/
 ///////////////////////////////////////////////////////////////////////////
 //
-// $Id: StEEmcAssociationMaker.h,v 1.1 2005/05/31 18:54:14 wzhang Exp $
+// $Id: StEEmcAssociationMaker.h,v 1.1.1.1 2005/05/31 18:54:14 wzhang Exp $
 // $Log: StEEmcAssociationMaker.h,v $
-// Revision 1.1  2005/05/31 18:54:14  wzhang
-// Initial revision
+// Revision 1.1.1.1  2005/05/31 18:54:14  wzhang
+// First version
 //
 //
 ///////////////////////////////////////////////////////////////////////////

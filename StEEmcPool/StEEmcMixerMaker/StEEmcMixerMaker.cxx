@@ -711,10 +711,10 @@ void StEEmcMixerMaker::printHits(StEvent *event)
 
 ///////////////////////////////////////////////////////////////////////////
 //
-// $Id: StEEmcMixerMaker.cxx,v 1.1 2005/05/31 18:53:25 wzhang Exp $
+// $Id: StEEmcMixerMaker.cxx,v 1.1.1.1 2005/05/31 18:53:25 wzhang Exp $
 // $Log: StEEmcMixerMaker.cxx,v $
-// Revision 1.1  2005/05/31 18:53:25  wzhang
-// Initial revision
+// Revision 1.1.1.1  2005/05/31 18:53:25  wzhang
+// First version
 //
 //
 ///////////////////////////////////////////////////////////////////////////

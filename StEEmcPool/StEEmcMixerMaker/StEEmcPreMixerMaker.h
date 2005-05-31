@@ -27,7 +27,7 @@ class StEEmcPreMixerMaker : public StMaker
     virtual Int_t Make();
     virtual Int_t Finish();
       
-    virtual const char *GetCVS() const {static const char cvs[]="Tag $Name:  $ $Id: StEEmcPreMixerMaker.h,v 1.1 2005/05/31 18:53:25 wzhang Exp $ built "__DATE__" "__TIME__ ; return cvs;}
+    virtual const char *GetCVS() const {static const char cvs[]="Tag $Name:  $ $Id: StEEmcPreMixerMaker.h,v 1.1.1.1 2005/05/31 18:53:25 wzhang Exp $ built "__DATE__" "__TIME__ ; return cvs;}
 
   ClassDef(StEEmcPreMixerMaker,0) 
 };
@@ -35,10 +35,10 @@ class StEEmcPreMixerMaker : public StMaker
 
 ///////////////////////////////////////////////////////////////////////////
 //
-// $Id: StEEmcPreMixerMaker.h,v 1.1 2005/05/31 18:53:25 wzhang Exp $
+// $Id: StEEmcPreMixerMaker.h,v 1.1.1.1 2005/05/31 18:53:25 wzhang Exp $
 // $Log: StEEmcPreMixerMaker.h,v $
-// Revision 1.1  2005/05/31 18:53:25  wzhang
-// Initial revision
+// Revision 1.1.1.1  2005/05/31 18:53:25  wzhang
+// First version
 //
 //
 ///////////////////////////////////////////////////////////////////////////

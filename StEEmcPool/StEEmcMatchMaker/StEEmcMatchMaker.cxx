@@ -248,10 +248,10 @@ Int_t StEEmcMatchMaker::Finish()
 
 ///////////////////////////////////////////////////////////////////////////
 //
-// $Id: StEEmcMatchMaker.cxx,v 1.1 2005/05/31 18:54:40 wzhang Exp $
+// $Id: StEEmcMatchMaker.cxx,v 1.1.1.1 2005/05/31 18:54:40 wzhang Exp $
 // $Log: StEEmcMatchMaker.cxx,v $
-// Revision 1.1  2005/05/31 18:54:40  wzhang
-// Initial revision
+// Revision 1.1.1.1  2005/05/31 18:54:40  wzhang
+// First version
 //
 //
 ///////////////////////////////////////////////////////////////////////////

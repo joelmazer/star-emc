@@ -103,7 +103,7 @@ class StEEmcMixerMaker : public StMaker
     void          setAllMinusPed(Bool_t a)   { 
                   for(Int_t i=0; i<NEEMCDETS; i++) mMinusPed[i] = a; } 
     
-    virtual const char *GetCVS() const {static const char cvs[]="Tag $Name:  $ $Id: StEEmcMixerMaker.h,v 1.1 2005/05/31 18:53:25 wzhang Exp $ built "__DATE__" "__TIME__ ; return cvs;}
+    virtual const char *GetCVS() const {static const char cvs[]="Tag $Name:  $ $Id: StEEmcMixerMaker.h,v 1.1.1.1 2005/05/31 18:53:25 wzhang Exp $ built "__DATE__" "__TIME__ ; return cvs;}
 
   ClassDef(StEEmcMixerMaker,0) 
 };
@@ -111,10 +111,10 @@ class StEEmcMixerMaker : public StMaker
 
 ///////////////////////////////////////////////////////////////////////////
 //
-// $Id: StEEmcMixerMaker.h,v 1.1 2005/05/31 18:53:25 wzhang Exp $
+// $Id: StEEmcMixerMaker.h,v 1.1.1.1 2005/05/31 18:53:25 wzhang Exp $
 // $Log: StEEmcMixerMaker.h,v $
-// Revision 1.1  2005/05/31 18:53:25  wzhang
-// Initial revision
+// Revision 1.1.1.1  2005/05/31 18:53:25  wzhang
+// First version
 //
 //
 ///////////////////////////////////////////////////////////////////////////

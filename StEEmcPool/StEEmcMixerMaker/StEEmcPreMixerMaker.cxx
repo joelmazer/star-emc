@@ -41,10 +41,10 @@ Int_t StEEmcPreMixerMaker::Finish()
 
 ///////////////////////////////////////////////////////////////////////////
 //
-// $Id: StEEmcPreMixerMaker.cxx,v 1.1 2005/05/31 18:53:25 wzhang Exp $
+// $Id: StEEmcPreMixerMaker.cxx,v 1.1.1.1 2005/05/31 18:53:25 wzhang Exp $
 // $Log: StEEmcPreMixerMaker.cxx,v $
-// Revision 1.1  2005/05/31 18:53:25  wzhang
-// Initial revision
+// Revision 1.1.1.1  2005/05/31 18:53:25  wzhang
+// First version
 //
 //
 ///////////////////////////////////////////////////////////////////////////

@@ -462,10 +462,10 @@ void StEEmcAssociationMaker::printHits(StEvent *event)
 
 ///////////////////////////////////////////////////////////////////////////
 //
-// $Id: StEEmcAssociationMaker.cxx,v 1.1 2005/05/31 18:54:13 wzhang Exp $
+// $Id: StEEmcAssociationMaker.cxx,v 1.1.1.1 2005/05/31 18:54:13 wzhang Exp $
 // $Log: StEEmcAssociationMaker.cxx,v $
-// Revision 1.1  2005/05/31 18:54:13  wzhang
-// Initial revision
+// Revision 1.1.1.1  2005/05/31 18:54:13  wzhang
+// First version
 //
 //
 ///////////////////////////////////////////////////////////////////////////
