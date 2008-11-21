@@ -4415,7 +4415,10 @@ void showResultsOthers(TH1F *histSpectrum, TLegend *legendSpectrum, const data_p
 		    //TString fstr = newPoints->func->GetName();
 		    //if (newPoints->funcDenom) fstr += TString("/") + newPoints->funcDenom->GetName();
 		    //TF1 *f = new TF1(newName.Data(), fstr.Data(), xmin, xmax);
-		    TF1 *f = new TF1(newName.Data(), ROOT::Math::ParamFunctor(newPoints, &TDataPoints::operator()), xmin, xmax, newPoints->func->GetNpar());
+		    TF1 *f = 0;
+#if ROOT_VERSION_CODE >= ROOT_VERSION(5,21,0)
+		    f = new TF1(newName.Data(), ROOT::Math::ParamFunctor(newPoints, &TDataPoints::operator()), xmin, xmax, newPoints->func->GetNpar());
+#endif
 		    if (f) {
 			f->SetParameters(newPoints->func->GetParameters());
 			newPoints->TAttLine::Copy(*f);
