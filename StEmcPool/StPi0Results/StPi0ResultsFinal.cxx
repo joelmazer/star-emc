@@ -25,6 +25,8 @@
 ClassImp(TAllSettings);
 ClassImp(TAllResults);
 
+//#pragma GCC diagnostic ignored "-Wunused-variable"
+
 //----------------------------------------------------------------------
 void show_analysis_final(const Char_t *DATA_DIR) {
 
@@ -63,7 +65,12 @@ const Float_t dAu_MB_HT1 = 4.0;
 const Float_t dAu_HT1_HT2 = 7.0;
 const Float_t dAu_HT2 = 17.0;
 
-const Float_t dAu_etatopi0_MB = 0.0;
+const Float_t pp_etatopi0_MB = 0.0;
+const Float_t pp_etatopi0_MB_HT1 = 4.0;
+const Float_t pp_etatopi0_HT1_HT2 = 7.0;
+const Float_t pp_etatopi0_HT2 = 14.0;
+
+const Float_t dAu_etatopi0_MB = 1.5;
 const Float_t dAu_etatopi0_MB_HT1 = 4.0;
 const Float_t dAu_etatopi0_HT1_HT2 = 7.0;
 const Float_t dAu_etatopi0_HT2 = 14.0;
@@ -73,7 +80,7 @@ const Float_t RdA_MB_HT1 = 4.0;
 const Float_t RdA_HT1_HT2 = 7.0;
 const Float_t RdA_HT2 = 17.0;
 
-const Float_t RdA_eta_MB = 3.0;
+const Float_t RdA_eta_MB = 4.0;
 const Float_t RdA_eta_MB_HT1 = 4.0;
 const Float_t RdA_eta_HT1_HT2 = 7.0;
 const Float_t RdA_eta_HT2 = 14.0;
@@ -166,7 +173,7 @@ const Float_t RdA_eta_HT2 = 14.0;
 	analysisSettingsSpectrumMB.mixNormLeft = 1.0;
 	analysisSettingsSpectrumMB.mixNormRight = 4.0;
 	analysisSettingsSpectrumMB.mixNormEntries = true;
-	analysisSettingsSpectrumMB.smoothBgRandom = 0;
+	analysisSettingsSpectrumMB.smoothBgRandom = 0.03;
 	analysisSettingsSpectrumMB.mixNormFixedRandom = 0.0;
 	analysisSettingsSpectrumMB.mixNormMassRangeRandom = false;
 	analysisSettingsSpectrumMB.mixNormLeftRandom = 0.9;
@@ -197,13 +204,13 @@ const Float_t RdA_eta_HT2 = 14.0;
 	analysisSettingsSpectrumMB.fitPeakShapeDistribution = false;
 	analysisSettingsSpectrumMB.fitPeakShapeEtaDistribution = false;
 	analysisSettingsSpectrumMB.fitPeakShapeEtabgDistribution = false;
-	analysisSettingsSpectrumMB.fitDistributionLeft = 0.8;
-	analysisSettingsSpectrumMB.fitDistributionRight = 0.9;
+	analysisSettingsSpectrumMB.fitDistributionLeft = 0.3;//0.3; // towerMB_smd2HT1 / towerMB_smd2HT1_gammaetacut
+	analysisSettingsSpectrumMB.fitDistributionRight = 0.4;//0.4; // towerMB_smd2HT1 / towerMB_smd2HT1_gammaetacut
 	analysisSettingsSpectrumMB.fitDistributionLeft2 = 0.9;
-	analysisSettingsSpectrumMB.fitDistributionRight2 = 1.0;
+	analysisSettingsSpectrumMB.fitDistributionRight2 = 1.2;
 	analysisSettingsSpectrumMB.fitDistributionOption = "RQN UNORM";
-	//analysisSettingsSpectrumMB.lowNormFixed = TFitSettings(1.5, -0.5/3);
-	analysisSettingsSpectrumMB.lowNormFixed = TFitSettings(1.12, -0.19);
+	analysisSettingsSpectrumMB.lowNormFixed = TFitSettings(1.12, -0.19); // towerMB_smd2HT1
+	//analysisSettingsSpectrumMB.lowNormFixed = TFitSettings(1.12, -0.09); // towerMB_smd2HT1_gammaetacut
 	//analysisSettingsSpectrumMB.lowNormFixed = TFitSettings(1);
 	//analysisSettingsSpectrumMB.lowNormFixed = TFitSettings(0.18, 0, 0, 1, true, 0, 100, 0, 2.5, "(TMath::Exp((1.28365)-(1.07833*x))) + (0*[0])", "RQN");
 	analysisSettingsSpectrumMB.lowNormMassRange = false;
@@ -407,9 +414,9 @@ const Float_t RdA_eta_HT2 = 14.0;
 	analysisSettingsSpectrumHT1.lowmassbgPointsHighPt = 100.0;
 	analysisSettingsSpectrumHT1.lowNormPointsPt = true;
 	analysisSettingsSpectrumHT1.lowmassbgNbar = TFitSettings(0.3, 0, 0, 1, true, 0, 100, 0, 100, "(1.0/((1.0/((0.3*x*TMath::Exp(-0.3233*x) / ((7.334427e-01)+(-9.284123e-02*x)+(8.582639e-03*x*x)+(-2.596326e-04*x*x*x))) * (1-0.2+(0.2*0.358/0.639)) * (10.39*TMath::Landau(x,3.214,0.695)) / (1.0+(2.48210e-03*x*x)) ))+1.0)) + (0*[0])", "RQN");
-	analysisSettingsSpectrumHT1.fixedPrescale = 1547.33;//2873.35;
+	analysisSettingsSpectrumHT1.fixedPrescale = /*1547.33;//*/2873.35; // towerMB_smd2HT1_gammaetacut / towerMB_smd2HT1
 	analysisSettingsSpectrumHT1.calculatePrescaleFromDB = false;
-	analysisSettingsSpectrumHT1.calculatePrescaleFromSim = true;
+	analysisSettingsSpectrumHT1.calculatePrescaleFromSim = false;
 	analysisSettingsSpectrumHT1.calculatePrescaleFromPoints = false;
 	analysisSettingsSpectrumHT1.calculatePrescaleFromPointsIntegral = false;
 	analysisSettingsSpectrumHT1.prescalePointsLowPt = 4.0;
@@ -585,10 +592,10 @@ const Float_t RdA_eta_HT2 = 14.0;
 	analysisSettingsSpectrumHT2.fitPeakShapeDistribution = false;
 	analysisSettingsSpectrumHT2.fitPeakShapeEtaDistribution = false;
 	analysisSettingsSpectrumHT2.fitPeakShapeEtabgDistribution = false;
-	analysisSettingsSpectrumHT2.fitDistributionLeft = 0.3;
-	analysisSettingsSpectrumHT2.fitDistributionRight = 0.4;
+	analysisSettingsSpectrumHT2.fitDistributionLeft = TFitSettings(0.3, 0, 0, 1, true, 0, 100, 0, 14, "(0.1/9.5) + (x*(0.3-(7.0*0.1/9.5)))", "RQN");
+	analysisSettingsSpectrumHT2.fitDistributionRight = TFitSettings(0.4, 0, 0, 1, true, 0, 100, 0, 14, "(0.1/9.5) + (x*(0.4-(7.0*0.1/9.5)))", "RQN");
 	analysisSettingsSpectrumHT2.fitDistributionLeft2 = 0.9;
-	analysisSettingsSpectrumHT2.fitDistributionRight2 = 1.2;
+	analysisSettingsSpectrumHT2.fitDistributionRight2 = 1.2; // towerMB_smd2HT1 / towerMB_smd2HT1_gammaetacut = 1.2 / 1.0
 	analysisSettingsSpectrumHT2.fitDistributionOption = "RQN UNORM";
 	analysisSettingsSpectrumHT2.lowNormFixed = TFitSettings(1.0);
 	analysisSettingsSpectrumHT2.lowNormMassRange = false;
@@ -601,7 +608,7 @@ const Float_t RdA_eta_HT2 = 14.0;
 	analysisSettingsSpectrumHT2.lowmassbgNbar = TFitSettings(0.3, 0, 0, 1, true, 0, 100, 0, 100, "(1.0/((1.0/((0.3*x*TMath::Exp(-0.3233*x) / ((7.334427e-01)+(-9.284123e-02*x)+(8.582639e-03*x*x)+(-2.596326e-04*x*x*x))) * (1-0.2+(0.2*0.358/0.639)) * (2.886*TMath::Landau(x,5.595,0.9)) / (1.0+(2.48210e-03*x*x)) ))+1.0)) + (0*[0])", "RQN");
 	analysisSettingsSpectrumHT2.fixedPrescale = (28032.5 + 29070.3)/2.0;
 	analysisSettingsSpectrumHT2.calculatePrescaleFromDB = false;
-	analysisSettingsSpectrumHT2.calculatePrescaleFromSim = true;
+	analysisSettingsSpectrumHT2.calculatePrescaleFromSim = false;
 	analysisSettingsSpectrumHT2.calculatePrescaleFromPoints = false;
 	analysisSettingsSpectrumHT2.calculatePrescaleFromPointsIntegral = false;
 	analysisSettingsSpectrumHT2.prescalePointsLowPt = 7.5;
@@ -1025,9 +1032,9 @@ const Float_t RdA_eta_HT2 = 14.0;
 	analysisSettingsPPMB.fitPeakShapeEtaDistribution = false && !isPythia;
 	analysisSettingsPPMB.fitPeakShapeEtabgDistribution = false && !isPythia;
 	analysisSettingsPPMB.fitDistributionLeft = 0.3;
-	analysisSettingsPPMB.fitDistributionRight = 0.9;
-	analysisSettingsPPMB.fitDistributionLeft2 = 0.9;
-	analysisSettingsPPMB.fitDistributionRight2 = 1.2;
+	analysisSettingsPPMB.fitDistributionRight = 0.9;//0.5; // towerMB_smd2HT1 / towerMB_smd2HT1_gammaetacut
+	analysisSettingsPPMB.fitDistributionLeft2 = 0.9;//0.85; // towerMB_smd2HT1 / towerMB_smd2HT1_gammaetacut
+	analysisSettingsPPMB.fitDistributionRight2 = 1.2;//0.95; // towerMB_smd2HT1 / towerMB_smd2HT1_gammaetacut
 	analysisSettingsPPMB.fitDistributionOption = "RQN UNORM";
 	//analysisSettingsPPMB.lowNormFixed = TFitSettings(2.0, -1.0/4);
 	//analysisSettingsPPMB.lowNormFixed = TFitSettings(0.75, -0.45/5);
@@ -1065,7 +1072,7 @@ const Float_t RdA_eta_HT2 = 14.0;
 	analysisSettingsPPMB.showInvBinsFitsSeparately = false;
 
 	TAnalysisSettingsTrigger analysisSettingsPPHT1 = analysisSettingsSpectrumHT1;
-	analysisSettingsPPHT1.lowPt = 3.5;
+	analysisSettingsPPHT1.lowPt = 4.0;
 	analysisSettingsPPHT1.highPt = 10.0;
 	analysisSettingsPPHT1.lowPtUse = pp_MB_HT1;
 	analysisSettingsPPHT1.highPtUse = pp_HT1_HT2;
@@ -1095,7 +1102,7 @@ const Float_t RdA_eta_HT2 = 14.0;
 	analysisSettingsPPHT1.jetBgFraction = TFitSettings(1.0, 0.0, 0.0, 1.0, true, 0.0, 100.0, 0.0, 10, "([0]*0) + (3.288739e-02 - 0.15) + (6.936733e-02 * 1.4 * x)", "RQN");
 	//analysisSettingsPPHT1.jetBgFraction = TFitSettings(1.0, 0.0, 0.0, 1.0, true, 0.0, 12, 0.0, 100.0, "pol2", "RQN");
 	analysisSettingsPPHT1.bgToSigbg = TFitSettings(0.5);
-	analysisSettingsPPHT1.fixedPrescale = 7340.76;//4670.96;
+	analysisSettingsPPHT1.fixedPrescale = /*7340.76;//*/4670.96; // towerMB_smd2HT1_gammaetacut / towerMB_smd2HT1
 	analysisSettingsPPHT1.calculatePrescaleFromDB = false;
 	analysisSettingsPPHT1.calculatePrescaleFromSim = false;
 	analysisSettingsPPHT1.calculatePrescaleFromPoints = false;
@@ -1212,7 +1219,7 @@ const Float_t RdA_eta_HT2 = 14.0;
 	analysisSettingsPPHT2.jetBgFraction = TFitSettings(1.0, 0.0, 0.0, 1.0, true, 0.0, 100.0, 0.0, 10, "([0]*0) + (3.288739e-02 - 0.15) + (6.936733e-02 * 1.4 * x)", "RQN");
 	//analysisSettingsPPHT2.jetBgFraction = TFitSettings(1.0, 0.0, 0.0, 1.0, true, 0.0, 12, 0.0, 100.0, "pol2", "RQN");
 	analysisSettingsPPHT2.bgToSigbg = TFitSettings(0.5);
-	analysisSettingsPPHT2.fixedPrescale = 33897.6;//19632.8;
+	analysisSettingsPPHT2.fixedPrescale = /*33897.6;//*/19632.8; // towerMB_smd2HT1_gammaetacut / towerMB_smd2HT1
 	analysisSettingsPPHT2.calculatePrescaleFromDB = false;
 	analysisSettingsPPHT2.calculatePrescaleFromSim = false;
 	analysisSettingsPPHT2.calculatePrescaleFromPoints = false;
@@ -1278,11 +1285,11 @@ const Float_t RdA_eta_HT2 = 14.0;
 	analysisSettingsPPHT2.fitPeakShapeDistribution = false && !isPythia;
 	analysisSettingsPPHT2.fitPeakShapeEtaDistribution = false && !isPythia;
 	analysisSettingsPPHT2.fitPeakShapeEtabgDistribution = false && !isPythia;
-	analysisSettingsPPHT2.fitDistributionLeft = 0.3;//0.25;
-	analysisSettingsPPHT2.fitDistributionRight = 0.4;//2;
-	analysisSettingsPPHT2.fitDistributionLeft2 = 0.9;//0;
-	analysisSettingsPPHT2.fitDistributionRight2 = 1.2;//0;
-	analysisSettingsPPHT2.fitDistributionOption = "RQN UNORM";
+	analysisSettingsPPHT2.fitDistributionLeft = 0.30;
+	analysisSettingsPPHT2.fitDistributionRight = 0.4;//0.45;  // towerMB_smd2HT1 / towerMB_smd2HT1_gammaetacut
+	analysisSettingsPPHT2.fitDistributionLeft2 = 0.9;//0.75;  // towerMB_smd2HT1 / towerMB_smd2HT1_gammaetacut
+	analysisSettingsPPHT2.fitDistributionRight2 = 1.2;
+	analysisSettingsPPHT2.fitDistributionOption = /*"RQN UNORM"; //*/ "RQN";  // towerMB_smd2HT1 / towerMB_smd2HT1_gammaetacut
 	analysisSettingsPPHT2.lowNormFixed = TFitSettings(1.0);
 	analysisSettingsPPHT2.lowNormMassRange = false;
 	analysisSettingsPPHT2.lowNormMassRangeLeft = 0.00;
@@ -1616,7 +1623,7 @@ const Float_t RdA_eta_HT2 = 14.0;
 	//allSettings.settingsDAuNoCentral.settingsHT1.signalToBackgroundRatio = TFitSettings(1.0, 0.0, 0.0, 100.0, true, 0, 10, 0, 10, "pol2", "RQN");
 	//allSettings.settingsDAuNoCentral.settingsHT1.signalToBackgroundRatioEta = TFitSettings(0.5, 0.0, 0.0, 100.0, true, 0, 10, 0, 100, "pol2", "RQN");
 	//allSettings.settingsDAuNoCentral.settingsHT2.signalToBackgroundRatio = TFitSettings(1.2, 0.0, 0.0, 100.0, true, 0, 12, 0, 12, "pol2", "RQN");
-	//allSettings.settingsDAuNoCentral.settingsHT2.signalToBackgroundRatioEta = TFitSettings(0.5, 0.0, 0.0, 100.0, true, 0, 14, 0, 100, "pol2", "RQN");
+	//allSettings.settingsDAuNoCentral.settingsHT2.signalToBackgroundRatioEta = TFitSettings(0.27, 0.0, 0.0, 100.0, true, 0, 17, 0, 100, "pol0", "RQN");
 	allSettings.settingsDAuNoCentral.correctPrescaleTriggerBias = true;
 	allSettings.settingsDAuNoCentral.prescaleTriggerBiasMBHT1 = -0.02;
 	allSettings.settingsDAuNoCentral.prescaleTriggerBiasMBHT2 = -0.20;
@@ -1787,8 +1794,10 @@ const Float_t RdA_eta_HT2 = 14.0;
 // Data from other experiments, theory etc.
 #include "macros/my_results/data_arrays_others.C"
 
+	Bool_t showPPKKP = true; // KKP or DSS fragmentation functions
+
 	// fitted functions used to divide data
-	const Char_t *LevyFunc = "[0]*TMath::Power(1 + ((TMath::Sqrt(x*x + 0.135*0.135) - 0.135) / [1]), -[2])";
+	//const Char_t *LevyFunc = "[0]*TMath::Power(1 + ((TMath::Sqrt(x*x + 0.135*0.135) - 0.135) / [1]), -[2])";
 	TF1 *fPPPi0Invyield = 0;
 	TF1 *fDAuPi0Invyield = 0;
 	TF1 *fPPPi0Crossection = 0;
@@ -1819,7 +1828,7 @@ const Float_t RdA_eta_HT2 = 14.0;
 	TF1 *fDAuEtaInvyield = 0;
 
         TF1 *fDIV = fNLOpQCD;
-        TF1 *fDIVPP = fNLOpQCDPP_2;
+        TF1 *fDIVPP = showPPKKP ? fNLOpQCDPP : fNLOpQCDPP_2;
 
 /*
 #define X_NEW(fD, x0, dx) {cout << (x0) << ": " << (fD)->GetX((fD)->Integral((x0) - (dx), (x0) + (dx))/((dx) + (dx)), (x0) - (dx), (x0) + (dx)) << endl;}
@@ -1881,31 +1890,33 @@ X_NEW(fDIV, 15.5+0.25, 0.25)
 	CREATE_ARRAYS_FUNC(NLOPPfill_2, fNLOpQCDPP_2, fNLOpQCDPP1_2, fNLOpQCDPP2_2, 2.0, 20.0/*19.4*/)
 	
 	// PHENIX d+Au pi0 cross section
-	TDataPoints PHENIX_dAu_pi0 = TDataPoints(TDrawOptions(TNamed("PHENIX_dAu_pi0", "PHENIX #pi^{0}"/*showPhenixPi0Legend*/), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 1001), TAttMarker(kBlack, kOpenSquare, 1.0), "P", "P", TString("PHENIX #pi^{0}"/*showPhenixPi0Legend*/)), Px, Py, Pxe, Pye, sizeof(Px)/sizeof(Px[0]));
+	TDataPoints PHENIX_dAu_pi0 = TDataPoints(TDrawOptions(TNamed("PHENIX_dAu_pi0", "PHENIX #pi^{0}"/*showPhenixPi0Legend*/), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 1001), TAttMarker(kBlack, kOpenSquare, 1.0), "P", "P", TString("PHENIX #pi^{0}^{}"/*showPhenixPi0Legend*/)), Px, Py, Pxe, Pye, sizeof(Px)/sizeof(Px[0]));
 	// PHENIX d+Au eta cross section
 	TDataPoints PHENIX_dAu_eta = TDataPoints(TDrawOptions(TNamed("PHENIX_dAu_eta", showPhenixPi0EtaLegend), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 1001), TAttMarker(kBlack, kOpenSquare, 1.0), "P", "P", TString(showPhenixPi0EtaLegend)), Petax, Petay, Petaxe, Petaye, sizeof(Petax)/sizeof(Petax[0]));
 	// PHENIX p+p pi0 cross section
-	TDataPoints PHENIX_pp_pi0 = TDataPoints(TDrawOptions(TNamed("PHENIX_pp_pi0", "PHENIX #pi^{0}"/*showPhenixPi0PPLegend*/), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 1001), TAttMarker(kBlack, kOpenCircle, 1.0), "P", "P", TString("PHENIX #pi^{0}"/*showPhenixPi0PPLegend*/)), Pppx, Pppy, Pppxe, Pppye, sizeof(Pppx)/sizeof(Pppx[0]));
+	TDataPoints PHENIX_pp_pi0 = TDataPoints(TDrawOptions(TNamed("PHENIX_pp_pi0", "PHENIX #pi^{0}"/*showPhenixPi0PPLegend*/), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 1001), TAttMarker(kBlack, kOpenCircle, 1.0), "P", "P", TString("PHENIX #pi^{0}^{}"/*showPhenixPi0PPLegend*/)), Pppx, Pppy, Pppxe, Pppye, sizeof(Pppx)/sizeof(Pppx[0]));
 	// PHENIX p+p eta cross section
 	TDataPoints PHENIX_pp_eta = TDataPoints(TDrawOptions(TNamed("PHENIX_pp_eta", showPhenixPi0PPEtaLegend), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 1001), TAttMarker(kBlack, kOpenSquare, 1.0), "P", "P", TString(showPhenixPi0PPEtaLegend)), Pppetax, Pppetay, Pppetaxe, Pppetaye, sizeof(Pppetax)/sizeof(Pppetax[0]));
 	// PHENIX pi0 RdA
-	TDataPoints PHENIX_pi0_RdA = TDataPoints(TDrawOptions(TNamed("PHENIX_Rda_pi0", showPhenixPi0dALegend), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 1001), TAttMarker(kBlack, kOpenCircle, 1.0), "P", "P", TString(showPhenixPi0dALegend)), PdAx, PdAy, PdAxe, PdAye, sizeof(PdAx)/sizeof(PdAx[0]));
+	TDataPoints PHENIX_pi0_RdA = TDataPoints(TDrawOptions(TNamed("PHENIX_Rda_pi0", "PHENIX #pi^{0}"/*showPhenixPi0dALegend*/), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 1001), TAttMarker(kBlack, kOpenCircle, 1.0), "P", "P", TString("PHENIX #pi^{0}^{}"/*showPhenixPi0dALegend*/)), PdAx, PdAy, PdAxe, PdAye, sizeof(PdAx)/sizeof(PdAx[0]));
 	// PHENIX eta RdA
-	TDataPoints PHENIX_eta_RdA = TDataPoints(TDrawOptions(TNamed("PHENIX_Rda_eta", showPhenixEtadALegend), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 1001), TAttMarker(kBlack, kOpenSquare, 1.0), "P", "P", TString(showPhenixEtadALegend)), PEtadAx, PEtadAy, PEtadAxe, PEtadAye, sizeof(PEtadAx)/sizeof(PEtadAx[0]));
+	TDataPoints PHENIX_eta_RdA = TDataPoints(TDrawOptions(TNamed("PHENIX_Rda_eta", "PHENIX #eta"/*showPhenixEtadALegend*/), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 1001), TAttMarker(kBlack, kOpenSquare, 1.0), "P", "P", TString("PHENIX #eta"/*showPhenixEtadALegend*/)), PEtadAx, PEtadAy, PEtadAxe, PEtadAye, sizeof(PEtadAx)/sizeof(PEtadAx[0]));
 	// PHENIX eta/pi0 ratio in p+p
 	TDataPoints PHENIX_etaToPi0_pp = TDataPoints(TDrawOptions(TNamed("PHENIX_etatopi_pp", "PHENIX #font[12]{p}_{ }+_{ }#font[12]{p}"/*showPhenixEtaToPi0Legend*/), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 1001), TAttMarker(kBlack, kOpenCircle, 1.0), "P", "P", TString("PHENIX #font[12]{p}_{ }+_{ }#font[12]{p}"/*showPhenixEtaToPi0Legend*/)), PEtaToPi0x, PEtaToPi0y, PEtaToPi0xe, PEtaToPi0ye, sizeof(PEtaToPi0x)/sizeof(PEtaToPi0x[0]));
 	// PHENIX eta/pi0 ratio in d+Au
 	TDataPoints PHENIX_etaToPi0_dAu = TDataPoints(TDrawOptions(TNamed("PHENIX_etatopi_dAu", "PHENIX #font[12]{d}_{ }+_{ }Au"/*showPhenixEtaToPi0dAuLegend*/), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 1001), TAttMarker(kBlack, kOpenSquare, 1.0), "P", "P", TString("PHENIX #font[12]{d}_{ }+_{ }Au"/*showPhenixEtaToPi0dAuLegend*/)), PEtaToPi0dAux, PEtaToPi0dAuy, PEtaToPi0dAuxe, PEtaToPi0dAuye, sizeof(PEtaToPi0dAux)/sizeof(PEtaToPi0dAux[0]));
 	// STAR d+Au pi+
-	TDataPoints STAR_dAu_piplus = TDataPoints(TDrawOptions(TNamed("STAR_dAu_piplus", "STAR #pi^{+}, #pi^{-}"/*showStarChargedPionsPlusLegend*/), TAttLine(kBlue, kSolid, 1), TAttFill(kBlue, 1001), TAttMarker(kBlue, kOpenStar, 1.3), "P", "P", TString("STAR #pi^{+}, #pi^{-}"/*showStarChargedPionsPlusLegend*/)), SPpx, SPpy_xsec, SPpxe, SPpye_xsec, sizeof(SPpx)/sizeof(SPpx[0]));
+	TDataPoints STAR_dAu_piplus = TDataPoints(TDrawOptions(TNamed("STAR_dAu_piplus", "STAR #pi^{+}, #pi^{-}"/*showStarChargedPionsPlusLegend*/), TAttLine(kBlue, kSolid, 1), TAttFill(kBlue, 1001), TAttMarker(kBlue, kOpenStar, 1.3), "P", "P", TString("STAR #pi^{+}^{}, #pi^{#font[122]{-}}^{}"/*showStarChargedPionsPlusLegend*/)), SPpx, SPpy_xsec, SPpxe, SPpye_xsec, sizeof(SPpx)/sizeof(SPpx[0]));
 	// STAR d+Au pi-
 	TDataPoints STAR_dAu_piminus = TDataPoints(TDrawOptions(TNamed("STAR_dAu_piminus", showStarChargedPionsMinusLegend), TAttLine(kBlue, kSolid, 1), TAttFill(kBlue, 1001), TAttMarker(kBlue, kFullStar, 1.3), "P", "P", TString(showStarChargedPionsMinusLegend)), SPmx, SPmy_xsec, SPmxe, SPmye_xsec, sizeof(SPmx)/sizeof(SPmx[0]));
 	TDataPoints STAR_dAu_piminus_unnamed = TDataPoints(TDrawOptions(TNamed("STAR_dAu_piminus", ""), TAttLine(kBlue, kSolid, 1), TAttFill(kBlue, 1001), TAttMarker(kBlue, kFullStar, 1.3), "P", "P", TString("")), SPmx, SPmy_xsec, SPmxe, SPmye_xsec, sizeof(SPmx)/sizeof(SPmx[0]));
 	// STAR p+p pi+
-	TDataPoints STAR_pp_piplus = TDataPoints(TDrawOptions(TNamed("STAR_pp_piplus", "STAR #pi^{+}, #pi^{-}"/*showStarChargedPionsPlusPPLegend*/), TAttLine(kBlue, kSolid, 1), TAttFill(kBlue, 1001), TAttMarker(kBlue, kOpenStar, 1.3), "P", "P", TString("STAR #pi^{+}, #pi^{-}"/*showStarChargedPionsPlusPPLegend*/)), SPPPpx, SPPPpy_xsec, SPPPpxe, SPPPpye_xsec, sizeof(SPPPpx)/sizeof(SPPPpx[0]));
+	TDataPoints STAR_pp_piplus = TDataPoints(TDrawOptions(TNamed("STAR_pp_piplus", "STAR #pi^{+}, #pi^{-}"/*showStarChargedPionsPlusPPLegend*/), TAttLine(kBlue, kSolid, 1), TAttFill(kBlue, 1001), TAttMarker(kBlue, kOpenStar, 1.3), "P", "P", TString("STAR #pi^{+}^{}, #pi^{#font[122]{-}}^{}"/*showStarChargedPionsPlusPPLegend*/)), SPPPpx, SPPPpy_xsec, SPPPpxe, SPPPpye_xsec, sizeof(SPPPpx)/sizeof(SPPPpx[0]));
 	// STAR p+p pi-
 	TDataPoints STAR_pp_piminus = TDataPoints(TDrawOptions(TNamed("STAR_pp_piminus", showStarChargedPionsMinusPPLegend), TAttLine(kBlue, kSolid, 1), TAttFill(kBlue, 1001), TAttMarker(kBlue, kFullStar, 1.3), "P", "P", TString(showStarChargedPionsMinusPPLegend)), SPPPmx, SPPPmy_xsec, SPPPmxe, SPPPmye_xsec, sizeof(SPPPmx)/sizeof(SPPPmx[0]));
 	TDataPoints STAR_pp_piminus_unnamed = TDataPoints(TDrawOptions(TNamed("STAR_pp_piminus", ""), TAttLine(kBlue, kSolid, 1), TAttFill(kBlue, 1001), TAttMarker(kBlue, kFullStar, 1.3), "P", "P", TString("")), SPPPmx, SPPPmy_xsec, SPPPmxe, SPPPmye_xsec, sizeof(SPPPmx)/sizeof(SPPPmx[0]));
+	// STAR p+p (pi+ + pi-)/2
+	TDataPoints STAR_pp_pipm = TDataPoints(TDrawOptions(TNamed("STAR_pp_pm", "STAR (#pi^{+}+#pi^{-})/2"/*showStarChargedPionsPlusPPLegend*/), TAttLine(kBlue, kSolid, 1), TAttFill(kBlue, 1001), TAttMarker(kBlue, kOpenSquare, 1.3), "P", "P", TString("STAR (#pi^{+}^{ }+ #pi^{#font[122]{-}}^{})/2"/*showStarChargedPionsPlusPPLegend*/)), SPPPpmx, SPPPpmy, SPPPpmxe, SPPPpmye, sizeof(SPPPpmx)/sizeof(SPPPpmx[0]));
 	// STAR d+Au (h+ + h-)/2
 	TDataPoints STAR_dAu_hpm = TDataPoints(TDrawOptions(TNamed("STAR_dAu_hpm", showStarChargedHadronsLegend), TAttLine(kGreen, kSolid, 1), TAttFill(kGreen, 1001), TAttMarker(kGreen, kFullTriangleUp, 1.3), "P", "P", TString(showStarChargedHadronsLegend)), Sx, Sy_xsec, Sxe, Sye_xsec, sizeof(Sx)/sizeof(Sx[0]));
 	// STAR p+p (h+ + h-)/2
@@ -1914,16 +1925,16 @@ X_NEW(fDIV, 15.5+0.25, 0.25)
 	TDataPoints STAR_dAu_Rcp_hpm_1 = TDataPoints(TDrawOptions(TNamed("STAR_Rcp_hpm_1", showStarRcpLegend1), TAttLine(kGreen, kSolid, 1), TAttFill(kGreen, 1001), TAttMarker(kGreen, kFullTriangleUp, 1.3), "P", "P", TString(showStarRcpLegend1)), SRcpx, SRcp1y, SRcpxe, SRcp1ye, sizeof(SRcpx)/sizeof(SRcpx[0]));
 	TDataPoints STAR_dAu_Rcp_hpm_2 = TDataPoints(TDrawOptions(TNamed("STAR_Rcp_hpm_2", showStarRcpLegend2), TAttLine(kGreen, kSolid, 1), TAttFill(kGreen, 1001), TAttMarker(kGreen, kMultiply, 1.3), "P", "P", TString(showStarRcpLegend2)), SRcpx, SRcp2y, SRcpxe, SRcp2ye, sizeof(SRcpx)/sizeof(SRcpx[0]));
 	// STAR d+Au pi+ Rcp
-	TDataPoints STAR_dAu_Rcp_piplus = TDataPoints(TDrawOptions(TNamed("STAR_Rcp_piplus", "STAR #pi^{+}, #pi^{-}"/*showStarChargedPionsPlusRcpLegend*/), TAttLine(kBlue, kSolid, 1), TAttFill(kBlue, 1001), TAttMarker(kBlue, kOpenStar, 1.3), "P", "P", TString("STAR #pi^{+}, #pi^{-}"/*showStarChargedPionsPlusRcpLegend*/)), SPpRcpx, SPpRcpy, SPpRcpxe, SPpRcpye, sizeof(SPpRcpx)/sizeof(SPpRcpx[0]));
+	TDataPoints STAR_dAu_Rcp_piplus = TDataPoints(TDrawOptions(TNamed("STAR_Rcp_piplus", "STAR #pi^{+}, #pi^{-}"/*showStarChargedPionsPlusRcpLegend*/), TAttLine(kBlue, kSolid, 1), TAttFill(kBlue, 1001), TAttMarker(kBlue, kOpenStar, 1.3), "P", "P", TString("STAR #pi^{+}^{}, #pi^{#font[122]{-}}^{}"/*showStarChargedPionsPlusRcpLegend*/)), SPpRcpx, SPpRcpy, SPpRcpxe, SPpRcpye, sizeof(SPpRcpx)/sizeof(SPpRcpx[0]));
 	// STAR d+Au pi- Rcp
 	TDataPoints STAR_dAu_Rcp_piminus = TDataPoints(TDrawOptions(TNamed("STAR_Rcp_piminus", showStarChargedPionsMinusRcpLegend), TAttLine(kBlue, kSolid, 1), TAttFill(kBlue, 1001), TAttMarker(kBlue, kFullStar, 1.3), "P", "P", TString(showStarChargedPionsMinusRcpLegend)), SPmRcpx, SPmRcpy, SPmRcpxe, SPmRcpye, sizeof(SPmRcpx)/sizeof(SPmRcpx[0]));
 	TDataPoints STAR_dAu_Rcp_piminus_unnamed = TDataPoints(TDrawOptions(TNamed("STAR_Rcp_piminus", ""/*showStarChargedPionsMinusRcpLegend*/), TAttLine(kBlue, kSolid, 1), TAttFill(kBlue, 1001), TAttMarker(kBlue, kFullStar, 1.3), "P", "P", TString(/*showStarChargedPionsMinusRcpLegend*/)), SPmRcpx, SPmRcpy, SPmRcpxe, SPmRcpye, sizeof(SPmRcpx)/sizeof(SPmRcpx[0]));
 	// STAR (h+ + h-)/2 RdA
 	TDataPoints STAR_dAu_RdA_hpm = TDataPoints(TDrawOptions(TNamed("STAR_RdA_hpm", showStarRdALegend), TAttLine(kGreen, kSolid, 1), TAttFill(kGreen, 1001), TAttMarker(kGreen, kFullTriangleUp, 1.3), "P", "P", TString(showStarRdALegend)), SRdAx, SRdAy, SRdAxe, SRdAye, sizeof(SRdAx)/sizeof(SRdAx[0]));
 	// STAR (pi+ + pi-)/2 RdA
-	TDataPoints STAR_dAu_RdA_pipm = TDataPoints(TDrawOptions(TNamed("STAR_RdA_pipm", "STAR (#pi^{+}+ #pi^{-})/2"/*showStarRdApLegend*/), TAttLine(kBlue, kSolid, 1), TAttFill(kBlue, 1001), TAttMarker(kBlue, kOpenCross, 1.3), "P", "P", TString("STAR (#pi^{+}+ #pi^{-})/2"/*showStarRdApLegend*/)), SRdApx, SRdApy, SRdApxe, SRdApye, sizeof(SRdApx)/sizeof(SRdApx[0]));
+	TDataPoints STAR_dAu_RdA_pipm = TDataPoints(TDrawOptions(TNamed("STAR_RdA_pipm", "STAR (#pi^{+}+ #pi^{-})/2"/*showStarRdApLegend*/), TAttLine(kBlue, kSolid, 1), TAttFill(kBlue, 1001), TAttMarker(kBlue, kOpenCross, 1.3), "P", "P", TString("STAR (#pi^{+}^{}+ #pi^{#font[122]{-}}^{})/2"/*showStarRdApLegend*/)), SRdApx, SRdApy, SRdApxe, SRdApye, sizeof(SRdApx)/sizeof(SRdApx[0]));
 
-	const Char_t *Rinf_titlestr = "Asymptotic #font[12]{R}^{_{ }#infty} = 0.5";
+	const Char_t *Rinf_titlestr = "Asymptotic #font[12]{R}^{_{ }#infty}^{} = 0.5";
 	TDataPoints THEORY_etaToPi0_Rinf = TDataPoints(TDrawOptions(TNamed("THEORY_Rinf" , Rinf_titlestr), TAttLine(kBlack, kSolid, 2), TAttFill(kBlack, 0), TAttMarker(kBlack, kOpenSquare, 1.0), "L", "L", TString(Rinf_titlestr)), RinfFunc);
 	TDataPoints THEORY_etaToPi0_Rinf_unnamed = TDataPoints(TDrawOptions(TNamed("THEORY_Rinf" , ""), TAttLine(kBlack, kSolid, 2), TAttFill(kBlack, 0), TAttMarker(kBlack, kOpenSquare, 1.0), "L", "L", TString()), RinfFunc);
 	const Char_t *mTscaling_titlestr = "#font[12]{m}_{#font[12]{T}} scaling";
@@ -1993,6 +2004,7 @@ X_NEW(fDIV, 15.5+0.25, 0.25)
 	data_points_list dataPoints_eta_dAu_invyield;
 	// pi0 cross section in pp
 	data_points_list dataPoints_pi0_pp_crossection;
+	data_points_list dataPoints_pi0_pp_crossection_1;
 	data_points_list dataPoints_pi0_pp_crossection_div;
 	data_points_list dataPoints_pi0_pp_crossection_div_2;
 	data_points_list dataPoints_pi0_pp_crossection_div1;
@@ -2026,26 +2038,27 @@ X_NEW(fDIV, 15.5+0.25, 0.25)
 	dataPoints_dAu_crossSection_div.push_back(THEORY_pi0_dAu_1_unnamed);
 	dataPoints_dAu_crossSection_div.push_back(THEORY_pi0_dAu_2);
 
-	/*
-	dataPoints_pp_crossSection.push_back(THEORY_pi0_pp_unnamed);
-	//dataPoints_pp_crossSection_div.push_back(THEORY_pi0_pp_fill1_unnamed);
-	//dataPoints_pp_crossSection_div.push_back(THEORY_pi0_pp_fill2);
-	dataPoints_pp_crossSection_div.push_back(THEORY_pi0_pp_unnamed);
-	//dataPoints_pp_crossSection_div.push_back(THEORY_pi0_pp_fill1_nodraw);
-	dataPoints_pp_crossSection_div.push_back(THEORY_pi0_pp_1);
-	dataPoints_pp_crossSection_div.push_back(THEORY_pi0_pp_2);
-	*/
-
-	
-	dataPoints_pp_crossSection.push_back(THEORY2_pi0_pp_unnamed);
-	dataPoints_pp_crossSection_spinpaper.push_back(THEORY2_pi0_pp);
-	//dataPoints_pp_crossSection_div.push_back(THEORY2_pi0_pp_fill1_unnamed);
-	//dataPoints_pp_crossSection_div.push_back(THEORY2_pi0_pp_fill2);
-	dataPoints_pp_crossSection_div.push_back(THEORY2_pi0_pp_unnamed);
-	//dataPoints_pp_crossSection_div.push_back(THEORY2_pi0_pp_fill1_nodraw);
-	dataPoints_pp_crossSection_div.push_back(THEORY2_pi0_pp_1);
-	dataPoints_pp_crossSection_div.push_back(THEORY2_pi0_pp_2);
-	
+	if (showPPKKP) {
+	    dataPoints_pp_crossSection.push_back(THEORY_pi0_pp_unnamed);
+	    dataPoints_pp_crossSection_spinpaper.push_back(THEORY_pi0_pp);
+	    //dataPoints_pp_crossSection_div.push_back(THEORY_pi0_pp_fill1_unnamed);
+	    //dataPoints_pp_crossSection_div.push_back(THEORY_pi0_pp_fill2);
+	    dataPoints_pp_crossSection_div.push_back(THEORY_pi0_pp_unnamed);
+	    //dataPoints_pp_crossSection_div.push_back(THEORY_pi0_pp_fill1_nodraw);
+	    dataPoints_pp_crossSection_div.push_back(THEORY_pi0_pp_1);
+	    dataPoints_pp_crossSection_div.push_back(THEORY_pi0_pp_2);
+	    //dataPoints_pp_crossSection_div.push_back(THEORY2_pi0_pp);
+	} else {
+	    dataPoints_pp_crossSection.push_back(THEORY2_pi0_pp_unnamed);
+	    dataPoints_pp_crossSection_spinpaper.push_back(STAR_pp_pipm);
+	    dataPoints_pp_crossSection_spinpaper.push_back(THEORY2_pi0_pp);
+	    //dataPoints_pp_crossSection_div.push_back(THEORY2_pi0_pp_fill1_unnamed);
+	    //dataPoints_pp_crossSection_div.push_back(THEORY2_pi0_pp_fill2);
+	    dataPoints_pp_crossSection_div.push_back(THEORY2_pi0_pp_unnamed);
+	    //dataPoints_pp_crossSection_div.push_back(THEORY2_pi0_pp_fill1_nodraw);
+	    dataPoints_pp_crossSection_div.push_back(THEORY2_pi0_pp_1);
+	    dataPoints_pp_crossSection_div.push_back(THEORY2_pi0_pp_2);
+	}
 
 	dataPoints_dAu_crossSection_div1.push_back(THEORY_pi0_dAu_unnamed);
 	//dataPoints_dAu_crossSection.push_back(STAR_dAu_hpm);
@@ -2057,7 +2070,11 @@ X_NEW(fDIV, 15.5+0.25, 0.25)
 	//dataPoints_dAu_crossSection.push_back(PHENIX_dAu_pi0);
 	dataPoints_dAu_crossSection_div1_2.push_back(PHENIX_dAu_pi0);
 
-	dataPoints_pp_crossSection_div1.push_back(THEORY_pi0_pp_unnamed);
+	if (showPPKKP) {
+	    dataPoints_pp_crossSection_div1.push_back(THEORY_pi0_pp_unnamed);
+	} else {
+	    dataPoints_pp_crossSection_div1.push_back(THEORY2_pi0_pp_unnamed);
+	}
 	//dataPoints_pp_crossSection.push_back(STAR_pp_hpm);
 	//dataPoints_pp_crossSection_div.push_back(STAR_pp_hpm);
 	//dataPoints_pp_crossSection.push_back(STAR_pp_piplus);
@@ -2477,10 +2494,17 @@ ADD_ERR_POINTS(MBcrossection_dAu_systA, HT1crossection_dAu_systA, HT2crossection
 ADD_ERR_POINTS(MBcrossection_pp_systB, HT1crossection_pp_systB, HT2crossection_pp_systB, 0.02/1.10, 0)
 ADD_ERR_POINTS(MBcrossection_dAu_systB, HT1crossection_dAu_systB, HT2crossection_dAu_systB, 0.03/1.15, 0)
 // Detector simulation: 80-0%
-ADD_ERR_POINTS(MBcrossection_pp_systC, HT1crossection_pp_systC, HT2crossection_pp_systC, 0*0.80, -0*0.80/6)
-ADD_ERR(x_MBspectrum_pp_smdsyst,  y_MBspectrum_pp_smdsyst,  y_err_MBspectrum_pp_smdsyst, 0*0.80, -0*0.80/6)
-ADD_ERR_POINTS(MBcrossection_dAu_systC, HT1crossection_dAu_systC, HT2crossection_dAu_systC, 0*0.80, -0*0.80/6)
-ADD_ERR(x_MBspectrum_dAu_smdsyst,  y_MBspectrum_dAu_smdsyst,  y_err_MBspectrum_dAu_smdsyst, 0*0.80, -0*0.80/6)
+//ADD_ERR_POINTS(MBcrossection_pp_systC, HT1crossection_pp_systC, HT2crossection_pp_systC, 0.80, -0.80/6)
+ADD_ERR(x_HT1crossection_pp_systC, y_HT1crossection_pp_systC, y_err_HT1crossection_pp_systC, 0.40, -0.40/7)
+ADD_ERR(x_MBspectrum_pp_smdsyst,  y_MBspectrum_pp_smdsyst,  y_err_MBspectrum_pp_smdsyst, 0.80, -0.80/6)
+//ADD_ERR_POINTS(MBcrossection_dAu_systC, HT1crossection_dAu_systC, HT2crossection_dAu_systC, 0.80, -0.80/6)
+ADD_ERR(x_HT1crossection_dAu_systC, y_HT1crossection_dAu_systC, y_err_HT1crossection_dAu_systC, 0.40, -0.40/7)
+ADD_ERR(x_MBspectrum_dAu_smdsyst,  y_MBspectrum_dAu_smdsyst,  y_err_MBspectrum_dAu_smdsyst, 0.80, -0.80/6)
+// SMD scale uncertainty
+ADD_ERR(x_HT1crossection_pp_systB, y_HT1crossection_pp_systB, y_err_HT1crossection_pp_systB, 0.04, -0.0025)
+ADD_ERR(x_HT2crossection_pp_systB, y_HT2crossection_pp_systB, y_err_HT2crossection_pp_systB, 0.04, -0.0025)
+ADD_ERR(x_HT1crossection_dAu_systB, y_HT1crossection_dAu_systB, y_err_HT1crossection_dAu_systB, 0.04, -0.0025)
+ADD_ERR(x_HT2crossection_dAu_systB, y_HT2crossection_dAu_systB, y_err_HT2crossection_dAu_systB, 0.04, -0.0025)
 // Bin centering: 1.5%
 ADD_ERR_POINTS(MBcrossection_pp_systC, HT1crossection_pp_systC, HT2crossection_pp_systC, 0.015, 0)
 ADD_ERR_POINTS(MBcrossection_dAu_systC, HT1crossection_dAu_systC, HT2crossection_dAu_systC, 0.015, 0)
@@ -2580,9 +2604,9 @@ ADD_ERR_POINTS(EtaToPi0MB_dAu_systA, EtaToPi0HT1_dAu_systA, EtaToPi0HT2_dAu_syst
 // Write tables
 {
 ofstream ofstr("table_etatopi0_pp.tex");
-OUTPUT_TABLE_3(ofstr, EtaToPi0MB_pp,  pp_MB,      pp_MB_HT1,  stat, systA, systC, FORMAT_R, true)
-OUTPUT_TABLE_3(ofstr, EtaToPi0HT1_pp, pp_MB_HT1,  pp_HT1_HT2, stat, systA, systC, FORMAT_R, true)
-OUTPUT_TABLE_3(ofstr, EtaToPi0HT2_pp, pp_HT1_HT2, pp_HT2,     stat, systA, systC, FORMAT_R, true)
+OUTPUT_TABLE_3(ofstr, EtaToPi0MB_pp,  pp_etatopi0_MB,      pp_etatopi0_MB_HT1,  stat, systA, systC, FORMAT_R, true)
+OUTPUT_TABLE_3(ofstr, EtaToPi0HT1_pp, pp_etatopi0_MB_HT1,  pp_etatopi0_HT1_HT2, stat, systA, systC, FORMAT_R, true)
+OUTPUT_TABLE_3(ofstr, EtaToPi0HT2_pp, pp_etatopi0_HT1_HT2, pp_etatopi0_HT2,     stat, systA, systC, FORMAT_R, true)
 }
 {
 ofstream ofstr("table_etatopi0_dAu.tex");
@@ -2700,6 +2724,11 @@ ADD_ERR_POINTS(RDAMB_RdA_systB, RDAHT1_RdA_systB, RDAHT2_RdA_systB, 0.02/1.10, 0
 ADD_ERR_POINTS(RDAMB_RdA_systB, RDAHT1_RdA_systB, RDAHT2_RdA_systB, 0.03/1.15, 0)
 ADD_ERR_POINTS(RDAMBEta_RdA_systB, RDAHT1Eta_RdA_systB, RDAHT2Eta_RdA_systB, 0.02/1.10, 0)
 ADD_ERR_POINTS(RDAMBEta_RdA_systB, RDAHT1Eta_RdA_systB, RDAHT2Eta_RdA_systB, 0.03/1.15, 0)
+// SMD scale uncertainty
+ADD_ERR(x_RDAHT1_RdA_systB, y_RDAHT1_RdA_systB, y_err_RDAHT1_RdA_systB, S2*0.04, S2*(-0.0025))
+ADD_ERR(x_RDAHT2_RdA_systB, y_RDAHT2_RdA_systB, y_err_RDAHT2_RdA_systB, S2*0.04, S2*(-0.0025))
+ADD_ERR(x_RDAHT1Eta_RdA_systB, y_RDAHT1Eta_RdA_systB, y_err_RDAHT1Eta_RdA_systB, S2*0.03, 0)
+ADD_ERR(x_RDAHT2Eta_RdA_systB, y_RDAHT2Eta_RdA_systB, y_err_RDAHT2Eta_RdA_systB, S2*0.05, 0)
 // Analysis cuts: add
 ADD_ERR_POINTS(RDAMB_RdA_systA, RDAHT1_RdA_systA, RDAHT2_RdA_systA, S2*0.05, 0)
 ADD_ERR_POINTS(RDAMBEta_RdA_systA, RDAHT1Eta_RdA_systA, RDAHT2Eta_RdA_systA, S2*0.05, 0)
@@ -2823,10 +2852,10 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    tmp = TDataPoints(x_HT2crossection_pp, y_HT2crossection_pp, x_err_HT2crossection_pp, y_err_HT2crossection_pp_stat, sizeof(x_HT2crossection_pp)/sizeof(x_HT2crossection_pp[0])).getBins(pp_HT1_HT2, pp_HT2);
 	    bins_pp_pi0_crossection.merge(tmp);
 	    const Char_t *titlePPPi0 = "#font[12]{p}_{ }+_{ }#font[12]{p}";
-	    TDataPoints dataPPPi0ThisCrossection = TDataPoints(TDrawOptions(TNamed("pp_pi0_crossection", titlePPPi0), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 0), TAttMarker(kBlack, kFullCircle, 1.0), "P E Z", "P E Z", TString(titlePPPi0)), bins_pp_pi0_crossection);
-	    TDataPoints dataPPPi0ThisCrossection_unnamed = TDataPoints(TDrawOptions(TNamed("pp_pi0_crossection", ""), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 0), TAttMarker(kBlack, kFullCircle, 1.0), "P E Z", "P E Z", TString()), bins_pp_pi0_crossection);
-	    const Char_t *titlePPPi0_1 = "#pi^{0} (this analysis)";
-	    TDataPoints dataPPPi0ThisCrossection_name1 = TDataPoints(TDrawOptions(TNamed("pp_pi0_crossection", titlePPPi0_1), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 0), TAttMarker(kBlack, kFullCircle, 1.0), "P E Z", "P E Z", TString(titlePPPi0_1)), bins_pp_pi0_crossection);
+	    TDataPoints dataPPPi0ThisCrossection = TDataPoints(TDrawOptions(TNamed("pp_pi0_crossection", titlePPPi0), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 0), TAttMarker(kBlack, kFullCircle, 1.2), "P E Z", "P E Z", TString(titlePPPi0)), bins_pp_pi0_crossection);
+	    TDataPoints dataPPPi0ThisCrossection_unnamed = TDataPoints(TDrawOptions(TNamed("pp_pi0_crossection", ""), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 0), TAttMarker(kBlack, kFullCircle, 1.2), "P E Z", "P E Z", TString()), bins_pp_pi0_crossection);
+	    const Char_t *titlePPPi0_1 = "#pi^{0}^{} (this analysis)";
+	    TDataPoints dataPPPi0ThisCrossection_name1 = TDataPoints(TDrawOptions(TNamed("pp_pi0_crossection", titlePPPi0_1), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 0), TAttMarker(kBlack, kFullCircle, 1.2), "P E Z", "P E Z", TString(titlePPPi0_1)), bins_pp_pi0_crossection);
 
 	    bin_stat_list_type bins_pp_pi0_crossection_esyst;
 	    tmp = TDataPoints(x_MBcrossection_pp, y_MBcrossection_pp, x_err_MBcrossection_pp_syst, y_err_MBcrossection_pp_esyst, sizeof(x_MBcrossection_pp)/sizeof(x_MBcrossection_pp[0])).getBins(pp_MB, pp_MB_HT1);
@@ -2835,10 +2864,10 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    bins_pp_pi0_crossection_esyst.merge(tmp);
 	    tmp = TDataPoints(x_HT2crossection_pp, y_HT2crossection_pp, x_err_HT2crossection_pp_syst, y_err_HT2crossection_pp_esyst, sizeof(x_HT2crossection_pp)/sizeof(x_HT2crossection_pp[0])).getBins(pp_HT1_HT2, pp_HT2);
 	    bins_pp_pi0_crossection_esyst.merge(tmp);
-	    TDataPoints dataPPPi0ThisCrossectionEsyst1 = TDataPoints(TDrawOptions(TNamed("pp_pi0_crossection_esyst1", ""), TAttLine(kBlack, kSolid, 1), TAttFill(17, 1001), TAttMarker(kBlack, kFullCircle, 1.0), "E2 Z", "E2 Z", TString()), bins_pp_pi0_crossection_esyst, ""/*"LOWEDGE"*/);
-	    //TDataPoints dataPPPi0ThisCrossectionEsyst2 = TDataPoints(TDrawOptions(TNamed("pp_pi0_crossection_esyst2", ""), TAttLine(kBlack, kSolid, 1), TAttFill(17, 1001), TAttMarker(kBlack, kFullCircle, 1.0), "L", "L", TString()), bins_pp_pi0_crossection_esyst, ""/*"HIGHEDGE"*/);
-	    TDataPoints dataPPPi0ThisCrossectionNorm = TDataPoints(TDrawOptions(TNamed("pp_pi0_crossection_norm", ""), TAttLine(13, kSolid, 1), TAttFill(13, 1001), TAttMarker(13, kFullCircle, 1.0), "E2 Z", "PF", TString()), x_MBcrossection_pp_norm, y_MBcrossection_pp_norm, x_err_MBcrossection_pp_norm, y_err_MBcrossection_pp_norm, sizeof(x_MBcrossection_pp_norm)/sizeof(x_MBcrossection_pp_norm[0]));
-	    TDataPoints dataPPPi0ThisCrossectionNorm1 = TDataPoints(TDrawOptions(TNamed("pp_pi0_crossection_norm1", ""), TAttLine(13, kSolid, 1), TAttFill(13, 1001), TAttMarker(13, kFullCircle, 1.0), "E2 Z", "PF", TString()), x_MBcrossection_pp_norm1, y_MBcrossection_pp_norm1, x_err_MBcrossection_pp_norm1, y_err_MBcrossection_pp_norm1, sizeof(x_MBcrossection_pp_norm1)/sizeof(x_MBcrossection_pp_norm1[0]));
+	    TDataPoints dataPPPi0ThisCrossectionEsyst1 = TDataPoints(TDrawOptions(TNamed("pp_pi0_crossection_esyst1", ""), TAttLine(kBlack, kSolid, 1), TAttFill(17, 1001), TAttMarker(kBlack, kFullCircle, 1.2), "E2 Z", "E2 Z", TString()), bins_pp_pi0_crossection_esyst, ""/*"LOWEDGE"*/);
+	    //TDataPoints dataPPPi0ThisCrossectionEsyst2 = TDataPoints(TDrawOptions(TNamed("pp_pi0_crossection_esyst2", ""), TAttLine(kBlack, kSolid, 1), TAttFill(17, 1001), TAttMarker(kBlack, kFullCircle, 1.2), "L", "L", TString()), bins_pp_pi0_crossection_esyst, ""/*"HIGHEDGE"*/);
+	    TDataPoints dataPPPi0ThisCrossectionNorm = TDataPoints(TDrawOptions(TNamed("pp_pi0_crossection_norm", ""), TAttLine(13, kSolid, 1), TAttFill(13, 1001), TAttMarker(13, kFullCircle, 1.2), "E2 Z", "PF", TString()), x_MBcrossection_pp_norm, y_MBcrossection_pp_norm, x_err_MBcrossection_pp_norm, y_err_MBcrossection_pp_norm, sizeof(x_MBcrossection_pp_norm)/sizeof(x_MBcrossection_pp_norm[0]));
+	    TDataPoints dataPPPi0ThisCrossectionNorm1 = TDataPoints(TDrawOptions(TNamed("pp_pi0_crossection_norm1", ""), TAttLine(13, kSolid, 1), TAttFill(13, 1001), TAttMarker(13, kFullCircle, 1.2), "E2 Z", "PF", TString()), x_MBcrossection_pp_norm1, y_MBcrossection_pp_norm1, x_err_MBcrossection_pp_norm1, y_err_MBcrossection_pp_norm1, sizeof(x_MBcrossection_pp_norm1)/sizeof(x_MBcrossection_pp_norm1[0]));
 
 	    TWeightCalculator wPPPi0Crossection("wPPPi0Crossection", "#font[12]{p}+#font[12]{p} #pi^{0} cross section");
 	    wPPPi0Crossection.Fit(bins_pp_pi0_crossection, "RQN LL M", "POWERLAW", 0, 100);
@@ -2848,6 +2877,7 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    //fPPPi0Crossection->Print("");
 
 	    dataPoints_pi0_pp_crossection.push_back(dataPPPi0ThisCrossection);
+	    dataPoints_pi0_pp_crossection_1.push_back(dataPPPi0ThisCrossection_name1);
 	    dataPoints_pi0_pp_crossection_div.push_back(dataPPPi0ThisCrossectionEsyst1);
 	    //dataPoints_pi0_pp_crossection_div.push_back(dataPPPi0ThisCrossectionEsyst2);
 	    dataPoints_pi0_pp_crossection_div_2.push_back(dataPPPi0ThisCrossection_unnamed);
@@ -2876,19 +2906,19 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    TDataPoints dataPPMBEtaInvyield = TDataPoints(TDrawOptions(TNamed("pp_MB_eta_invyield", titlePPMBEta), TAttLine(kBlack, kSolid, 2), TAttFill(kBlack, 0), TAttMarker(kBlack, kOpenCircle, 1.0), "P E Z", "P E Z", TString(titlePPMBEta)), x_EtaMBspectrum_pp, y_EtaMBspectrum_pp, x_err_EtaMBspectrum_pp, y_err_EtaMBspectrum_pp, sizeof(x_EtaMBspectrum_pp)/sizeof(x_EtaMBspectrum_pp[0]));
 	    dataPoints_eta_invyield.push_back(dataPPMBEtaInvyield);
 	    dataPoints_eta_pp_invyield.push_back(dataPPMBEtaInvyield);
-	    bin_stat_list_type bins_pp_eta_invyield_MB = dataPPMBEtaInvyield.getBins(pp_MB, pp_MB_HT1);
+	    bin_stat_list_type bins_pp_eta_invyield_MB = dataPPMBEtaInvyield.getBins(pp_etatopi0_MB, pp_etatopi0_MB_HT1);
 
 	    const Char_t *titlePPHT1Eta = "#font[12]{p}_{ }+_{ }#font[12]{p} HighTower-1";
 	    TDataPoints dataPPHT1EtaInvyield = TDataPoints(TDrawOptions(TNamed("pp_HT1_eta_invyield", titlePPHT1Eta), TAttLine(kBlue, kSolid, 2), TAttFill(kBlue, 0), TAttMarker(kBlue, kOpenSquare, 1.0), "P E Z", "P E Z", TString(titlePPHT1Eta)), x_EtaHT1spectrum_pp, y_EtaHT1spectrum_pp, x_err_EtaHT1spectrum_pp, y_err_EtaHT1spectrum_pp, sizeof(x_EtaHT1spectrum_pp)/sizeof(x_EtaHT1spectrum_pp[0]));
 	    dataPoints_eta_invyield.push_back(dataPPHT1EtaInvyield);
 	    dataPoints_eta_pp_invyield.push_back(dataPPHT1EtaInvyield);
-	    bin_stat_list_type bins_pp_eta_invyield_HT1 = dataPPHT1EtaInvyield.getBins(pp_MB_HT1, pp_HT1_HT2);
+	    bin_stat_list_type bins_pp_eta_invyield_HT1 = dataPPHT1EtaInvyield.getBins(pp_etatopi0_MB_HT1, pp_etatopi0_HT1_HT2);
 
 	    const Char_t *titlePPHT2Eta = "#font[12]{p}_{ }+_{ }#font[12]{p} HighTower-2";
 	    TDataPoints dataPPHT2EtaInvyield = TDataPoints(TDrawOptions(TNamed("pp_HT2_eta_invyield", titlePPHT2Eta), TAttLine(kRed, kSolid, 2), TAttFill(kRed, 0), TAttMarker(kRed, kOpenTriangleUp, 1.0), "P E Z", "P E Z", TString(titlePPHT2Eta)), x_EtaHT2spectrum_pp, y_EtaHT2spectrum_pp, x_err_EtaHT2spectrum_pp, y_err_EtaHT2spectrum_pp, sizeof(x_EtaHT2spectrum_pp)/sizeof(x_EtaHT2spectrum_pp[0]));
 	    dataPoints_eta_invyield.push_back(dataPPHT2EtaInvyield);
 	    dataPoints_eta_pp_invyield.push_back(dataPPHT2EtaInvyield);
-	    bin_stat_list_type bins_pp_eta_invyield_HT2 = dataPPHT2EtaInvyield.getBins(pp_HT1_HT2, pp_HT2);
+	    bin_stat_list_type bins_pp_eta_invyield_HT2 = dataPPHT2EtaInvyield.getBins(pp_etatopi0_HT1_HT2, pp_etatopi0_HT2);
 
 	    bin_stat_list_type bins_pp_eta_invyield;
 	    bins_pp_eta_invyield.merge(bins_pp_eta_invyield_MB);
@@ -2903,22 +2933,22 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    dataPoints_eta_pp_invyield.push_back(TDataPoints(TDrawOptions(TNamed("pp_eta_invyield_fit", fPPEtaInvyield->GetTitle()), TAttLine(kBlack, kDashed, 1), TAttFill(kBlack, 0), TAttMarker(kBlack, kFullCircle, 1.0), "L", "L", TString(fPPEtaInvyield->GetTitle())), fPPEtaInvyield));
 
 	    bin_stat_list_type bins_etatopi_pp;
-	    tmp = TDataPoints(x_EtaToPi0MB_pp, y_EtaToPi0MB_pp, x_err_EtaToPi0MB_pp, y_err_EtaToPi0MB_pp, sizeof(x_EtaToPi0MB_pp)/sizeof(x_EtaToPi0MB_pp[0])).getBins(pp_MB, pp_MB_HT1);
+	    tmp = TDataPoints(x_EtaToPi0MB_pp, y_EtaToPi0MB_pp, x_err_EtaToPi0MB_pp, y_err_EtaToPi0MB_pp, sizeof(x_EtaToPi0MB_pp)/sizeof(x_EtaToPi0MB_pp[0])).getBins(pp_etatopi0_MB, pp_etatopi0_MB_HT1);
 	    bins_etatopi_pp.merge(tmp);
-	    tmp = TDataPoints(x_EtaToPi0HT1_pp, y_EtaToPi0HT1_pp, x_err_EtaToPi0HT1_pp, y_err_EtaToPi0HT1_pp, sizeof(x_EtaToPi0HT1_pp)/sizeof(x_EtaToPi0HT1_pp[0])).getBins(pp_MB_HT1, pp_HT1_HT2);
+	    tmp = TDataPoints(x_EtaToPi0HT1_pp, y_EtaToPi0HT1_pp, x_err_EtaToPi0HT1_pp, y_err_EtaToPi0HT1_pp, sizeof(x_EtaToPi0HT1_pp)/sizeof(x_EtaToPi0HT1_pp[0])).getBins(pp_etatopi0_MB_HT1, pp_etatopi0_HT1_HT2);
 	    bins_etatopi_pp.merge(tmp);
-	    tmp = TDataPoints(x_EtaToPi0HT2_pp, y_EtaToPi0HT2_pp, x_err_EtaToPi0HT2_pp, y_err_EtaToPi0HT2_pp, sizeof(x_EtaToPi0HT2_pp)/sizeof(x_EtaToPi0HT2_pp[0])).getBins(pp_HT1_HT2, pp_HT2);
+	    tmp = TDataPoints(x_EtaToPi0HT2_pp, y_EtaToPi0HT2_pp, x_err_EtaToPi0HT2_pp, y_err_EtaToPi0HT2_pp, sizeof(x_EtaToPi0HT2_pp)/sizeof(x_EtaToPi0HT2_pp[0])).getBins(pp_etatopi0_HT1_HT2, pp_etatopi0_HT2);
 	    bins_etatopi_pp.merge(tmp);
 	    const Char_t *titlePPEtaToPi0 = "#font[12]{p}_{ }+_{ }#font[12]{p} (this analysis)";
 	    TDataPoints dataPPEtaToPi0 = TDataPoints(TDrawOptions(TNamed("pp_etaToPi0", titlePPEtaToPi0), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 0), TAttMarker(kBlack, kFullCircle, 1.0), "P E Z", "P E Z", TString(titlePPEtaToPi0)), bins_etatopi_pp);
 	    dataPoints_etaToPi0_pp.push_back(dataPPEtaToPi0);
 
 	    bin_stat_list_type bins_etatopi_pp_syst;
-	    tmp = TDataPoints(x_EtaToPi0MB_pp, y_EtaToPi0MB_pp, x_err_EtaToPi0MB_pp_syst, y_err_EtaToPi0MB_pp_totsyst, sizeof(x_EtaToPi0MB_pp)/sizeof(x_EtaToPi0MB_pp[0])).getBins(pp_MB, pp_MB_HT1);
+	    tmp = TDataPoints(x_EtaToPi0MB_pp, y_EtaToPi0MB_pp, x_err_EtaToPi0MB_pp_syst, y_err_EtaToPi0MB_pp_totsyst, sizeof(x_EtaToPi0MB_pp)/sizeof(x_EtaToPi0MB_pp[0])).getBins(pp_etatopi0_MB, pp_etatopi0_MB_HT1);
 	    bins_etatopi_pp_syst.merge(tmp);
-	    tmp = TDataPoints(x_EtaToPi0HT1_pp, y_EtaToPi0HT1_pp, x_err_EtaToPi0HT1_pp_syst, y_err_EtaToPi0HT1_pp_totsyst, sizeof(x_EtaToPi0HT1_pp)/sizeof(x_EtaToPi0HT1_pp[0])).getBins(pp_MB_HT1, pp_HT1_HT2);
+	    tmp = TDataPoints(x_EtaToPi0HT1_pp, y_EtaToPi0HT1_pp, x_err_EtaToPi0HT1_pp_syst, y_err_EtaToPi0HT1_pp_totsyst, sizeof(x_EtaToPi0HT1_pp)/sizeof(x_EtaToPi0HT1_pp[0])).getBins(pp_etatopi0_MB_HT1, pp_etatopi0_HT1_HT2);
 	    bins_etatopi_pp_syst.merge(tmp);
-	    tmp = TDataPoints(x_EtaToPi0HT2_pp, y_EtaToPi0HT2_pp, x_err_EtaToPi0HT2_pp_syst, y_err_EtaToPi0HT2_pp_totsyst, sizeof(x_EtaToPi0HT2_pp)/sizeof(x_EtaToPi0HT2_pp[0])).getBins(pp_HT1_HT2, pp_HT2);
+	    tmp = TDataPoints(x_EtaToPi0HT2_pp, y_EtaToPi0HT2_pp, x_err_EtaToPi0HT2_pp_syst, y_err_EtaToPi0HT2_pp_totsyst, sizeof(x_EtaToPi0HT2_pp)/sizeof(x_EtaToPi0HT2_pp[0])).getBins(pp_etatopi0_HT1_HT2, pp_etatopi0_HT2);
 	    bins_etatopi_pp_syst.merge(tmp);
 	    TDataPoints dataPPEtaToPi0_syst = TDataPoints(TDrawOptions(TNamed("pp_etaToPi0_syst", ""), TAttLine(kBlack, kSolid, 1), TAttFill(17, 1001), TAttMarker(kBlack, kFullCircle, 1.0), "E2 Z", "E2 Z", TString()), bins_etatopi_pp_syst);
 	    dataPoints_etaToPi0_pp1.push_back(dataPPEtaToPi0_syst);
@@ -2983,7 +3013,7 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    const Char_t *titleDAuPi0 = "#font[12]{d}_{ }+_{ }Au";
 	    TDataPoints dataDAuPi0ThisCrossection = TDataPoints(TDrawOptions(TNamed("dAu_pi0_crossection", titleDAuPi0), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 0), TAttMarker(kBlack, kFullSquare, 1.0), "P E Z", "P E Z", TString(titleDAuPi0)), bins_dAu_pi0_crossection);
 	    TDataPoints dataDAuPi0ThisCrossection_unnamed = TDataPoints(TDrawOptions(TNamed("dAu_pi0_crossection", ""), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 0), TAttMarker(kBlack, kFullSquare, 1.0), "P E Z", "P E Z", TString()), bins_dAu_pi0_crossection);
-	    const Char_t *titleDAuPi0_1 = "#pi^{0}";
+	    const Char_t *titleDAuPi0_1 = "#pi^{0}^{}";
 	    TDataPoints dataDAuPi0ThisCrossection_name1 = TDataPoints(TDrawOptions(TNamed("dAu_pi0_crossection", titleDAuPi0_1), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 0), TAttMarker(kBlack, kFullSquare, 1.0), "P E Z", "P E Z", TString(titleDAuPi0_1)), bins_dAu_pi0_crossection);
 
 	    bin_stat_list_type bins_dAu_pi0_crossection_esyst;
@@ -3033,19 +3063,19 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    TDataPoints dataDAuMBEtaInvyield = TDataPoints(TDrawOptions(TNamed("dAu_MB_eta_invyield", titleDAuMBEta), TAttLine(kBlack, kSolid, 2), TAttFill(kBlack, 0), TAttMarker(kBlack, kFullCircle, 1.0), "P E Z", "P E Z", TString(titleDAuMBEta)), x_EtaMBspectrum_dAu, y_EtaMBspectrum_dAu, x_err_EtaMBspectrum_dAu, y_err_EtaMBspectrum_dAu, sizeof(x_EtaMBspectrum_dAu)/sizeof(x_EtaMBspectrum_dAu[0]));
 	    dataPoints_eta_invyield.push_back(dataDAuMBEtaInvyield);
 	    dataPoints_eta_dAu_invyield.push_back(dataDAuMBEtaInvyield);
-	    bin_stat_list_type bins_dAu_eta_invyield_MB = dataDAuMBEtaInvyield.getBins(dAu_MB, dAu_MB_HT1);
+	    bin_stat_list_type bins_dAu_eta_invyield_MB = dataDAuMBEtaInvyield.getBins(dAu_etatopi0_MB, dAu_etatopi0_MB_HT1);
 
 	    const Char_t *titleDAuHT1Eta = "#font[12]{d}_{ }+_{ }Au HighTower-1";
 	    TDataPoints dataDAuHT1EtaInvyield = TDataPoints(TDrawOptions(TNamed("dAu_HT1_eta_invyield", titleDAuHT1Eta), TAttLine(kBlue, kSolid, 2), TAttFill(kBlue, 0), TAttMarker(kBlue, kFullSquare, 1.0), "P E Z", "P E Z", TString(titleDAuHT1Eta)), x_EtaHT1spectrum_dAu, y_EtaHT1spectrum_dAu, x_err_EtaHT1spectrum_dAu, y_err_EtaHT1spectrum_dAu, sizeof(x_EtaHT1spectrum_dAu)/sizeof(x_EtaHT1spectrum_dAu[0]));
 	    dataPoints_eta_invyield.push_back(dataDAuHT1EtaInvyield);
 	    dataPoints_eta_dAu_invyield.push_back(dataDAuHT1EtaInvyield);
-	    bin_stat_list_type bins_dAu_eta_invyield_HT1 = dataDAuHT1EtaInvyield.getBins(dAu_MB_HT1, dAu_HT1_HT2);
+	    bin_stat_list_type bins_dAu_eta_invyield_HT1 = dataDAuHT1EtaInvyield.getBins(dAu_etatopi0_MB_HT1, dAu_etatopi0_HT1_HT2);
 
 	    const Char_t *titleDAuHT2Eta = "#font[12]{d}_{ }+_{ }Au HighTower-2";
 	    TDataPoints dataDAuHT2EtaInvyield = TDataPoints(TDrawOptions(TNamed("dAu_HT2_eta_invyield", titleDAuHT2Eta), TAttLine(kRed, kSolid, 2), TAttFill(kRed, 0), TAttMarker(kRed, kFullTriangleUp, 1.0), "P E Z", "P E Z", TString(titleDAuHT2Eta)), x_EtaHT2spectrum_dAu, y_EtaHT2spectrum_dAu, x_err_EtaHT2spectrum_dAu, y_err_EtaHT2spectrum_dAu, sizeof(x_EtaHT2spectrum_dAu)/sizeof(x_EtaHT2spectrum_dAu[0]));
 	    dataPoints_eta_invyield.push_back(dataDAuHT2EtaInvyield);
 	    dataPoints_eta_dAu_invyield.push_back(dataDAuHT2EtaInvyield);
-	    bin_stat_list_type bins_dAu_eta_invyield_HT2 = dataDAuHT2EtaInvyield.getBins(dAu_HT1_HT2, dAu_HT2);
+	    bin_stat_list_type bins_dAu_eta_invyield_HT2 = dataDAuHT2EtaInvyield.getBins(dAu_etatopi0_HT1_HT2, dAu_etatopi0_HT2);
 
 	    bin_stat_list_type bins_dAu_eta_invyield;
 	    bins_dAu_eta_invyield.merge(bins_dAu_eta_invyield_MB);
@@ -3053,6 +3083,14 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    bins_dAu_eta_invyield.merge(bins_dAu_eta_invyield_HT2);
 	    TWeightCalculator wDAuEtaInvyield("wDAuEtaInvyield", "#font[12]{d}+Au #eta invariant yield");
 	    wDAuEtaInvyield.Fit(bins_dAu_eta_invyield, "RQN LL M", "POWERLAW", 0, 100);
+	    fDAuEtaInvyield = wDAuEtaInvyield.createFunc(false);
+	    for (Int_t i = 2;i < fDAuEtaInvyield->GetNpar();i++) {
+		fDAuEtaInvyield->FixParameter(i, fPPEtaInvyield->GetParameter(i));
+	    }
+	    fDAuEtaInvyield->SetParameter(0, 1);
+	    fDAuEtaInvyield->FixParameter(1, 0);//fDAuEtaInvyield->GetParameter(1));
+	    wDAuEtaInvyield.Fit(bins_dAu_eta_invyield, "RQN LL M", "POWERLAW", 0, 100, fDAuEtaInvyield);
+	    if (fDAuEtaInvyield) delete fDAuEtaInvyield;
 	    fDAuEtaInvyield = wDAuEtaInvyield.createFunc(true);
 	    fDAuEtaInvyield->SetTitle("Fit to #font[12]{d}_{ }+_{ }Au");
 	    fDAuEtaInvyield->SetRange(0.0, 20.0);
@@ -3105,7 +3143,7 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    bins_dAu_pi0_Rcp.merge(tmp);
 	    tmp = TDataPoints(x_RcpHT2_dAuRcp, y_RcpHT2_dAuRcp, x_err_RcpHT2_dAuRcp, y_err_RcpHT2_dAuRcp, sizeof(x_RcpHT2_dAuRcp)/sizeof(x_RcpHT2_dAuRcp[0])).getBins(dAu_HT1_HT2, dAu_HT2);
 	    bins_dAu_pi0_Rcp.merge(tmp);
-	    const Char_t *titleDAuPi0Rcp = "#pi^{0} (this analysis)";
+	    const Char_t *titleDAuPi0Rcp = "#pi^{0}^{} (this analysis)";
 	    TDataPoints dataDAuPi0Rcp = TDataPoints(TDrawOptions(TNamed("dAu_pi0_Rcp", titleDAuPi0Rcp), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 0), TAttMarker(kBlack, kFullCircle, 1.0), "P E Z", "P E Z", TString(titleDAuPi0Rcp)), bins_dAu_pi0_Rcp);
 	    TDataPoints dataDAuPi0RcpNorm = TDataPoints(TDrawOptions(TNamed("dAu_pi0_Rcp_norm", ""), TAttLine(13, kSolid, 1), TAttFill(13, 1001), TAttMarker(13, kFullCircle, 1.0), "E2 Z", "PF", TString()), x_RcpMB_dAuRcp_norm, y_RcpMB_dAuRcp_norm, x_err_RcpMB_dAuRcp_norm, y_err_RcpMB_dAuRcp_norm, sizeof(x_RcpMB_dAuRcp_norm)/sizeof(x_RcpMB_dAuRcp_norm[0]));
 
@@ -3153,7 +3191,7 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    bins_pi0_RdA.merge(tmp);
 	    tmp = TDataPoints(x_RDAHT2_RdA, y_RDAHT2_RdA, x_err_RDAHT2_RdA, y_err_RDAHT2_RdA, sizeof(x_RDAHT2_RdA)/sizeof(x_RDAHT2_RdA[0])).getBins(RdA_HT1_HT2, RdA_HT2);
 	    bins_pi0_RdA.merge(tmp);
-	    const Char_t *titlePi0RdA = "#pi^{0} (this analysis)";
+	    const Char_t *titlePi0RdA = "#pi^{0}^{} (this analysis)";
 	    TDataPoints dataPi0ThisRdA = TDataPoints(TDrawOptions(TNamed("pi0_RdA", titlePi0RdA), TAttLine(kBlack, kSolid, 1), TAttFill(kBlack, 0), TAttMarker(kBlack, kFullCircle, 1.0), "P E Z", "P E Z", TString(titlePi0RdA)), bins_pi0_RdA);
 
 	    bin_stat_list_type bins_pi0_RdA_esyst;
@@ -3242,18 +3280,18 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    cPi0InvYield->Divide(1, 3, 0, 0);
 	    cPi0InvYield->cd(1);
 	    gPad->SetPad(0, 0.5, 1, 1);
-	    gPad->SetLeftMargin(0.15);
-	    gPad->SetRightMargin(0.05);
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
 	    gPad->SetTopMargin(0.05);
 	    gPad->SetBottomMargin(0);
 	    TString hPi0InvYieldName = namePi0InvYield; hPi0InvYieldName += "_hist";
 	    TString hPi0InvYieldTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [GeV/#font[12]{c}];#frac{1}{_{ }2#pi#font[12]{p}_{#font[12]{T}}} #frac{_{ }d^{2}#font[12]{N}}{_{ }d#font[12]{p}_{#font[12]{T}}_{ }d#font[12]{y}_{ }}   [(GeV/#font[12]{c})^{-2}^{ }]";
 	    TH1F *hPi0InvYield = new TH1F(hPi0InvYieldName.Data(), hPi0InvYieldTitle.Data(), 1000, 0, 17);
 	    hPi0InvYield->GetXaxis()->SetTitleOffset(1.0);
-	    hPi0InvYield->GetYaxis()->SetTitleOffset(1.3);
+	    hPi0InvYield->GetYaxis()->SetTitleOffset(1.23);
 	    setHistFontSize(hPi0InvYield, 240.0, 8.0);
 	    hPi0InvYield->Draw();
-	    TLegend *lPi0InvYield = new TLegend(0.55, 0.4, 0.93, 0.85);
+	    TLegend *lPi0InvYield = new TLegend(0.48, 0.45, 0.96, 0.93);
 	    lPi0InvYield->SetLineColor(0);
 	    lPi0InvYield->SetFillColor(0);
 	    SetShadowColor(lPi0InvYield, 0);
@@ -3263,7 +3301,7 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    hPi0InvYield->SetMinimum(1.001e-11);
 	    hPi0InvYield->SetMaximum(0.9e+00);
 	    gPad->SetLogy();
-	    TLatex *label = new TLatex(12.0, 0.15, "#pi^{0}");
+	    TLatex *label = new TLatex(4.0, 0.177, "#pi^{0}^{}");
 	    setLatexFontSize(label, 240.0, 8.0);
 	    label->Draw();
 
@@ -3292,18 +3330,18 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    TString namePi0InvYieldDivPP = "pi0_invyield_pp_div";
 	    TString titlePi0InvYieldDivPP = "p+p #pi^{0} invariant yield / fit";
 	    cPi0InvYield->cd(2);
-	    gPad->SetPad(0, 0.25-0.03, 1, 0.5);
-	    gPad->SetLeftMargin(0.15);
-	    gPad->SetRightMargin(0.05);
+	    gPad->SetPad(0, 0.5*4.0/7.0, 1, 0.5);
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
 	    gPad->SetTopMargin(0);
-	    gPad->SetBottomMargin(0.215);
+	    gPad->SetBottomMargin(0);
 	    TString hPi0InvYieldPPDivName = namePi0InvYieldDivPP; hPi0InvYieldPPDivName += "_hist";
-	    TString hPi0InvYieldPPDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [GeV/#font[12]{c}];Data_{ }/_{ }fit             ";
+	    TString hPi0InvYieldPPDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [GeV/#font[12]{c}];Data_{ }/_{ }fit        ";
 	    TH1F *hPi0InvYieldPPDiv = new TH1F(hPi0InvYieldPPDivName.Data(), hPi0InvYieldPPDivTitle.Data(), 1000, 0, 17);
 	    setHistFontSize(hPi0InvYieldPPDiv, 240.0, 8.0);
 	    hPi0InvYieldPPDiv->GetXaxis()->SetTitleOffset(1.0);
 	    hPi0InvYieldPPDiv->GetXaxis()->SetTickLength(0.06);
-	    hPi0InvYieldPPDiv->GetYaxis()->SetTitleOffset(0.65);
+	    hPi0InvYieldPPDiv->GetYaxis()->SetTitleOffset(0.54);
 	    hPi0InvYieldPPDiv->GetYaxis()->SetNdivisions(505);
 	    hPi0InvYieldPPDiv->Draw();
 	    TLegend *lPi0InvYieldPPDiv = new TLegend(0.2, 0.65, 0.6, 0.9);
@@ -3318,24 +3356,24 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    hPi0InvYieldPPDiv->SetMinimum(0.001);
 	    hPi0InvYieldPPDiv->SetMaximum(5.0-0.001);
 	    delete lPi0InvYieldPPDiv; lPi0InvYieldPPDiv = 0;
-	    TLatex *labelPP = new TLatex(2.0, 3.5, "#font[12]{p}_{ }+_{ }#font[12]{p}");
+	    TLatex *labelPP = new TLatex(4.0, 3.5, "#font[12]{p}_{ }+_{ }#font[12]{p}");
 	    setLatexFontSize(labelPP, 240.0, 8.0);
 	    labelPP->Draw();
 
 	    TString namePi0InvYieldDivDAu = "pi0_invyield_dAu_div";
 	    TString titlePi0InvYieldDivDAu = "d+Au #pi^{0} invariant yield / fit";
 	    cPi0InvYield->cd(3);
-	    gPad->SetPad(0, 0, 1, 0.25+0.03);
-	    gPad->SetLeftMargin(0.15);
-	    gPad->SetRightMargin(0.05);
+	    gPad->SetPad(0, 0, 1, 0.5*4.0/7.0);
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
 	    gPad->SetTopMargin(0);
-	    gPad->SetBottomMargin(0.215);
+	    gPad->SetBottomMargin(0.25);
 	    TString hPi0InvYieldDAuDivName = namePi0InvYieldDivDAu; hPi0InvYieldDAuDivName += "_hist";
-	    TString hPi0InvYieldDAuDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [_{_{_{ }}}GeV/#font[12]{c}_{_{ }}];Data_{ }/_{ }fit             ";
+	    TString hPi0InvYieldDAuDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [_{_{_{ }}}GeV/#font[12]{c}_{_{ }}];Data_{ }/_{ }fit        ";
 	    TH1F *hPi0InvYieldDAuDiv = new TH1F(hPi0InvYieldDAuDivName.Data(), hPi0InvYieldDAuDivTitle.Data(), 1000, 0, 17);
-	    hPi0InvYieldDAuDiv->GetXaxis()->SetTitleOffset(1.15);
+	    hPi0InvYieldDAuDiv->GetXaxis()->SetTitleOffset(1.05);
 	    hPi0InvYieldDAuDiv->GetXaxis()->SetTickLength(0.06);
-	    hPi0InvYieldDAuDiv->GetYaxis()->SetTitleOffset(0.65);
+	    hPi0InvYieldDAuDiv->GetYaxis()->SetTitleOffset(0.72);
 	    hPi0InvYieldDAuDiv->GetYaxis()->SetNdivisions(505);
 	    setHistFontSize(hPi0InvYieldDAuDiv, 240.0, 8.0);
 	    hPi0InvYieldDAuDiv->Draw();
@@ -3351,7 +3389,7 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    hPi0InvYieldDAuDiv->SetMinimum(0.001);
 	    hPi0InvYieldDAuDiv->SetMaximum(5.0-0.001);
 	    delete lPi0InvYieldDAuDiv; lPi0InvYieldDAuDiv = 0;
-	    TLatex *labelDAu = new TLatex(2.0, 3.5, "#font[12]{d}_{ }+_{ }Au");
+	    TLatex *labelDAu = new TLatex(4.0, 3.5, "#font[12]{d}_{ }+_{ }Au");
 	    setLatexFontSize(labelDAu, 240.0, 8.0);
 	    labelDAu->Draw();
 
@@ -3361,18 +3399,18 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    cEtaInvYield->Divide(1, 3, 0, 0);
 	    cEtaInvYield->cd(1);
 	    gPad->SetPad(0, 0.5, 1, 1);
-	    gPad->SetLeftMargin(0.15);
-	    gPad->SetRightMargin(0.05);
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
 	    gPad->SetTopMargin(0.05);
 	    gPad->SetBottomMargin(0);
 	    TString hEtaInvYieldName = nameEtaInvYield; hEtaInvYieldName += "_hist";
 	    TString hEtaInvYieldTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [GeV/#font[12]{c}];#frac{1}{_{ }2#pi#font[12]{p}_{#font[12]{T}}} #frac{_{ }d^{2}#font[12]{N}}{_{ }d#font[12]{p}_{#font[12]{T}}_{ }d#font[12]{y}_{ }}   [(GeV/#font[12]{c})^{-2}^{ }]";
 	    TH1F *hEtaInvYield = new TH1F(hEtaInvYieldName.Data(), hEtaInvYieldTitle.Data(), 1000, 0, 17);
 	    hEtaInvYield->GetXaxis()->SetTitleOffset(1.0);
-	    hEtaInvYield->GetYaxis()->SetTitleOffset(1.3);
+	    hEtaInvYield->GetYaxis()->SetTitleOffset(1.23);
 	    setHistFontSize(hEtaInvYield, 240.0, 8.0);
 	    hEtaInvYield->Draw();
-	    TLegend *lEtaInvYield = new TLegend(0.55, 0.4, 0.93, 0.85);
+	    TLegend *lEtaInvYield = new TLegend(0.48, 0.45, 0.96, 0.93);
 	    lEtaInvYield->SetLineColor(0);
 	    lEtaInvYield->SetFillColor(0);
 	    SetShadowColor(lEtaInvYield, 0);
@@ -3382,25 +3420,25 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    hEtaInvYield->SetMinimum(1.001e-11);
 	    hEtaInvYield->SetMaximum(0.9e+00);
 	    gPad->SetLogy();
-	    TLatex *labelEta = new TLatex(12.0, 0.15, "#eta");
+	    TLatex *labelEta = new TLatex(4.0, 0.177, "#eta");
 	    setLatexFontSize(labelEta, 240.0, 8.0);
 	    labelEta->Draw();
 
 	    TString nameEtaInvYieldDivPP = "eta_invyield_pp_div";
 	    TString titleEtaInvYieldDivPP = "p+p #eta invariant yield / fit";
 	    cEtaInvYield->cd(2);
-	    gPad->SetPad(0, 0.25-0.03, 1, 0.5);
-	    gPad->SetLeftMargin(0.15);
-	    gPad->SetRightMargin(0.05);
+	    gPad->SetPad(0, 0.5*4.0/7.0, 1, 0.5);
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
 	    gPad->SetTopMargin(0);
-	    gPad->SetBottomMargin(0.215);
+	    gPad->SetBottomMargin(0);
 	    TString hEtaInvYieldPPDivName = nameEtaInvYieldDivPP; hEtaInvYieldPPDivName += "_hist";
-	    TString hEtaInvYieldPPDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [GeV/#font[12]{c}];Data_{ }/_{ }fit             ";
+	    TString hEtaInvYieldPPDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [GeV/#font[12]{c}];Data_{ }/_{ }fit        ";
 	    TH1F *hEtaInvYieldPPDiv = new TH1F(hEtaInvYieldPPDivName.Data(), hEtaInvYieldPPDivTitle.Data(), 1000, 0, 17);
 	    setHistFontSize(hEtaInvYieldPPDiv, 240.0, 8.0);
 	    hEtaInvYieldPPDiv->GetXaxis()->SetTitleOffset(1.0);
 	    hEtaInvYieldPPDiv->GetXaxis()->SetTickLength(0.06);
-	    hEtaInvYieldPPDiv->GetYaxis()->SetTitleOffset(0.65);
+	    hEtaInvYieldPPDiv->GetYaxis()->SetTitleOffset(0.54);
 	    hEtaInvYieldPPDiv->GetYaxis()->SetNdivisions(505);
 	    hEtaInvYieldPPDiv->Draw();
 	    TLegend *lEtaInvYieldPPDiv = new TLegend(0.2, 0.65, 0.6, 0.9);
@@ -3415,24 +3453,24 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    hEtaInvYieldPPDiv->SetMinimum(0.001);
 	    hEtaInvYieldPPDiv->SetMaximum(5.0-0.001);
 	    delete lEtaInvYieldPPDiv; lEtaInvYieldPPDiv = 0;
-	    TLatex *labelPPEta = new TLatex(2.0, 3.5, "#font[12]{p}_{ }+_{ }#font[12]{p}");
+	    TLatex *labelPPEta = new TLatex(4.0, 3.5, "#font[12]{p}_{ }+_{ }#font[12]{p}");
 	    setLatexFontSize(labelPPEta, 240.0, 8.0);
 	    labelPPEta->Draw();
 
 	    TString nameEtaInvYieldDivDAu = "eta_invyield_dAu_div";
 	    TString titleEtaInvYieldDivDAu = "d+Au #eta invariant yield / fit";
 	    cEtaInvYield->cd(3);
-	    gPad->SetPad(0, 0, 1, 0.25+0.03);
-	    gPad->SetLeftMargin(0.15);
-	    gPad->SetRightMargin(0.05);
+	    gPad->SetPad(0, 0, 1, 0.5*4.0/7.0);
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
 	    gPad->SetTopMargin(0);
-	    gPad->SetBottomMargin(0.215);
+	    gPad->SetBottomMargin(0.25);
 	    TString hEtaInvYieldDAuDivName = nameEtaInvYieldDivDAu; hEtaInvYieldDAuDivName += "_hist";
-	    TString hEtaInvYieldDAuDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [_{_{_{ }}}GeV/#font[12]{c}_{_{ }}];Data_{ }/_{ }fit             ";
+	    TString hEtaInvYieldDAuDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [_{_{_{ }}}GeV/#font[12]{c}_{_{ }}];Data_{ }/_{ }fit        ";
 	    TH1F *hEtaInvYieldDAuDiv = new TH1F(hEtaInvYieldDAuDivName.Data(), hEtaInvYieldDAuDivTitle.Data(), 1000, 0, 17);
-	    hEtaInvYieldDAuDiv->GetXaxis()->SetTitleOffset(1.15);
+	    hEtaInvYieldDAuDiv->GetXaxis()->SetTitleOffset(1.05);
 	    hEtaInvYieldDAuDiv->GetXaxis()->SetTickLength(0.06);
-	    hEtaInvYieldDAuDiv->GetYaxis()->SetTitleOffset(0.65);
+	    hEtaInvYieldDAuDiv->GetYaxis()->SetTitleOffset(0.72);
 	    hEtaInvYieldDAuDiv->GetYaxis()->SetNdivisions(505);
 	    setHistFontSize(hEtaInvYieldDAuDiv, 240.0, 8.0);
 	    hEtaInvYieldDAuDiv->Draw();
@@ -3448,7 +3486,7 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    hEtaInvYieldDAuDiv->SetMinimum(0.001);
 	    hEtaInvYieldDAuDiv->SetMaximum(5.0-0.001);
 	    delete lEtaInvYieldDAuDiv; lEtaInvYieldDAuDiv = 0;
-	    TLatex *labelDAuEta = new TLatex(2.0, 3.5, "#font[12]{d}_{ }+_{ }Au");
+	    TLatex *labelDAuEta = new TLatex(4.0, 3.5, "#font[12]{d}_{ }+_{ }Au");
 	    setLatexFontSize(labelDAuEta, 240.0, 8.0);
 	    labelDAuEta->Draw();
 	}
@@ -3462,15 +3500,15 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    cPi0CrossSection->Divide(1, 3, 0, 0);
 	    cPi0CrossSection->cd(1);
 	    gPad->SetPad(0, 0.5, 1, 1);
-	    gPad->SetLeftMargin(0.15);
-	    gPad->SetRightMargin(0.05);
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
 	    gPad->SetTopMargin(0.05);
 	    gPad->SetBottomMargin(0);
 	    TString hPi0CrossSectionName = namePi0CrossSection; hPi0CrossSectionName += "_hist";
-	    TString hPi0CrossSectionTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [GeV/#font[12]{c}];#font[12]{E} #frac{d^{3}#sigma}{d#font[22]{p}^{3}}   [mb GeV^{-2}_{ }#font[12]{c}^{3_{#color[0]{-}}}]";
+	    TString hPi0CrossSectionTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [GeV/#font[12]{c}];#font[12]{E} #frac{d^{3}#sigma}{d#font[22]{p}^{3}}   [mb GeV^{_{ }-2}_{ }#font[12]{c}^{3_{#color[0]{-}}}]";
 	    TH1F *hPi0CrossSection = new TH1F(hPi0CrossSectionName.Data(), hPi0CrossSectionTitle.Data(), 1000, 0, 20);
 	    hPi0CrossSection->GetXaxis()->SetTitleOffset(1.0);
-	    hPi0CrossSection->GetYaxis()->SetTitleOffset(1.3);
+	    hPi0CrossSection->GetYaxis()->SetTitleOffset(1.23);
 	    setHistFontSize(hPi0CrossSection, 240.0, 8.0);
 	    hPi0CrossSection->Draw();
 	    TLegend *lPi0CrossSection = new TLegend(0.511494, 0.60, 0.933908, 0.80);
@@ -3493,7 +3531,7 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    hPi0CrossSection->SetMaximum(0.9e+03);
 	    hPi0CrossSection->GetXaxis()->SetRangeUser(0, 17);
 	    gPad->SetLogy();
-	    TLatex *label = new TLatex(10.5, 20.0, "#pi^{0}");
+	    TLatex *label = new TLatex(10.2, 20.0, "#pi^{0}^{}");
 	    setLatexFontSize(label, 240.0, 8.0);
 	    label->Draw();
 
@@ -3501,21 +3539,21 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    TString namePi0CrossSectionDiv = "pp_pi0_crossection_div";
 	    TString titlePi0CrossSectionDiv = "#pi^{0} invariant cross section in #font[12]{p}+#font[12]{p} / theory";
 	    cPi0CrossSection->cd(2);
-	    gPad->SetPad(0, 0.25-0.03, 1, 0.5);
-	    gPad->SetLeftMargin(0.15);
-	    gPad->SetRightMargin(0.05);
+	    gPad->SetPad(0, 0.5*(4.0/7.0), 1, 0.5);
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
 	    gPad->SetTopMargin(0);
-	    gPad->SetBottomMargin(0.215);
+	    gPad->SetBottomMargin(0);
 	    TString hPi0CrossSectionDivName = namePi0CrossSectionDiv; hPi0CrossSectionDivName += "_hist";
-	    TString hPi0CrossSectionDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [GeV/#font[12]{c}];Data_{ }/_{ }theory         ";
+	    TString hPi0CrossSectionDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [GeV/#font[12]{c}];Data_{ }/_{ }theory    ";
 	    TH1F *hPi0CrossSectionDiv = new TH1F(hPi0CrossSectionDivName.Data(), hPi0CrossSectionDivTitle.Data(), 1000, 0, 20);
 	    hPi0CrossSectionDiv->GetXaxis()->SetTitleOffset(1.0);
 	    hPi0CrossSectionDiv->GetXaxis()->SetTickLength(0.06);
-	    hPi0CrossSectionDiv->GetYaxis()->SetTitleOffset(0.65);
+	    hPi0CrossSectionDiv->GetYaxis()->SetTitleOffset(0.54);
 	    hPi0CrossSectionDiv->GetYaxis()->SetNdivisions(505);
 	    setHistFontSize(hPi0CrossSectionDiv, 240.0, 8.0);
 	    hPi0CrossSectionDiv->Draw();
-	    TLegend *lPi0CrossSectionDiv = new TLegend(0.511494, 0.833333, 0.933908, 0.935606);
+	    TLegend *lPi0CrossSectionDiv = new TLegend(0.228448, 0.855967, 0.79023, 0.95679);
 	    lPi0CrossSectionDiv->SetLineColor(0);
 	    lPi0CrossSectionDiv->SetFillColor(0);
 	    SetShadowColor(lPi0CrossSectionDiv, 0);
@@ -3533,7 +3571,7 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    data_points_list dataPointsDiv_noname = dataPointsDiv_2;
 	    for (data_points_list::iterator iter = dataPointsDiv_noname.begin();iter != dataPointsDiv_noname.end();++iter) (*iter).legendTitle = "";
 	    showResultsOthers(hPi0CrossSectionDiv, lPi0CrossSectionDiv, dataPointsDiv_noname);
-	    TLatex *label = new TLatex(5.0, 2.5, "#font[12]{p}_{ }+_{ }#font[12]{p}");
+	    TLatex *label = new TLatex(7.55, 2.0, "#font[12]{p}_{ }+_{ }#font[12]{p}");
 	    setLatexFontSize(label, 240.0, 8.0);
 	    label->Draw();
 	    hPi0CrossSectionDiv->SetMinimum(0.001);
@@ -3545,17 +3583,17 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    TString namePi0CrossSectionDiv = "dAu_pi0_crossection_div";
 	    TString titlePi0CrossSectionDiv = "#pi^{0} invariant cross section in #font[12]{d}+Au / theory";
 	    cPi0CrossSection->cd(3);
-	    gPad->SetPad(0, 0, 1, 0.25+0.03);
-	    gPad->SetLeftMargin(0.15);
-	    gPad->SetRightMargin(0.05);
+	    gPad->SetPad(0, 0, 1, 0.5*(4.0/7.0));
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
 	    gPad->SetTopMargin(0);
-	    gPad->SetBottomMargin(0.215);
+	    gPad->SetBottomMargin(0.25);
 	    TString hPi0CrossSectionDivName = namePi0CrossSectionDiv; hPi0CrossSectionDivName += "_hist";
-	    TString hPi0CrossSectionDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [_{_{_{ }}}GeV/#font[12]{c}_{_{ }}];Data_{ }/_{ }theory         ";
+	    TString hPi0CrossSectionDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [_{_{_{ }}}GeV/#font[12]{c}_{_{ }}];Data_{ }/_{ }theory    ";
 	    TH1F *hPi0CrossSectionDiv = new TH1F(hPi0CrossSectionDivName.Data(), hPi0CrossSectionDivTitle.Data(), 1000, 0, 20);
-	    hPi0CrossSectionDiv->GetXaxis()->SetTitleOffset(1.15);
+	    hPi0CrossSectionDiv->GetXaxis()->SetTitleOffset(1.05);
 	    hPi0CrossSectionDiv->GetXaxis()->SetTickLength(0.06);
-	    hPi0CrossSectionDiv->GetYaxis()->SetTitleOffset(0.65);
+	    hPi0CrossSectionDiv->GetYaxis()->SetTitleOffset(0.72);
 	    hPi0CrossSectionDiv->GetYaxis()->SetNdivisions(505);
 	    setHistFontSize(hPi0CrossSectionDiv, 240.0, 8.0);
 	    hPi0CrossSectionDiv->Draw();
@@ -3577,7 +3615,7 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    data_points_list dataPointsDiv_noname = dataPointsDiv_2;
 	    for (data_points_list::iterator iter = dataPointsDiv_noname.begin();iter != dataPointsDiv_noname.end();++iter) (*iter).legendTitle = "";
 	    showResultsOthers(hPi0CrossSectionDiv, lPi0CrossSectionDiv, dataPointsDiv_noname);
-	    TLatex *label = new TLatex(5.0, 2.5, "#font[12]{d}_{ }+_{ }Au");
+	    TLatex *label = new TLatex(7.55, 2.0, "#font[12]{d}_{ }+_{ }Au");
 	    setLatexFontSize(label, 240.0, 8.0);
 	    label->Draw();
 	    hPi0CrossSectionDiv->SetMinimum(0.001);
@@ -3596,24 +3634,24 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    cPi0CrossSection->Divide(1, 2, 0, 0);
 	    cPi0CrossSection->cd(1);
 	    gPad->SetPad(0, 0.4, 1, 1);
-	    gPad->SetLeftMargin(0.15);
-	    gPad->SetRightMargin(0.05);
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
 	    gPad->SetTopMargin(0.05);
 	    gPad->SetBottomMargin(0);
 	    TString hPi0CrossSectionName = namePi0CrossSection; hPi0CrossSectionName += "_hist";
-	    TString hPi0CrossSectionTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [GeV/#font[12]{c}];#font[12]{E} #frac{d^{3}#sigma}{d#font[22]{p}^{3}}   [mb GeV^{-2}_{ }#font[12]{c}^{3_{#color[0]{-}}}]";
+	    TString hPi0CrossSectionTitle = ";#font[12]{p}_{#shiftx[-0.3]{#font[12]{T}}} #shifty[-0.07]{[}Ge#shiftx[-0.12]{V}#shiftx[-0.4]{#shifty[-0.06]{/}}#shiftx[-0.3]{#font[12]{c}}#shifty[-0.07]{]};#font[12]{E} #frac{d^{3}#sigma}{d#font[12]{p}^{3}}   [mb GeV^{_{ }-2}_{ }#font[12]{c}^{3_{#color[0]{-}}}]";
 	    TH1F *hPi0CrossSection = new TH1F(hPi0CrossSectionName.Data(), hPi0CrossSectionTitle.Data(), 1000, 0, 20);
 	    hPi0CrossSection->GetXaxis()->SetTitleOffset(1.0);
-	    hPi0CrossSection->GetYaxis()->SetTitleOffset(1.2);
+	    hPi0CrossSection->GetYaxis()->SetTitleOffset(1.03);
 	    setHistFontSize(hPi0CrossSection, 240.0, 8.0);
 	    hPi0CrossSection->Draw();
-	    TLegend *lPi0CrossSection = new TLegend(0.511494, 0.60, 0.933908, 0.80);
+	    TLegend *lPi0CrossSection = new TLegend(0.511494, 0.53621, 0.933908, 0.80);
 	    lPi0CrossSection->SetLineColor(0);
 	    lPi0CrossSection->SetFillColor(0);
 	    SetShadowColor(lPi0CrossSection, 0);
 	    setLegendFontSize(lPi0CrossSection, 240.0, 8.0);
 	    lPi0CrossSection->Draw();
-	    showResultsOthers(hPi0CrossSection, lPi0CrossSection, dataPoints_pi0_pp_crossection);
+	    showResultsOthers(hPi0CrossSection, lPi0CrossSection, dataPoints_pi0_pp_crossection_1);
 	    showResultsOthers(hPi0CrossSection, lPi0CrossSection, dataPoints_pp_crossSection_spinpaper);
 	    data_points_list dataPoints_pi0_pp_crossection_noname = dataPoints_pi0_pp_crossection;
 	    for (data_points_list::iterator iter = dataPoints_pi0_pp_crossection_noname.begin();iter != dataPoints_pi0_pp_crossection_noname.end();++iter) (*iter).legendTitle = "";
@@ -3622,7 +3660,7 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    hPi0CrossSection->SetMaximum(0.9e+01);
 	    hPi0CrossSection->GetXaxis()->SetRangeUser(0, 17);
 	    gPad->SetLogy();
-	    TLatex *label = new TLatex(10.5, 0.426, "#pi^{0}");
+	    TLatex *label = new TLatex(7.45, 0.426, "#font[12]{p}_{ }+_{ }#font[12]{p} _{_{ }}at #surd#font[12]{#shiftx[-0.2]{s}}#shiftx[-0.67]{#shifty[-1]{#font[122]{-}}}=_{ }200_{ }Ge#shiftx[-0.12]{V}");
 	    setLatexFontSize(label, 240.0, 8.0);
 	    label->Draw();
 
@@ -3631,20 +3669,20 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    TString titlePi0CrossSectionDiv = "#pi^{0} invariant cross section in #font[12]{p}+#font[12]{p} / theory";
 	    cPi0CrossSection->cd(2);
 	    gPad->SetPad(0, 0, 1, 0.4);
-	    gPad->SetLeftMargin(0.15);
-	    gPad->SetRightMargin(0.05);
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
 	    gPad->SetTopMargin(0);
-	    gPad->SetBottomMargin(0.215);
+	    gPad->SetBottomMargin(0.30);
 	    TString hPi0CrossSectionDivName = namePi0CrossSectionDiv; hPi0CrossSectionDivName += "_hist";
-	    TString hPi0CrossSectionDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [GeV/#font[12]{c}];Data_{ }/_{ }theory         ";
+	    TString hPi0CrossSectionDivTitle = ";#font[12]{p}_{#shiftx[-0.3]{#font[12]{T}}} #shifty[-0.07]{[}Ge#shiftx[-0.12]{V}#shiftx[-0.4]{#shifty[-0.06]{/}}#shiftx[-0.3]{#font[12]{c}}#shifty[-0.07]{]};Data_{ }/_{ }theory    ";
 	    TH1F *hPi0CrossSectionDiv = new TH1F(hPi0CrossSectionDivName.Data(), hPi0CrossSectionDivTitle.Data(), 1000, 0, 20);
-	    hPi0CrossSectionDiv->GetXaxis()->SetTitleOffset(1.0);
+	    hPi0CrossSectionDiv->GetXaxis()->SetTitleOffset(1.16);
 	    hPi0CrossSectionDiv->GetXaxis()->SetTickLength(0.06);
-	    hPi0CrossSectionDiv->GetYaxis()->SetTitleOffset(0.8);
+	    hPi0CrossSectionDiv->GetYaxis()->SetTitleOffset(0.69);
 	    hPi0CrossSectionDiv->GetYaxis()->SetNdivisions(505);
 	    setHistFontSize(hPi0CrossSectionDiv, 240.0, 8.0);
 	    hPi0CrossSectionDiv->Draw();
-	    TLegend *lPi0CrossSectionDiv = new TLegend(0.511494, 0.833333, 0.933908, 0.935606);
+	    TLegend *lPi0CrossSectionDiv = new TLegend(0.228448, 0.855967, 0.79023, 0.95679);
 	    lPi0CrossSectionDiv->SetLineColor(0);
 	    lPi0CrossSectionDiv->SetFillColor(0);
 	    SetShadowColor(lPi0CrossSectionDiv, 0);
@@ -3676,28 +3714,28 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    
 	    TString namePi0CrossSection = "pp_dAu_pi0_crossection_others";
 	    TString titlePi0CrossSection = "#pi^{0} invariant cross section in #font[12]{p}+#font[12]{p} and #font[12]{d}+Au";
-    	    TCanvas *cPi0CrossSection = new TCanvas(namePi0CrossSection.Data(), titlePi0CrossSection.Data(), 0, 0, 700, 500);
+    	    TCanvas *cPi0CrossSection = new TCanvas(namePi0CrossSection.Data(), titlePi0CrossSection.Data(), 0, 0, 700, 700);
 	    cPi0CrossSection->Divide(1, 2, 0, 0);
 
 	    {
 	    TString namePi0CrossSectionDiv = "pp_pi0_crossection_others_div";
 	    TString titlePi0CrossSectionDiv = "#pi^{0} invariant cross section in #font[12]{p}+#font[12]{p} / theory";
 	    cPi0CrossSection->cd(1);
-	    gPad->SetPad(0, 0.5-0.06, 1, 1);
-	    gPad->SetLeftMargin(0.15);
-	    gPad->SetRightMargin(0.05);
-	    gPad->SetTopMargin(0.005);
-	    gPad->SetBottomMargin(0.215);
+	    gPad->SetPad(0, 5.0*(1.0/9.0), 1, 1);
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
+	    gPad->SetTopMargin(0.05);
+	    gPad->SetBottomMargin(0);
 	    TString hPi0CrossSectionDivName = namePi0CrossSectionDiv; hPi0CrossSectionDivName += "_hist";
 	    TString hPi0CrossSectionDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [GeV/#font[12]{c}];Data_{ }/_{ }theory      ";
 	    TH1F *hPi0CrossSectionDiv = new TH1F(hPi0CrossSectionDivName.Data(), hPi0CrossSectionDivTitle.Data(), 1000, 0, 20);
-	    hPi0CrossSectionDiv->GetXaxis()->SetTitleOffset(1.0);
+	    hPi0CrossSectionDiv->GetXaxis()->SetTitleOffset(1.00);
 	    hPi0CrossSectionDiv->GetXaxis()->SetTickLength(0.06);
-	    hPi0CrossSectionDiv->GetYaxis()->SetTitleOffset(0.5);
+	    hPi0CrossSectionDiv->GetYaxis()->SetTitleOffset(0.76);
 	    hPi0CrossSectionDiv->GetYaxis()->SetNdivisions(505);
 	    setHistFontSize(hPi0CrossSectionDiv, 240.0, 8.0);
 	    hPi0CrossSectionDiv->Draw();
-	    TLegend *lPi0CrossSectionDiv = new TLegend(0.33, 0.634052, 0.637, 0.934515);
+	    TLegend *lPi0CrossSectionDiv = new TLegend(0.278736, 0.611111, 0.666667, 0.909722);
 	    lPi0CrossSectionDiv->SetLineColor(0);
 	    lPi0CrossSectionDiv->SetFillColor(0);
 	    SetShadowColor(lPi0CrossSectionDiv, 0);
@@ -3719,45 +3757,45 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    data_points_list dataPointsDiv_noname = dataPointsDiv_2;
 	    for (data_points_list::iterator iter = dataPointsDiv_noname.begin();iter != dataPointsDiv_noname.end();++iter) (*iter).legendTitle = "";
 	    showResultsOthers(hPi0CrossSectionDiv, lPi0CrossSectionDiv, dataPointsDiv_noname);
-	    TLatex *label = new TLatex(17.0, 2.48, "#font[12]{p}_{ }+_{ }#font[12]{p}");
+	    TLatex *label = new TLatex(16.7, 2.64, "#font[12]{p}_{ }+_{ }#font[12]{p}");
 	    setLatexFontSize(label, 240.0, 8.0);
 	    label->Draw();
 	    hPi0CrossSectionDiv->SetMinimum(0.001);
 	    hPi0CrossSectionDiv->SetMaximum(3-0.001);
 	    hPi0CrossSectionDiv->GetXaxis()->SetRangeUser(0, 20);
-	    TLine *l1 = new TLine(5.0, 2.55, 5.9, 2.55);
+	    TLine *l1 = new TLine(3.4, 2.7, 4.3, 2.7);
 	    l1->SetLineWidth(15);
 	    l1->SetLineColor(0);
 	    l1->Draw();
-	    TMarker *m_pi0_1 = new TMarker(5.8, 2.55, kFullSquare);
+	    TMarker *m_pi0_1 = new TMarker(4.2, 2.7, kFullSquare);
 	    m_pi0_1->SetMarkerColor(kBlack);
 	    m_pi0_1->SetMarkerSize(1.1);
 	    m_pi0_1->Draw();
-	    TMarker *m_pi0_2 = new TMarker(5.2, 2.55, kFullCircle);
+	    TMarker *m_pi0_2 = new TMarker(3.6, 2.7, kFullCircle);
 	    m_pi0_2->SetMarkerColor(kBlack);
 	    m_pi0_2->SetMarkerSize(1.2);
 	    m_pi0_2->Draw();
-	    TLine *l = new TLine(5.0, 2.17, 5.9, 2.17);
+	    TLine *l = new TLine(3.4, 2.4, 4.3, 2.4);
 	    l->SetLineWidth(15);
 	    l->SetLineColor(0);
 	    l->Draw();
-	    TMarker *m_star_1 = new TMarker(5.8, 2.2, 29);
+	    TMarker *m_star_1 = new TMarker(4.2, 2.4, 29);
 	    m_star_1->SetMarkerColor(kBlue);
 	    m_star_1->SetMarkerSize(1.5);
 	    m_star_1->Draw();
-	    TMarker *m_star_2 = new TMarker(5.2, 2.2, 30);
+	    TMarker *m_star_2 = new TMarker(3.6, 2.4, 30);
 	    m_star_2->SetMarkerColor(kBlue);
 	    m_star_2->SetMarkerSize(1.5);
 	    m_star_2->Draw();
-	    TLine *l2 = new TLine(5.0, 1.79, 5.9, 1.79);
+	    TLine *l2 = new TLine(3.4, 2.1, 4.3, 2.1);
 	    l2->SetLineWidth(15);
 	    l2->SetLineColor(0);
 	    l2->Draw();
-	    TMarker *m_phenix_1 = new TMarker(5.8, 1.82, kOpenSquare);
+	    TMarker *m_phenix_1 = new TMarker(4.2, 2.1, kOpenSquare);
 	    m_phenix_1->SetMarkerColor(kBlack);
 	    m_phenix_1->SetMarkerSize(1.1);
 	    m_phenix_1->Draw();
-	    TMarker *m_phenix_2 = new TMarker(5.2, 1.82, kOpenCircle);
+	    TMarker *m_phenix_2 = new TMarker(3.6, 2.1, kOpenCircle);
 	    m_phenix_2->SetMarkerColor(kBlack);
 	    m_phenix_2->SetMarkerSize(1.1);
 	    m_phenix_2->Draw();
@@ -3767,17 +3805,17 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    TString namePi0CrossSectionDiv = "dAu_pi0_crossection_div";
 	    TString titlePi0CrossSectionDiv = "#pi^{0} invariant cross section in #font[12]{d}+Au / theory";
 	    cPi0CrossSection->cd(2);
-	    gPad->SetPad(0, 0, 1, 0.5+0.06);
-	    gPad->SetLeftMargin(0.15);
-	    gPad->SetRightMargin(0.05);
+	    gPad->SetPad(0, 0, 1, 5.0*(1.0/9.0));
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
 	    gPad->SetTopMargin(0);
-	    gPad->SetBottomMargin(0.22);
+	    gPad->SetBottomMargin(0.20);
 	    TString hPi0CrossSectionDivName = namePi0CrossSectionDiv; hPi0CrossSectionDivName += "_hist";
 	    TString hPi0CrossSectionDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [_{_{_{ }}}GeV/#font[12]{c}_{_{ }}];Data_{ }/_{ }theory      ";
 	    TH1F *hPi0CrossSectionDiv = new TH1F(hPi0CrossSectionDivName.Data(), hPi0CrossSectionDivTitle.Data(), 1000, 0, 20);
-	    hPi0CrossSectionDiv->GetXaxis()->SetTitleOffset(1.15);
+	    hPi0CrossSectionDiv->GetXaxis()->SetTitleOffset(1.05);
 	    hPi0CrossSectionDiv->GetXaxis()->SetTickLength(0.06);
-	    hPi0CrossSectionDiv->GetYaxis()->SetTitleOffset(0.5);
+	    hPi0CrossSectionDiv->GetYaxis()->SetTitleOffset(0.97);
 	    hPi0CrossSectionDiv->GetYaxis()->SetNdivisions(505);
 	    setHistFontSize(hPi0CrossSectionDiv, 240.0, 8.0);
 	    hPi0CrossSectionDiv->Draw();
@@ -3804,7 +3842,7 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    data_points_list dataPointsDiv_noname = dataPointsDiv_2;
 	    for (data_points_list::iterator iter = dataPointsDiv_noname.begin();iter != dataPointsDiv_noname.end();++iter) (*iter).legendTitle = "";
 	    showResultsOthers(hPi0CrossSectionDiv, lPi0CrossSectionDiv, dataPointsDiv_noname);
-	    TLatex *label = new TLatex(17.0, 2.48, "#font[12]{d}_{ }+_{ }Au");
+	    TLatex *label = new TLatex(16.7, 2.64, "#font[12]{d}_{ }+_{ }Au");
 	    setLatexFontSize(label, 240.0, 8.0);
 	    label->Draw();
 	    hPi0CrossSectionDiv->SetMinimum(0.001);
@@ -3815,28 +3853,121 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	}
 
 	if (true) {
+	    // p+p cross section plot for the spin paper, comparison to other results
+
+	    TString namePi0CrossSection = "pp_pi0_crossection_others";
+	    TString titlePi0CrossSection = "#pi^{0} invariant cross section in #font[12]{p}+#font[12]{p}";
+    	    TCanvas *cPi0CrossSection = new TCanvas(namePi0CrossSection.Data(), titlePi0CrossSection.Data(), 0, 0, 700, 400);
+
+	    {
+	    TString namePi0CrossSectionDiv = "pp_pi0_crossection_others_div";
+	    TString titlePi0CrossSectionDiv = "#pi^{0} invariant cross section in #font[12]{p}+#font[12]{p} / theory";
+	    cPi0CrossSection->cd(1);
+	    //gPad->SetPad(0, 0.5-0.06, 1, 1);
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
+	    gPad->SetTopMargin(0.01);
+	    gPad->SetBottomMargin(0.22);
+	    TString hPi0CrossSectionDivName = namePi0CrossSectionDiv; hPi0CrossSectionDivName += "_hist";
+	    TString hPi0CrossSectionDivTitle = ";#font[12]{p}_{#shiftx[-0.3]{#font[12]{T}}} #shifty[-0.07]{[}Ge#shiftx[-0.12]{V}#shiftx[-0.4]{#shifty[-0.06]{/}}#shiftx[-0.3]{#font[12]{c}}#shifty[-0.07]{]};Data_{ }/_{ }theory";
+	    //TString hPi0CrossSectionDivTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [GeV/#font[12]{c}];Data_{ }/_{ }theory";
+	    TH1F *hPi0CrossSectionDiv = new TH1F(hPi0CrossSectionDivName.Data(), hPi0CrossSectionDivTitle.Data(), 1000, 0, 20);
+	    hPi0CrossSectionDiv->GetXaxis()->SetTitleOffset(1.16);
+	    hPi0CrossSectionDiv->GetXaxis()->SetTickLength(0.06);
+	    hPi0CrossSectionDiv->GetYaxis()->SetTitleOffset(0.96);
+	    hPi0CrossSectionDiv->GetYaxis()->SetNdivisions(505);
+	    setHistFontSize(hPi0CrossSectionDiv, 240.0, 8.0);
+	    hPi0CrossSectionDiv->Draw();
+	    TLegend *lPi0CrossSectionDiv = new TLegend(0.280172, 0.702796, 0.668103, 0.950108);
+	    lPi0CrossSectionDiv->SetLineColor(0);
+	    lPi0CrossSectionDiv->SetFillColor(0);
+	    SetShadowColor(lPi0CrossSectionDiv, 0);
+	    setLegendFontSize(lPi0CrossSectionDiv, 240.0, 8.0);
+	    lPi0CrossSectionDiv->Draw();
+	    data_points_list dataPointsDiv = dataPoints_pi0_pp_crossection_div1;
+	    if (fDIVPP) dataPointsDiv /= *fDIVPP;
+	    data_points_list dataPointsDiv_2 = dataPoints_pi0_pp_crossection_div1_2;
+	    if (fDIVPP) dataPointsDiv_2 /= *fDIVPP;
+	    data_points_list dataPointsOthersDiv = dataPoints_pp_crossSection_div1;
+	    if (fDIVPP) dataPointsOthersDiv /= *fDIVPP;
+	    data_points_list dataPointsOthersDiv_2 = dataPoints_pp_crossSection_div1_2;
+	    if (fDIVPP) dataPointsOthersDiv_2 /= *fDIVPP;
+	    showResultsOthers(hPi0CrossSectionDiv, lPi0CrossSectionDiv, dataPointsDiv_2);
+	    showResultsOthers(hPi0CrossSectionDiv, lPi0CrossSectionDiv, dataPointsDiv);
+	    showResultsOthers(hPi0CrossSectionDiv, lPi0CrossSectionDiv, dataPointsOthersDiv);
+	    showResultsOthers(hPi0CrossSectionDiv, lPi0CrossSectionDiv, dataPointsOthersDiv_2);
+	    //showResultsOthers(hPi0CrossSectionDiv, lPi0CrossSectionDiv, dataPointsDiv_2);
+	    data_points_list dataPointsDiv_noname = dataPointsDiv_2;
+	    for (data_points_list::iterator iter = dataPointsDiv_noname.begin();iter != dataPointsDiv_noname.end();++iter) (*iter).legendTitle = "";
+	    showResultsOthers(hPi0CrossSectionDiv, lPi0CrossSectionDiv, dataPointsDiv_noname);
+	    TLatex *label = new TLatex(17.0*17.0/20.0/*17.0*/, 2.777, "#font[12]{p}_{ }+_{ }#font[12]{p}");
+	    setLatexFontSize(label, 240.0, 8.0);
+	    label->Draw();
+	    hPi0CrossSectionDiv->SetMinimum(0.001);
+	    hPi0CrossSectionDiv->SetMaximum(3.2 - 0.001);
+	    hPi0CrossSectionDiv->GetXaxis()->SetRangeUser(0, 19.99);
+	    /*TLine *l1 = new TLine(5.0, 2.55, 5.9, 2.55);
+	    l1->SetLineWidth(15);
+	    l1->SetLineColor(0);
+	    l1->Draw();
+	    TMarker *m_pi0_1 = new TMarker(5.8, 2.55, kFullSquare);
+	    m_pi0_1->SetMarkerColor(kBlack);
+	    m_pi0_1->SetMarkerSize(1.1);
+	    m_pi0_1->Draw();
+	    TMarker *m_pi0_2 = new TMarker(5.2, 2.55, kFullCircle);
+	    m_pi0_2->SetMarkerColor(kBlack);
+	    m_pi0_2->SetMarkerSize(1.2);
+	    m_pi0_2->Draw();*/
+	    TLine *l = new TLine(4.1*17.0/20.0, 2.53, 5.2*17.0/20.0, 2.53);
+	    l->SetLineWidth(15);
+	    l->SetLineColor(0);
+	    l->Draw();
+	    TMarker *m_star_1 = new TMarker(4.4*17.0/20.0, 2.53, 29);
+	    m_star_1->SetMarkerColor(kBlue);
+	    m_star_1->SetMarkerSize(1.5);
+	    m_star_1->Draw();
+	    TMarker *m_star_2 = new TMarker(4.9*17.0/20.0, 2.53, 30);
+	    m_star_2->SetMarkerColor(kBlue);
+	    m_star_2->SetMarkerSize(1.5);
+	    m_star_2->Draw();
+	    /*TLine *l2 = new TLine(5.0, 1.79, 5.9, 1.79);
+	    l2->SetLineWidth(15);
+	    l2->SetLineColor(0);
+	    l2->Draw();
+	    TMarker *m_phenix_1 = new TMarker(5.8, 1.82, kOpenSquare);
+	    m_phenix_1->SetMarkerColor(kBlack);
+	    m_phenix_1->SetMarkerSize(1.1);
+	    m_phenix_1->Draw();
+	    TMarker *m_phenix_2 = new TMarker(5.2, 1.82, kOpenCircle);
+	    m_phenix_2->SetMarkerColor(kBlack);
+	    m_phenix_2->SetMarkerSize(1.1);
+	    m_phenix_2->Draw();*/
+	    }
+	}
+
+	if (true) {
 	    // d+Au pi0 and eta R_CP, comparison to other results, theory etc.
-	    
+
 	    TString namePi0Rcp = "dAu_pi0_Rcp";
-	    TString titlePi0Rcp = "#pi^{0} #font[12]{R}_{#font[12]{CP}} in #font[12]{d}+Au";
-    	    TCanvas *cPi0Rcp = new TCanvas(namePi0Rcp.Data(), titlePi0Rcp.Data(), 0, 0, 700, 375);
+	    TString titlePi0Rcp = "#pi^{0}^{} #font[12]{R}_{#font[12]{CP}} in #font[12]{d}+Au";
+    	    TCanvas *cPi0Rcp = new TCanvas(namePi0Rcp.Data(), titlePi0Rcp.Data(), 0, 0, 700, 400);
 
 	    {
 	    cPi0Rcp->cd();
-	    gPad->SetLeftMargin(0.1);
-	    gPad->SetRightMargin(0.05);
-	    gPad->SetTopMargin(0.02);
-	    gPad->SetBottomMargin(0.17);
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
+	    gPad->SetTopMargin(0.03);
+	    gPad->SetBottomMargin(0.20);
 	    TString hPi0RcpName = namePi0Rcp; hPi0RcpName += "_hist";
 	    TString hPi0RcpTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [_{_{_{ }}}GeV/#font[12]{c}_{_{ }}];#font[12]{R}_{#font[12]{CP}}";
 	    TH1F *hPi0Rcp = new TH1F(hPi0RcpName.Data(), hPi0RcpTitle.Data(), 1000, 0, 20);
 	    hPi0Rcp->GetXaxis()->SetTitleOffset(1.15);
 	    hPi0Rcp->GetXaxis()->SetTickLength(0.05);
-	    hPi0Rcp->GetYaxis()->SetTitleOffset(0.70);
+	    hPi0Rcp->GetYaxis()->SetTitleOffset(0.94);
 	    hPi0Rcp->GetYaxis()->SetNdivisions(505);
 	    setHistFontSize(hPi0Rcp, 240.0, 8.0);
 	    hPi0Rcp->Draw();
-	    TLegend *lPi0Rcp = new TLegend(0.52, 0.78, 0.87, 0.95);
+	    TLegend *lPi0Rcp = new TLegend(0.557471, 0.78, 0.952586, 0.95);
 	    lPi0Rcp->SetLineColor(0);
 	    lPi0Rcp->SetFillColor(0);
 	    SetShadowColor(lPi0Rcp, 0);
@@ -3906,32 +4037,32 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 
 	if (true) {
 	    // d+Au pi0 and eta R_dA, comparison to other results, theory etc.
-	    
-	    
+
+
 	    TString nameRdA = "RdA_pi0_eta";
 	    TString titleRdA = "#pi^{0} and #eta #font[12]{R}_{#font[12]{dA}}";
-    	    TCanvas *cRdA = new TCanvas(nameRdA.Data(), titleRdA.Data(), 0, 0, 700, 750);
+    	    TCanvas *cRdA = new TCanvas(nameRdA.Data(), titleRdA.Data(), 0, 0, 700, 700);
 	    cRdA->Divide(1, 2, 0, 0);
 
 	    {
 	    cRdA->cd(1);
-	    gPad->SetPad(0, 0.5-0.035, 1, 1);
-	    gPad->SetLeftMargin(0.1);
-	    gPad->SetRightMargin(0.05);
-	    gPad->SetTopMargin(0.02);
-	    gPad->SetBottomMargin(0.125);
+	    gPad->SetPad(0, 5.0*(1.0/9.0), 1, 1);
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
+	    gPad->SetTopMargin(0.05);
+	    gPad->SetBottomMargin(0);
 	    TString namePi0RdA = "pi0_RdA";
-	    TString titlePi0RdA = "#pi^{0} #font[12]{R}_{#font[12]{dA}}";
+	    TString titlePi0RdA = "#pi^{0}^{} #font[12]{R}_{#font[12]{dA}}";
 	    TString hPi0RdAName = namePi0RdA; hPi0RdAName += "_hist";
 	    TString hPi0RdATitle = ";#font[12]{p}_{#font[12]{T}}_{ } [_{_{_{ }}}GeV/#font[12]{c}_{_{ }}];#font[12]{R}_{#font[12]{dA}}";
 	    TH1F *hPi0RdA = new TH1F(hPi0RdAName.Data(), hPi0RdATitle.Data(), 1000, 0, 20);
 	    hPi0RdA->GetXaxis()->SetTitleOffset(1.0);
 	    hPi0RdA->GetXaxis()->SetTickLength(0.05);
-	    hPi0RdA->GetYaxis()->SetTitleOffset(0.75);
+	    hPi0RdA->GetYaxis()->SetTitleOffset(0.76);
 	    hPi0RdA->GetYaxis()->SetNdivisions(510);
 	    setHistFontSize(hPi0RdA, 240.0, 8.0);
 	    hPi0RdA->Draw();
-	    TLegend *lPi0RdA = new TLegend(0.563, 0.723, 0.912, 0.956);
+	    TLegend *lPi0RdA = new TLegend(0.54454, 0.628348, 0.95977, 0.926339);
 	    lPi0RdA->SetLineColor(0);
 	    lPi0RdA->SetFillColor(0);
 	    SetShadowColor(lPi0RdA, 0);
@@ -3953,11 +4084,11 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    
 	    {
 	    cRdA->cd(2);
-	    gPad->SetPad(0, 0, 1, 0.5+0.035);
-	    gPad->SetLeftMargin(0.1);
-	    gPad->SetRightMargin(0.05);
+	    gPad->SetPad(0, 0, 1, 5.0*(1.0/9.0));
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
 	    gPad->SetTopMargin(0);
-	    gPad->SetBottomMargin(0.15);
+	    gPad->SetBottomMargin(0.20);
 	    TString nameEtaRdA = "eta_RdA";
 	    TString titleEtaRdA = "#eta #font[12]{R}_{#font[12]{dA}}";
 	    TString hEtaRdAName = nameEtaRdA; hEtaRdAName += "_hist";
@@ -3965,11 +4096,11 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    TH1F *hEtaRdA = new TH1F(hEtaRdAName.Data(), hEtaRdATitle.Data(), 1000, 0, 20);
 	    hEtaRdA->GetXaxis()->SetTitleOffset(1.15);
 	    hEtaRdA->GetXaxis()->SetTickLength(0.05);
-	    hEtaRdA->GetYaxis()->SetTitleOffset(0.75);
+	    hEtaRdA->GetYaxis()->SetTitleOffset(0.97);
 	    hEtaRdA->GetYaxis()->SetNdivisions(505);
 	    setHistFontSize(hEtaRdA, 240.0, 8.0);
 	    hEtaRdA->Draw();
-	    TLegend *lEtaRdA = new TLegend(0.563, 0.8, 0.912, 0.956);
+	    TLegend *lEtaRdA = new TLegend(0.54454, 0.80625, 0.95977, 0.976339);
 	    lEtaRdA->SetLineColor(0);
 	    lEtaRdA->SetFillColor(0);
 	    SetShadowColor(lEtaRdA, 0);
@@ -3992,26 +4123,26 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    
 	    TString nameEtaToPi0 = "etaToPi0_pp_dAu";
 	    TString titleEtaToPi0 = "#eta/#pi^{0} in #font[12]{p}+#font[12]{p} and #font[12]{d}+Au";
-    	    TCanvas *cEtaToPi0 = new TCanvas(nameEtaToPi0.Data(), titleEtaToPi0.Data(), 0, 0, 700, 750);
+    	    TCanvas *cEtaToPi0 = new TCanvas(nameEtaToPi0.Data(), titleEtaToPi0.Data(), 0, 0, 700, 700);
 	    cEtaToPi0->Divide(1, 2, 0, 0);
 
 	    {
 	    cEtaToPi0->cd(1);
-	    gPad->SetPad(0, 0.5-0.035, 1, 1);
-	    gPad->SetLeftMargin(0.1);
-	    gPad->SetRightMargin(0.05);
-	    gPad->SetTopMargin(0.02);
-	    gPad->SetBottomMargin(0.125);
+	    gPad->SetPad(0, 5.0*(1.0/9.0), 1, 1);
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
+	    gPad->SetTopMargin(0.05);
+	    gPad->SetBottomMargin(0);
 	    TString hEtaToPi0PPName = nameEtaToPi0; hEtaToPi0PPName += "_pp_hist";
-	    TString hEtaToPi0PPTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [_{_{_{ }}}GeV/#font[12]{c}_{_{ }}];#eta/#pi^{0}^{ }";
+	    TString hEtaToPi0PPTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [_{_{_{ }}}GeV/#font[12]{c}_{_{ }}];#font[12]{R}_{#eta/#pi}";
 	    TH1F *hEtaToPi0PP = new TH1F(hEtaToPi0PPName.Data(), hEtaToPi0PPTitle.Data(), 1000, 0, 20);
 	    hEtaToPi0PP->GetXaxis()->SetTitleOffset(1.0);
 	    hEtaToPi0PP->GetXaxis()->SetTickLength(0.05);
-	    hEtaToPi0PP->GetYaxis()->SetTitleOffset(0.75);
+	    hEtaToPi0PP->GetYaxis()->SetTitleOffset(0.74);
 	    hEtaToPi0PP->GetYaxis()->SetNdivisions(510);
 	    setHistFontSize(hEtaToPi0PP, 240.0, 8.0);
 	    hEtaToPi0PP->Draw();
-	    TLegend *lEtaToPi0PP = new TLegend(0.54454, 0.67, 0.939655, 0.95);
+	    TLegend *lEtaToPi0PP = new TLegend(0.452586, 0.53125, 0.95977, 0.933036);
 	    lEtaToPi0PP->SetLineColor(0);
 	    lEtaToPi0PP->SetFillColor(0);
 	    SetShadowColor(lEtaToPi0PP, 0);
@@ -4026,7 +4157,7 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    hEtaToPi0PP->GetXaxis()->SetRangeUser(0, 17);
 	    hEtaToPi0PP->SetMinimum(0.001);
 	    hEtaToPi0PP->SetMaximum(1.499);
-	    TLatex *label = new TLatex(4.4, 1.25, "#eta/#pi^{0}");
+	    TLatex *label = new TLatex(2.4, 1.3, "#eta/#pi^{0}^{}");
 	    setLatexFontSize(label, 240.0, 8.0);
 	    label->Draw();
 	    }
@@ -4035,21 +4166,21 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    TString nameEtaToPi0DAu = "etaToPi0_dAu";
 	    TString titleEtaToPi0DAu = "#eta/#pi^{0} in #font[12]{d}+Au";
 	    cEtaToPi0->cd(2);
-	    gPad->SetPad(0, 0, 1, 0.5+0.035);
-	    gPad->SetLeftMargin(0.1);
-	    gPad->SetRightMargin(0.05);
+	    gPad->SetPad(0, 0, 1, 5.0*(1.0/9.0));
+	    gPad->SetLeftMargin(0.17);
+	    gPad->SetRightMargin(0.03);
 	    gPad->SetTopMargin(0);
-	    gPad->SetBottomMargin(0.15);
+	    gPad->SetBottomMargin(0.20);
 	    TString hEtaToPi0DAuName = nameEtaToPi0DAu; hEtaToPi0DAuName += "_dAu_hist";
-	    TString hEtaToPi0DAuTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [_{_{_{ }}}GeV/#font[12]{c}_{_{ }}];#eta/#pi^{0} ";
+	    TString hEtaToPi0DAuTitle = ";#font[12]{p}_{#font[12]{T}}_{ } [_{_{_{ }}}GeV/#font[12]{c}_{_{ }}];#font[12]{R}_{#eta/#pi}";
 	    TH1F *hEtaToPi0DAu = new TH1F(hEtaToPi0DAuName.Data(), hEtaToPi0DAuTitle.Data(), 1000, 0, 20);
 	    hEtaToPi0DAu->GetXaxis()->SetTitleOffset(1.15);
 	    hEtaToPi0DAu->GetXaxis()->SetTickLength(0.05);
-	    hEtaToPi0DAu->GetYaxis()->SetTitleOffset(0.75);
+	    hEtaToPi0DAu->GetYaxis()->SetTitleOffset(0.92);
 	    hEtaToPi0DAu->GetYaxis()->SetNdivisions(510);
 	    setHistFontSize(hEtaToPi0DAu, 240.0, 8.0);
 	    hEtaToPi0DAu->Draw();
-	    TLegend *lEtaToPi0DAu = new TLegend(0.54454, 0.81, 0.939655, 0.95);
+	    TLegend *lEtaToPi0DAu = new TLegend(0.452586, 0.833036, 0.95977, 0.983036);
 	    lEtaToPi0DAu->SetLineColor(0);
 	    lEtaToPi0DAu->SetFillColor(0);
 	    SetShadowColor(lEtaToPi0DAu, 0);
@@ -4086,31 +4217,40 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    
 	    TString nameMix = "pp_HT1_45_rndmix";
 	    TString titleMix = "p+p HighTower-1 4 < pT < 5 GeV/c, event mixing";
-	    TString labelText = "#splitline{#font[12]{p}+#font[12]{p} HighTower-1}{4 < #font[12]{p}_{#font[12]{T}} < 5 GeV/#font[12]{c}}";
-	    TCanvas *cMix = new TCanvas(nameMix.Data(), titleMix.Data());
-	    cMix->SetCanvasSize(600, 2*400);
-	    cMix->Divide(1, 2, 0, 0);
+	    TString labelText = "#splitline{#font[12]{p}_{ }+_{ }#font[12]{p} HighTower-1}{4 < #font[12]{p}_{#font[12]{T}}_{ }< 5 GeV/#font[12]{c}}";
+	    TCanvas *cMix = new TCanvas(nameMix.Data(), titleMix.Data(), 0, 0, 600, 3*300);
+	    //cMix->SetCanvasSize(600, 3*300);
+	    gPad->SetLeftMargin(0);
+	    gPad->SetRightMargin(0);
+	    gPad->SetTopMargin(0);
+	    gPad->SetBottomMargin(0);
+	    cMix->Divide(1, 3, 0, 0);
 	    cMix->cd(1);
+	    gPad->SetPad(0, 2.25*(1.0/3.25), 1, 1);
+	    gPad->SetLeftMargin(0.13);
+	    gPad->SetRightMargin(0.01);
 	    TH1F *hSigBg = new TH1F(*sigBg);
 	    hSigBg->SetNameTitle("same", ";#font[12]{M}_{#gamma#gamma} [GeV/#font[12]{c}^{2}];Counts  ");
 	    if (nrebin > 1) hSigBg->Rebin(nrebin);
-	    //hSigBg->GetXaxis()->SetTitleFont(132);
-	    //hSigBg->SetLabelFont(132, "x");
-	    //hSigBg->GetYaxis()->SetTitleFont(132);
-	    //hSigBg->SetLabelFont(132, "y");
-	    //hSigBg->SetTitleFont(132, "title");
+	    hSigBg->GetXaxis()->SetLabelFont(132);
+	    hSigBg->GetXaxis()->SetTitleFont(132);
+	    hSigBg->GetYaxis()->SetLabelFont(132);
+	    hSigBg->GetYaxis()->SetTitleFont(132);
 	    hSigBg->GetXaxis()->SetRangeUser(0.0 + hSigBg->GetXaxis()->GetBinWidth(1), 1.2 - 3*hSigBg->GetXaxis()->GetBinWidth(1));
-	    hSigBg->SetMinimum(-199);
-	    hSigBg->SetMaximum(1249);
+	    hSigBg->SetMinimum(-149);
+	    hSigBg->SetMaximum(1049);
 	    hSigBg->GetXaxis()->SetTitleOffset(1.1);
-	    hSigBg->GetYaxis()->SetTitleOffset(1.2);
-	    setHistFontSize(hSigBg, 345.*0.9, 10.5);
+	    hSigBg->GetYaxis()->SetTitleOffset(0.68);
+	    setHistFontSize(hSigBg, 240.0, 8.0);
 	    hSigBg->DrawCopy();
-	    TLine *zeroLineSigbgMix = new TLine(0, 0, 1.2, 0);
+	    TLine *zeroLineSigbgMix = new TLine(0.02, 0, 1.18, 0);
 	    zeroLineSigbgMix->Draw();
-	    TLatex *labelMix = new TLatex(0.5, 600, labelText.Data());
-	    setLatexFontSize(labelMix, 345.*0.9, 10.5);
+	    TLatex *labelMix = new TLatex(0.4, 750, labelText.Data());
+	    setLatexFontSize(labelMix, 240.0, 8.0);
 	    labelMix->Draw();
+	    TLatex *labelMix1 = new TLatex(0.4, 400, "(a) Event mixing");
+	    setLatexFontSize(labelMix1, 240.0, 8.0);
+	    labelMix1->Draw();
 	    TH1F *hMixBg = new TH1F(*mixBg);
 	    hMixBg->SetName("mix");
 	    if (nrebin > 1) hMixBg->Rebin(nrebin);
@@ -4120,15 +4260,18 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    hMixBgNorm->SetName("mix_norm");
 	    hMixBgNorm->GetXaxis()->SetRangeUser(0.9, 1.2);
 	    hMixBgNorm->SetFillColor(17);
-	    hMixBgNorm->Draw("HIST SAME");
+	    hMixBgNorm->Draw("HIST SAME ][");
 	    cMix->cd(2);
-	    TH1F *hMixSub = new TH1F(*hSigBg);
+	    gPad->SetPad(0, 1.25*(1.0/3.25), 1, 2.25*(1.0/3.25));
+	    gPad->SetLeftMargin(0.13);
+	    gPad->SetRightMargin(0.01);
+/*	    TH1F *hMixSub = new TH1F(*hSigBg);
 	    hMixSub->SetName("mixsub");
 	    hMixSub->Add(hMixBg, -1);
 	    hMixSub->SetMinimum(-199);
 	    hMixSub->SetMaximum(1249);
 	    //hMixSub->GetYaxis()->LabelsOption("");
-	    setHistFontSize(hMixSub, 345.*0.9, 10.5);
+	    setHistFontSize(hMixSub, 240.0, 8.0);
 	    hMixSub->Draw();
 	    TLine *zeroLineMixSub = new TLine(0, 0, 1.2, 0);
 	    zeroLineMixSub->Draw();
@@ -4139,14 +4282,17 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    cJetmix->SetCanvasSize(600, 2*400);
 	    cJetmix->Divide(1, 2, 0, 0);
 	    cJetmix->cd(1);
-	    setHistFontSize(hSigBg, 345.*0.9, 10.5);
+*/	    setHistFontSize(hSigBg, 240.0, 8.0);
 	    hSigBg->DrawCopy();
-	    TLine *zeroLineSigbgJetmix = new TLine(0, 0, 1.2, 0);
+	    TLine *zeroLineSigbgJetmix = new TLine(0.02, 0, 1.18, 0);
 	    zeroLineSigbgJetmix->Draw();
-	    TLatex *labelJetmix = new TLatex(0.5, 600, labelText.Data());
-	    labelJetmix->SetTextSize(0.055);
-	    setLatexFontSize(labelJetmix, 345.*0.9, 10.5);
-	    labelJetmix->Draw();
+	    //TLatex *labelJetmix = new TLatex(0.5, 600, labelText.Data());
+	    //labelJetmix->SetTextSize(0.055);
+	    //setLatexFontSize(labelJetmix, 240.0, 8.0);
+	    //labelJetmix->Draw();
+	    TLatex *labelMix2 = new TLatex(0.4, 400, "(b) Jet-aligned mixing");
+	    setLatexFontSize(labelMix2, 240.0, 8.0);
+	    labelMix2->Draw();
 	    TH1F *hMixBgRnd = new TH1F(*mixBg);
 	    hMixBgRnd->SetName("mix_rnd");
 	    if (nrebin > 1) hMixBgRnd->Rebin(nrebin);
@@ -4162,41 +4308,61 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    TH1F *hJetmixBgNorm1 = new TH1F(*hJetmixBg);
 	    hJetmixBgNorm1->SetName("jetmix_norm1");
 	    hJetmixBgNorm1->GetXaxis()->SetRangeUser(0.3, 0.4);
+	    hJetmixBgNorm1->SetLineColor(kWhite);
 	    hJetmixBgNorm1->SetFillColor(17);
-	    hJetmixBgNorm1->Draw("HIST SAME");
+	    hJetmixBgNorm1->Draw("HIST SAME ][");
 	    TH1F *hJetmixBgNorm2 = new TH1F(*hJetmixBg);
 	    hJetmixBgNorm2->SetName("jetmix_norm2");
 	    hJetmixBgNorm2->GetXaxis()->SetRangeUser(0.9, 1.2);
 	    hJetmixBgNorm2->SetFillColor(17);
-	    hJetmixBgNorm2->Draw("HIST SAME");
-	    cJetmix->cd(2);
+	    hJetmixBgNorm2->Draw("HIST SAME ][");
+	    hJetmixBg->Draw("HIST SAME");
+//	    cJetmix->cd(2);
+	    cMix->cd(3);
+	    gPad->SetPad(0, 0, 1, 1.25*(1.0/3.25));
+	    gPad->SetLeftMargin(0.13);
+	    gPad->SetRightMargin(0.01);
+	    gPad->SetBottomMargin(0.20);
 	    TH1F *hJetmixSub = new TH1F(*hSigBg);
 	    hJetmixSub->SetName("jetmixsub");
 	    hJetmixSub->Add(hJetmixBg, -1);
-	    hJetmixSub->SetMinimum(-199);
-	    hJetmixSub->SetMaximum(1249);
+	    hJetmixSub->SetMinimum(-149);
+	    hJetmixSub->SetMaximum(1049);
 	    //hJetmixSub->GetYaxis()->LabelsOption("");
-	    setHistFontSize(hJetmixSub, 345.*0.9, 10.5);
+	    setHistFontSize(hJetmixSub, 240.0, 8.0);
+	    hJetmixSub->GetYaxis()->SetTitleOffset(0.85);
+	    hJetmixSub->GetXaxis()->SetTitleOffset(1.1);
 	    hJetmixSub->Draw();
-	    TLine *zeroLineJetmixSub = new TLine(0, 0, 1.2, 0);
+	    TLine *zeroLineJetmixSub = new TLine(0.02, 0, 1.18, 0);
 	    zeroLineJetmixSub->Draw();
+	    TLatex *labelMix3 = new TLatex(0.4, 400, "#splitline{(c) Combinatorial background}{     _{ }_{ }subtracted}");
+	    setLatexFontSize(labelMix3, 240.0, 8.0);
+	    labelMix3->Draw();
 
 	    TString nameLowmass = "pp_HT1_45_lowmass";
 	    TString titleLowmass = "p+p HighTower-1 4 < pT < 5 GeV/c, low mass background";
-	    TCanvas *cLowmass = new TCanvas(nameLowmass.Data(), titleLowmass.Data());
-	    cLowmass->SetCanvasSize(600, 2*400);
+	    TCanvas *cLowmass = new TCanvas(nameLowmass.Data(), titleLowmass.Data(), 0, 0, 600, 2*300);
+	    //cLowmass->SetCanvasSize(600, 2*300);
+	    gPad->SetLeftMargin(0);
+	    gPad->SetRightMargin(0);
+	    gPad->SetTopMargin(0);
+	    gPad->SetBottomMargin(0);
 	    cLowmass->Divide(1, 2, 0, 0);
 	    cLowmass->cd(1);
+	    gPad->SetPad(0, 1.25*(1.0/2.25), 1, 1);
+	    gPad->SetLeftMargin(0.13);
+	    gPad->SetRightMargin(0.01);
 	    TH1F *hSig = new TH1F(*hJetmixSub);
 	    hSig->SetNameTitle("same", ";#font[12]{M}_{#gamma#gamma} [GeV/#font[12]{c}^{2}];Counts  ");
 	    hSig->GetYaxis()->LabelsOption("v");
-	    setHistFontSize(hSig, 345.*0.9, 10.5);
+	    hSig->GetYaxis()->SetTitleOffset(0.68);
+	    setHistFontSize(hSig, 240.0, 8.0);
 	    hSig->Draw();
-	    TLine *zeroLineSigLowmass = new TLine(0, 0, 1.2, 0);
+	    TLine *zeroLineSigLowmass = new TLine(0.02, 0, 1.18, 0);
 	    zeroLineSigLowmass->Draw();
 	    TLatex *labelLowmass = new TLatex(0.5, 600, labelText.Data());
 	    labelLowmass->SetTextSize(0.055);
-	    setLatexFontSize(labelLowmass, 345.*0.9, 10.5);
+	    setLatexFontSize(labelLowmass, 240.0, 8.0);
 	    labelLowmass->Draw();
 	    TH1F *hBgLowmass = new TH1F(*gammaBg);
 	    hBgLowmass->SetName("lowmass");
@@ -4209,25 +4375,35 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    hBgLowmass->Add(hBgLowmass2);
 	    hBgLowmass->Draw("HIST SAME");
 	    cLowmass->cd(2);
+	    gPad->SetPad(0, 0, 1, 1.25*(1.0/2.25));
+	    gPad->SetLeftMargin(0.13);
+	    gPad->SetRightMargin(0.01);
+	    gPad->SetBottomMargin(0.20);
 	    TH1F *hLowmassSub = new TH1F(*hSig);
 	    hLowmassSub->SetName("lowmasssub");
 	    hLowmassSub->Add(hBgLowmass, -1);
-	    hLowmassSub->SetMinimum(-199);
-	    hLowmassSub->SetMaximum(1249);
+	    hLowmassSub->SetMinimum(-149);
+	    hLowmassSub->SetMaximum(1049);
 	    //hLowmassSub->GetYaxis()->LabelsOption("");
-	    setHistFontSize(hLowmassSub, 345.*0.9, 10.5);
+	    hLowmassSub->GetXaxis()->SetTitleOffset(1.1);
+	    hLowmassSub->GetYaxis()->SetTitleOffset(0.85);
+	    setHistFontSize(hLowmassSub, 240.0, 8.0);
 	    hLowmassSub->Draw();
-	    TLine *zeroLineLowmassSub = new TLine(0, 0, 1.2, 0);
+	    TLine *zeroLineLowmassSub = new TLine(0.02, 0, 1.18, 0);
 	    zeroLineLowmassSub->Draw();
+	    TLatex *labelBgSubtracted = new TLatex(0.4, 400, "#splitline{Combinatorial and low mass}{background subtracted}");
+	    setLatexFontSize(labelBgSubtracted, 240.0, 8.0);
+	    labelBgSubtracted->Draw();
 
 	    TString nameLowmassScale = "pp_HT1_45_lowmass_scale";
 	    TString titleLowmassScale = "p+p HighTower-1 4 < pT < 5 GeV/c, low mass background scale";
-	    TCanvas *cLowmassScale = new TCanvas(nameLowmassScale.Data(), titleLowmassScale.Data());
-	    cLowmassScale->SetCanvasSize(600, 400);
+	    TCanvas *cLowmassScale = new TCanvas(nameLowmassScale.Data(), titleLowmassScale.Data(), 0, 0, 600, 300);
+	    //cLowmassScale->SetCanvasSize(600, 400);
+	    cLowmassScale->cd();
 	    TH1F *hSigLowmassScale = new TH1F(*hSig);
 	    hSigLowmassScale->SetNameTitle("same", ";#font[12]{M}_{#gamma#gamma} [GeV/#font[12]{c}^{2}];Counts  ");
 	    hSigLowmassScale->GetXaxis()->SetRangeUser(0, 0.35);
-	    setHistFontSize(hSigLowmassScale, 345.*0.85, 10.5);
+	    setHistFontSize(hSigLowmassScale, 240.0, 8.0);
 	    hSigLowmassScale->Draw();
 	    TLine *zeroLineSigLowmassScale = new TLine(0, 0, 0.35, 0);
 	    zeroLineSigLowmassScale->Draw();
@@ -4257,11 +4433,11 @@ ADD_ERRORS_POINTS1(RDAMBEta_RdA, RDAHT1Eta_RdA, RDAHT2Eta_RdA, esyst, systE)
 	    arrow->SetFillStyle(1001);
 	    arrow->SetAngle(0);
 	    arrow->Draw();
-	    TLatex *   tex = new TLatex(0.1537283,1078,"#pi^{0} window");
+	    TLatex *   tex = new TLatex(0.1537283,1078,"#pi^{0}^{} window");
     	    tex->SetTextFont(132);
     	    tex->SetTextSize(0.04700855);
 	    tex->SetLineWidth(2);
-	    setLatexFontSize(tex, 345.*0.9, 10.5);
+	    setLatexFontSize(tex, 240.0, 8.0);
 	    tex->Draw();
 	    
 	    }

@@ -71,7 +71,7 @@ ClassImp(TAnalysisSettings);
 ClassImp(TAnalysisRawResultsTrigger);
 ClassImp(TAnalysisResults);
 
-Double_t TDataPoints::operator() (Double_t *x, Double_t *p) const {
+Double_t TDataPoints::operator() (Double_t *x, Double_t * /*p*/) const {
     Float_t val = funcDenom ? (funcDenom->Eval(x[0])) : 1;
     return (func && (val != 0)) ? (func->Eval(x[0]) / val) : 0;
 }
@@ -190,8 +190,8 @@ TDataPoints::TDataPoints(const TDrawOptions &draw, const bin_stat_list_type &bin
     this->n = i;
 }
 
-Bool_t operator==(const TDataPoints &p1, const TDataPoints &p2) {return false;}
-Bool_t operator<(const TDataPoints &p1, const TDataPoints &p2) {return true;}
+Bool_t operator==(const TDataPoints &/*p1*/, const TDataPoints &/*p2*/) {return false;}
+Bool_t operator<(const TDataPoints &/*p1*/, const TDataPoints &/*p2*/) {return true;}
 data_points_list &operator/=(data_points_list &l, const TF1 &f) {
     for (data_points_list::iterator it = l.begin();it != l.end();++it) {
         (*it) /= f;
@@ -343,6 +343,86 @@ void setBinsToFit(bin_stat_list_type &bins, const TFitSettings &param) {
 	Float_t val = getParameterValue(param, binStat.getParameters());
 	binStat.setValue(val);
     }
+}
+
+Bool_t fitParameter(const bin_stat_list_type *values, const TH1F *hist, TFitSettings &param, TFitSettings &paramSave, TString name) {
+    Bool_t result = false;
+    if (param.useFit) {
+	param.valuesForFit.clear();
+	param.fitSigma = 0;
+	param.fitMeanAbs = 0;
+	Int_t sizeMax = (values ? values->size() : 1) + (hist ? hist->GetXaxis()->GetNbins() : 1);
+	Float_t *X = new Float_t[sizeMax];
+	Float_t *Xerr = new Float_t[sizeMax];
+	Float_t *Y = new Float_t[sizeMax];
+	Float_t *Yerr = new Float_t[sizeMax];
+	Int_t size = 0;
+	Float_t maxX = -1;
+	Float_t minX = -1;
+	if (values) for (bin_stat_list_type::const_iterator iter = values->begin();iter != values->end();++iter) {
+		const TBinStatistics &value = *iter;
+		Float_t center = value.getParameters().getCenter();
+		if ((center >= param.fitLow) && (center <= param.fitHigh)) {
+			param.valuesForFit.push_back(value);
+			X[size] = center;
+			Xerr[size] = 0;
+			Y[size] = value.getValue();
+			Yerr[size] = value.getError();
+			size++;
+		}
+		if ((center > maxX) || (maxX == -1)) maxX = center;
+		if ((center < minX) || (minX == -1)) minX = center;
+	}
+	if (hist) {
+	    for (Int_t ibin = 1;ibin <= hist->GetXaxis()->GetNbins();++ibin) {
+		Float_t center = hist->GetXaxis()->GetBinCenter(ibin);
+		if ((center >= param.fitLow) && (center <= param.fitHigh) && !((hist->GetBinContent(ibin) == 0) && (hist->GetBinError(ibin) == 0))) {
+			TBinParameters binPar;
+			binPar.min = hist->GetXaxis()->GetBinLowEdge(ibin);
+			binPar.max = hist->GetXaxis()->GetBinUpEdge(ibin);
+			TBinStatistics value;
+			value.setParameters(binPar);
+			value.setValue(hist->GetBinContent(ibin));
+			value.setError(hist->GetBinError(ibin));
+			param.valuesForFit.push_back(value);
+			X[size] = center;
+			Xerr[size] = 0;
+			Y[size] = hist->GetBinContent(ibin);
+			Yerr[size] = hist->GetBinError(ibin);
+			size++;
+		}
+		if ((center > maxX) || (maxX == -1)) maxX = center;
+		if ((center < minX) || (minX == -1)) minX = center;
+
+	    }
+	}
+	if (size > 0) {
+	    TGraphErrors *hgr = new TGraphErrors(size, X, Y, Xerr, Yerr);
+    	    if (hgr) {
+		if (!param.func) param.func = new TF1(name, (const Char_t*)param.fitFuncStr);
+		if (param.func) {
+		    param.func->SetRange(minX, maxX);
+		    hgr->Fit(param.func, param.fitOption);
+		    param.wasFit = true;
+		    Float_t sum = 0;
+		    Float_t sumAbs = 0;
+		    Float_t sum2 = 0;
+		    for (Int_t i = 0;i < size;i++) {
+			Float_t diff = Y[i] - param.func->Eval(X[i]);
+			sum += diff;
+			sumAbs += TMath::Abs(diff);
+			sum2 += (diff * diff);
+//cout << i <<  ": X = " << X[i] << ", Y = " << Y[i] << ", F = " << param.func->Eval(X[i]) << ", diff = " << diff << ", sum = " << sum << ", sumAbs = " << sumAbs << ", sum2 = " << sum2 << endl;
+		    }
+		    param.fitSigma = TMath::Sqrt((sum2 / size) - ((sum / size) * (sum / size)));
+		    param.fitMeanAbs = sumAbs / size;
+		    result = true;
+		}
+	    }
+	}
+    }
+    paramSave = param;
+    return result;
 }
 
 Int_t getBestRebin(const TH1F *hist, Float_t numBinsWeight, Float_t meanErrorWeight, Float_t rangeLeft, Float_t rangeRight, Int_t minBins, Float_t minBinWidth) {
@@ -776,7 +856,7 @@ TCanvas *findPeak(const TFindPeakDistributions &s, Int_t numBinsToShow, Int_t bi
 
 	Float_t lowmassbgNbar = getParameterValue(analysisSettings.lowmassbgNbar, binParameters);
 //cout << "pT = " << binParameters.getCenter() << ": nbar = " << lowmassbgNbar << ": " << analysisSettings.name << endl;
-
+	
 	TH1F invSigBg(*(s.distribution)->getDistribution());
 	TString newTitle;
 	//newTitle += "  ";
@@ -1090,10 +1170,10 @@ TCanvas *findPeak(const TFindPeakDistributions &s, Int_t numBinsToShow, Int_t bi
 	histToFit4 = analysisSettings.fitPeakShapeDistribution ? invPeakShape : 0;
 	histToFit5 = analysisSettings.fitPeakShapeEtaDistribution ? invPeakShapeEta : 0;
 	histToFit6 = analysisSettings.fitPeakShapeEtabgDistribution ? invPeakShapeEtabg : 0;
-	fitRangeLeft = analysisSettings.fitDistributionLeft;
-	fitRangeRight = analysisSettings.fitDistributionRight;
-	fitRangeLeft2 = analysisSettings.fitDistributionLeft2;
-	fitRangeRight2 = analysisSettings.fitDistributionRight2;
+	fitRangeLeft = getParameterValue(analysisSettings.fitDistributionLeft, binParameters);
+	fitRangeRight = getParameterValue(analysisSettings.fitDistributionRight, binParameters);
+	fitRangeLeft2 = getParameterValue(analysisSettings.fitDistributionLeft2, binParameters);
+	fitRangeRight2 = getParameterValue(analysisSettings.fitDistributionRight2, binParameters);
 	TF1 fitDistributionFunc(analysisSettings.name + "_fitDistributionFunc", &getHistWeightedSum, (fitRangeLeft2 > 0) ? TMath::Min(fitRangeLeft, fitRangeLeft2) : fitRangeLeft, (fitRangeRight2 > 0) ? TMath::Max(fitRangeRight, fitRangeRight2) : fitRangeRight, 6);
 	for (Int_t ipar = 0;ipar < 6;ipar++) fitDistributionFunc.SetParameter(ipar, 0.0);
 	Float_t bgJetToTotalRatio = 0.0;
@@ -1138,35 +1218,35 @@ TCanvas *findPeak(const TFindPeakDistributions &s, Int_t numBinsToShow, Int_t bi
 	    Float_t bgJetmixNormErr = 0;
 	    Float_t bgJetmixNorm2 = 0;
 	    Float_t bgJetmixNorm2Err = 0;
-	    if (analysisSettings.fitDistributionLeft < analysisSettings.fitDistributionRight) {
-		extractSignal(invSig, funcZero, analysisSettings.fitDistributionLeft, analysisSettings.fitDistributionRight
+	    if (fitRangeLeft < fitRangeRight) {
+		extractSignal(invSig, funcZero, fitRangeLeft, fitRangeRight
 		    , false, true, false, false, false
 		    , sigNorm, sigNormErr
 		    , temp, temp, temp, temp, temp, temp, temp, temp
 		);
-		extractSignal(*invBgRandom, funcZero, analysisSettings.fitDistributionLeft, analysisSettings.fitDistributionRight
+		extractSignal(*invBgRandom, funcZero, fitRangeLeft, fitRangeRight
 		    , false, true, false, false, false
 		    , bgMixNorm, bgMixNormErr
 		    , temp, temp, temp, temp, temp, temp, temp, temp
 		);
-		extractSignal(*invBg, funcZero, analysisSettings.fitDistributionLeft, analysisSettings.fitDistributionRight
+		extractSignal(*invBg, funcZero, fitRangeLeft, fitRangeRight
 		    , false, true, false, false, false
 		    , bgJetmixNorm, bgJetmixNormErr
 		    , temp, temp, temp, temp, temp, temp, temp, temp
 		);
 	    }
-	    if (analysisSettings.fitDistributionLeft2 < analysisSettings.fitDistributionRight2) {
-		extractSignal(invSig, funcZero, analysisSettings.fitDistributionLeft2, analysisSettings.fitDistributionRight2
+	    if (fitRangeLeft2 < fitRangeRight2) {
+		extractSignal(invSig, funcZero, fitRangeLeft2, fitRangeRight2
 		    , false, true, false, false, false
 		    , sigNorm2, sigNorm2Err
 		    , temp, temp, temp, temp, temp, temp, temp, temp
 		);
-		extractSignal(*invBgRandom, funcZero, analysisSettings.fitDistributionLeft2, analysisSettings.fitDistributionRight2
+		extractSignal(*invBgRandom, funcZero, fitRangeLeft2, fitRangeRight2
 		    , false, true, false, false, false
 		    , bgMixNorm2, bgMixNorm2Err
 		    , temp, temp, temp, temp, temp, temp, temp, temp
 		);
-		extractSignal(*invBg, funcZero, analysisSettings.fitDistributionLeft2, analysisSettings.fitDistributionRight2
+		extractSignal(*invBg, funcZero, fitRangeLeft2, fitRangeRight2
 		    , false, true, false, false, false
 		    , bgJetmixNorm2, bgJetmixNorm2Err
 		    , temp, temp, temp, temp, temp, temp, temp, temp
@@ -1503,12 +1583,12 @@ TCanvas *findPeak(const TFindPeakDistributions &s, Int_t numBinsToShow, Int_t bi
 	    , yieldBgJetmix, yieldBgJetmixErr
 	    , temp, temp, temp, temp, temp, temp, temp, temp
 	);
-	if (invBg && (analysisSettings.fitDistributionLeft < analysisSettings.fitDistributionRight)) extractSignal(*invBg, funcZero, analysisSettings.fitDistributionLeft, analysisSettings.fitDistributionRight
+	if (invBg && (fitRangeLeft < fitRangeRight)) extractSignal(*invBg, funcZero, fitRangeLeft, fitRangeRight
 	    , false, true, false, false, false
 	    , yieldBgJetmixNorm, yieldBgJetmixNormErr
 	    , temp, temp, temp, temp, temp, temp, temp, temp
 	);
-	if (invBg && (analysisSettings.fitDistributionLeft2 < analysisSettings.fitDistributionRight2)) extractSignal(*invBg, funcZero, analysisSettings.fitDistributionLeft2, analysisSettings.fitDistributionRight2
+	if (invBg && (fitRangeLeft2 < fitRangeRight2)) extractSignal(*invBg, funcZero, fitRangeLeft2, fitRangeRight2
 	    , false, true, false, false, false
 	    , yieldBgJetmixNorm2, yieldBgJetmixNorm2Err
 	    , temp, temp, temp, temp, temp, temp, temp, temp
@@ -1519,12 +1599,12 @@ TCanvas *findPeak(const TFindPeakDistributions &s, Int_t numBinsToShow, Int_t bi
 	    , yieldBgMix, yieldBgMixErr
 	    , temp, temp, temp, temp, temp, temp, temp, temp
 	);
-	if (invBgRandom && (analysisSettings.fitDistributionLeft < analysisSettings.fitDistributionRight)) extractSignal(*invBgRandom, funcZero, analysisSettings.fitDistributionLeft, analysisSettings.fitDistributionRight
+	if (invBgRandom && (fitRangeLeft < fitRangeRight)) extractSignal(*invBgRandom, funcZero, fitRangeLeft, fitRangeRight
 	    , false, true, false, false, false
 	    , yieldBgMixNorm, yieldBgMixNormErr
 	    , temp, temp, temp, temp, temp, temp, temp, temp
 	);
-	if (invBgRandom && (analysisSettings.fitDistributionLeft2 < analysisSettings.fitDistributionRight2)) extractSignal(*invBgRandom, funcZero, analysisSettings.fitDistributionLeft2, analysisSettings.fitDistributionRight2
+	if (invBgRandom && (fitRangeLeft2 < fitRangeRight2)) extractSignal(*invBgRandom, funcZero, fitRangeLeft2, fitRangeRight2
 	    , false, true, false, false, false
 	    , yieldBgMixNorm2, yieldBgMixNorm2Err
 	    , temp, temp, temp, temp, temp, temp, temp, temp
@@ -2266,87 +2346,6 @@ TCanvas *findPeaks(const TAnalysisSettingsTrigger &analysisSettings
         return canvas;
 }
 
-
-Bool_t fitParameter(const bin_stat_list_type *values, const TH1F *hist, TFitSettings &param, TFitSettings &paramSave, TString name) {
-    Bool_t result = false;
-    if (param.useFit) {
-	param.valuesForFit.clear();
-	param.fitSigma = 0;
-	param.fitMeanAbs = 0;
-	Int_t sizeMax = (values ? values->size() : 1) + (hist ? hist->GetXaxis()->GetNbins() : 1);
-	Float_t *X = new Float_t[sizeMax];
-	Float_t *Xerr = new Float_t[sizeMax];
-	Float_t *Y = new Float_t[sizeMax];
-	Float_t *Yerr = new Float_t[sizeMax];
-	Int_t size = 0;
-	Float_t maxX = -1;
-	Float_t minX = -1;
-	if (values) for (bin_stat_list_type::const_iterator iter = values->begin();iter != values->end();++iter) {
-		const TBinStatistics &value = *iter;
-		Float_t center = value.getParameters().getCenter();
-		if ((center >= param.fitLow) && (center <= param.fitHigh)) {
-			param.valuesForFit.push_back(value);
-			X[size] = center;
-			Xerr[size] = 0;
-			Y[size] = value.getValue();
-			Yerr[size] = value.getError();
-			size++;
-		}
-		if ((center > maxX) || (maxX == -1)) maxX = center;
-		if ((center < minX) || (minX == -1)) minX = center;
-	}
-	if (hist) {
-	    for (Int_t ibin = 1;ibin <= hist->GetXaxis()->GetNbins();++ibin) {
-		Float_t center = hist->GetXaxis()->GetBinCenter(ibin);
-		if ((center >= param.fitLow) && (center <= param.fitHigh) && !((hist->GetBinContent(ibin) == 0) && (hist->GetBinError(ibin) == 0))) {
-			TBinParameters binPar;
-			binPar.min = hist->GetXaxis()->GetBinLowEdge(ibin);
-			binPar.max = hist->GetXaxis()->GetBinUpEdge(ibin);
-			TBinStatistics value;
-			value.setParameters(binPar);
-			value.setValue(hist->GetBinContent(ibin));
-			value.setError(hist->GetBinError(ibin));
-			param.valuesForFit.push_back(value);
-			X[size] = center;
-			Xerr[size] = 0;
-			Y[size] = hist->GetBinContent(ibin);
-			Yerr[size] = hist->GetBinError(ibin);
-			size++;
-		}
-		if ((center > maxX) || (maxX == -1)) maxX = center;
-		if ((center < minX) || (minX == -1)) minX = center;
-
-	    }
-	}
-	if (size > 0) {
-	    TGraphErrors *hgr = new TGraphErrors(size, X, Y, Xerr, Yerr);
-    	    if (hgr) {
-		if (!param.func) param.func = new TF1(name, (const Char_t*)param.fitFuncStr);
-		if (param.func) {
-		    param.func->SetRange(minX, maxX);
-		    hgr->Fit(param.func, param.fitOption);
-		    param.wasFit = true;
-		    Float_t sum = 0;
-		    Float_t sumAbs = 0;
-		    Float_t sum2 = 0;
-		    for (Int_t i = 0;i < size;i++) {
-			Float_t diff = Y[i] - param.func->Eval(X[i]);
-			sum += diff;
-			sumAbs += TMath::Abs(diff);
-			sum2 += (diff * diff);
-//cout << i <<  ": X = " << X[i] << ", Y = " << Y[i] << ", F = " << param.func->Eval(X[i]) << ", diff = " << diff << ", sum = " << sum << ", sumAbs = " << sumAbs << ", sum2 = " << sum2 << endl;
-		    }
-		    param.fitSigma = TMath::Sqrt((sum2 / size) - ((sum / size) * (sum / size)));
-		    param.fitMeanAbs = sumAbs / size;
-		    result = true;
-		}
-	    }
-	}
-    }
-    paramSave = param;
-    return result;
-}
-
 TCanvas *fitSpectraBins(const TAnalysisSettingsTrigger &analysisSettings
 		      , TAnalysisRawResultsTrigger &analysisResults
 		      , const TAnalysisRawResultsTrigger *analysisResultsSim
@@ -2586,6 +2585,14 @@ TCanvas *fitSpectraBins(const TAnalysisSettingsTrigger &analysisSettings
 		//if (funcHigh) delete funcHigh;
 		analysisResults.cpvCorrection = analysisResults.cpvCorrectionMult;
 	    }
+	}
+
+	{
+	    TH1F h("h","h",1,0,1); h.Fill(0.5, 1);
+	    fitParameter(0, &h, analysisSettingsNew.fitDistributionLeft, analysisSettingsNew.fitDistributionLeft, analysisSettingsNew.name + "_fitDistributionLeft");
+	    fitParameter(0, &h, analysisSettingsNew.fitDistributionRight, analysisSettingsNew.fitDistributionRight, analysisSettingsNew.name + "_fitDistributionRight");
+	    fitParameter(0, &h, analysisSettingsNew.fitDistributionLeft2, analysisSettingsNew.fitDistributionLeft2, analysisSettingsNew.name + "_fitDistributionLeft2");
+	    fitParameter(0, &h, analysisSettingsNew.fitDistributionRight2, analysisSettingsNew.fitDistributionRight2, analysisSettingsNew.name + "_fitDistributionRight2");
 	}
 
 	{
@@ -3217,7 +3224,7 @@ typedef map<ptBinPosFromQCD_point_type, Double_t> ptBinPosFromQCD_map_type;
 ptBinPosFromQCD_map_type ptBinPosMapFromQCD;
 ptBinPosFromQCD_map_type ptBinPosCorrMapFromQCD;
 TF1 *pQCDfunc = 0;
-Double_t getPtBinPosFromQCD(Double_t *x, Double_t *p) {
+Double_t getPtBinPosFromQCD(Double_t *x, Double_t * /*p*/) {
 	Double_t newBinCenter = 0;
 	if (!x) return newBinCenter;
 	Float_t binCenter = x[0];
@@ -3246,7 +3253,7 @@ Double_t getPtBinPosFromQCD(Double_t *x, Double_t *p) {
 	}
 	return newBinCenter;
 }
-Double_t getPtBinPosCorrFromQCD(Double_t *x, Double_t *p) {
+Double_t getPtBinPosCorrFromQCD(Double_t *x, Double_t * /*p*/) {
 	Double_t newBinCenterCorr = 0;
 	if (!x) return newBinCenterCorr;
 	Float_t binCenter = x[0];
@@ -3307,7 +3314,7 @@ void calculatePtShiftCorr(const bin_stat_list_type &bins, bin_stat_list_type &co
     }
 }
 
-void correctPtShift(bin_stat_list_type &bins, Bool_t horizontal, const distribution_list_type *simdistrlist) {
+void correctPtShift(bin_stat_list_type &bins, Bool_t horizontal, const distribution_list_type * /*simdistrlist*/) {
 	for (bin_stat_list_type::iterator iter = bins.begin();iter != bins.end();++iter) {
 		TBinStatistics &bin = *iter;
 		const TBinParameters &binParams = bin.getParameters();
@@ -3349,7 +3356,7 @@ void enumerateCombinations(UInt_t size, UInt_t N, const vector<UInt_t> cur, list
     }
 }
 
-void selectInv(const TCandidateDataProcessor *proc, Float_t binSize, Float_t pTLow, Float_t pTHigh, Int_t mult, list<TInvariantMassDistribution> &binlist, const TPointDataProcessor *pointDataProcessor, bool debug) {
+void selectInv(const TCandidateDataProcessor *proc, Float_t binSize, Float_t pTLow, Float_t pTHigh, Int_t mult, list<TInvariantMassDistribution> &binlist, const TPointDataProcessor *pointDataProcessor, bool /*debug*/) {
 	const list<TInvariantMassDistribution> *listToUse = 0;
 	if (mult == 0) {
 	    listToUse = proc ? &proc->invariantMassDistributions : 0;
@@ -4230,9 +4237,9 @@ void clearCachedPrescales() {
     prescalesNum = 0;
 }
 
-void calculatePSFromDB(const Char_t *name, const Char_t *title, const Char_t *psFilename
+void calculatePSFromDB(const Char_t * /*name*/, const Char_t *title, const Char_t *psFilename
     , const TEventDataProcessor *eventDataProcessorMB, const TEventDataProcessor *eventDataProcessorHT1, const TEventDataProcessor *eventDataProcessorHT2
-    , Bool_t show, Bool_t print, Float_t &PSHT1, Float_t &PSHT2, Float_t &PSHT1_err, Float_t &PSHT2_err, Float_t &PSHT1_alexst, Float_t &PSHT2_alexst) {
+    , Bool_t /*show*/, Bool_t print, Float_t &PSHT1, Float_t &PSHT2, Float_t &PSHT1_err, Float_t &PSHT2_err, Float_t &PSHT1_alexst, Float_t &PSHT2_alexst) {
 	if (print) cout << "Prescales calculation from the DB data, " << title << endl;
 	const TH2F *histMB = eventDataProcessorMB ? eventDataProcessorMB->getDayRun() : 0;
 	const TH2F *histHT1 = eventDataProcessorHT1 ? eventDataProcessorHT1->getDayRun() : 0;
@@ -4416,7 +4423,7 @@ void showResultsOthers(TH1F *histSpectrum, TLegend *legendSpectrum, const data_p
 		    //if (newPoints->funcDenom) fstr += TString("/") + newPoints->funcDenom->GetName();
 		    //TF1 *f = new TF1(newName.Data(), fstr.Data(), xmin, xmax);
 		    TF1 *f = 0;
-#if ROOT_VERSION_CODE >= ROOT_VERSION(5,21,0)
+#if ROOT_VERSION_CODE >= ROOT_VERSION(5,21,0) 
 		    f = new TF1(newName.Data(), ROOT::Math::ParamFunctor(newPoints, &TDataPoints::operator()), xmin, xmax, newPoints->func->GetNpar());
 #endif
 		    if (f) {
@@ -4460,6 +4467,7 @@ void showResultsOthers(TH1F *histSpectrum, TLegend *legendSpectrum, const data_p
 	if (legendSpectrum) legendSpectrum->Draw();
 }
 
+/*
 void showPointsRcp(const Char_t *name, const Char_t *title
 	, const TDataProcessorPool *poolMostcentral, const TDataProcessorPool *poolMostperipheral
 	, Bool_t chargedPoints, Bool_t allPoints
@@ -4468,7 +4476,6 @@ void showPointsRcp(const Char_t *name, const Char_t *title
 	, Float_t minPtMB, Float_t minPtHT1, Float_t minPtHT2
 	, Float_t maxPtMB, Float_t maxPtHT1, Float_t maxPtHT2
 ) {
-/*
 	GET_DATA(pointDataProcessorMBMostcentral, const TPointDataProcessor, poolMostcentral, (allPoints ? "pointAllMB" : (chargedPoints ? "pointChargedMB" : "pointMB")));
 	GET_DATA(pointDataProcessorHT1Mostcentral, const TPointDataProcessor, poolMostcentral, (allPoints ? "pointAllHT1" : (chargedPoints ? "pointChargedHT1" : "pointHT1")));
 	GET_DATA(pointDataProcessorHT2Mostcentral, const TPointDataProcessor, poolMostcentral, (allPoints ? "pointAllHT2" : (chargedPoints ? "pointChargedHT2" : "pointHT2")));
@@ -4667,8 +4674,8 @@ void showPointsRcp(const Char_t *name, const Char_t *title
 		if (pMBcc) pMBcc->SetMinimum(0);
 		if (pMBcc) pMBcc->SetMaximum(1.5);
 	}
-*/
 }
+*/
 
 TH1 *ProjectX3(const TH3 *h, Int_t xLowBin, Int_t xHighBin, Int_t yLowBin, Int_t yHighBin, Int_t zLowBin, Int_t zHighBin) {
 	TH1F *r = 0;
@@ -4700,6 +4707,7 @@ TH1 *ProjectX3(const TH3 *h, Int_t xLowBin, Int_t xHighBin, Int_t yLowBin, Int_t
 	return r;
 }
 
+/*
 void showPointsRcpEtaPhiCoord(const Char_t *name, const Char_t *title
 	, const TDataProcessorPool *poolMostcentral, const TDataProcessorPool *poolMostperipheral
 	, Bool_t chargedPoints, Bool_t allPoints
@@ -4710,7 +4718,6 @@ void showPointsRcpEtaPhiCoord(const Char_t *name, const Char_t *title
 	, Float_t maxPtMB, Float_t maxPtHT1, Float_t maxPtHT2
 	, Float_t integralLow, Float_t maxError
 ) {
-/*
 	GET_DATA(pointDataProcessorMBMostcentral, const TPointDataProcessor, poolMostcentral, (allPoints ? "pointAllMB" : (chargedPoints ? "pointChargedMB" : "pointMB")));
 	GET_DATA(pointDataProcessorHT1Mostcentral, const TPointDataProcessor, poolMostcentral, (allPoints ? "pointAllHT1" : (chargedPoints ? "pointChargedHT1" : "pointHT1")));
 	GET_DATA(pointDataProcessorHT2Mostcentral, const TPointDataProcessor, poolMostcentral, (allPoints ? "pointAllHT2" : (chargedPoints ? "pointChargedHT2" : "pointHT2")));
@@ -4988,14 +4995,14 @@ void showPointsRcpEtaPhiCoord(const Char_t *name, const Char_t *title
 			}
 		}
 	}
-*/
 }
+*/
 
 void showResultsDAuCentrality(const Char_t *dAuCentralityName, const Char_t *dAuCentralityTitle
         , Bool_t showRcp, Bool_t showRcpEta, Bool_t dAuCentralityShow, Bool_t dAuCentralityPrint, Bool_t showDAuCentralityTriggersSeparately
 	, Bool_t saveDataArrays, const Char_t *dataArraysFilenameFormat
         , const TAnalysisSettings &settingsDAuNoCentral
-        , const TAnalysisSettings &settingsDAuAllCentral
+        , const TAnalysisSettings &/*settingsDAuAllCentral*/
         , const TAnalysisSettings &settingsDAuMostCentral
         , const TAnalysisSettings &settingsDAuMidCentral
         , const TAnalysisSettings &settingsDAuMostPeripheral
