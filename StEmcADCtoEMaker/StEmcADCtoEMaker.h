@@ -13,7 +13,7 @@ files. The tasks performed by this maker are:
 #ifndef STAR_StEmcADCtoEMaker
 #define STAR_StEmcADCtoEMaker
 
-#include "StMaker.h"
+#include "StChain/StMaker.h"
 #include "TH1.h"
 #include "TH2.h"
 #include "tables/St_controlADCtoE_Table.h"

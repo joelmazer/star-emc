@@ -1,6 +1,6 @@
 #ifndef VoltCalibrator_H_INCLUDED
 #define VoltCalibrator_H_INCLUDED
-#include "Stiostream.h"
+#include "St_base/Stiostream.h"
 #include "TObject.h"
 
 class VoltCalibrator

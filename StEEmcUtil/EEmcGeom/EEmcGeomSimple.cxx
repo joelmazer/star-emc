@@ -15,17 +15,17 @@
 #include "TVector3.h"
 
 #if 0
-#include "SystemOfUnits.h"
-#include "StThreeVectorD.hh"
-#include "StPhysicalHelixD.hh"
+#include "StarClassLibrary/SystemOfUnits.h"
+#include "StarClassLibrary/StThreeVectorD.hh"
+#include "StarClassLibrary/StPhysicalHelixD.hh"
 
-#include "StEmcRawHit.h"
-#include "StTrackGeometry.h"
-#include "StTrack.h"
+#include "StEvent/StEmcRawHit.h"
+#include "StEvent/StTrackGeometry.h"
+#include "StEvent/StTrack.h"
 #endif
 
-#include "EEmcGeomDefs.h"
-#include "EEmcGeomSimple.h"
+#include "StEEmcUtil/EEmcGeom/EEmcGeomDefs.h"
+#include "StEEmcUtil/EEmcGeom/EEmcGeomSimple.h"
 
 // ######################################################################
 //         *** WARNING NOT TESTED FOR mClock==1 (clock-wise) ***

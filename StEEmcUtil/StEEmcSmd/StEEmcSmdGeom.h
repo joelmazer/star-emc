@@ -32,7 +32,7 @@
 
 // StRoot classes
 #include "StThreeVectorD.hh"
-#include "StPhysicalHelixD.hh"
+#include "StarClassLibrary/StPhysicalHelixD.hh"
 
 class StEEmcSmdGeom : public EEmcSmdGeom {
 public:

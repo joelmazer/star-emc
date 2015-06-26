@@ -1,6 +1,6 @@
 // $Id: EEmcMCData.cxx,v 1.18 2010/08/26 22:48:54 ogrebeny Exp $
 
-#include "StEventTypes.h"
+#include "StEvent/StEventTypes.h"
 
 //#include "emc_def.h"          /* FIXME - move it to pams */
 
@@ -10,15 +10,15 @@
 #include "tables/St_g2t_emc_hit_Table.h"
 #include "tables/St_g2t_event_Table.h"
 //
-#include "StBFChain.h"
+#include "StBFChain/StBFChain.h"
 //
-#include "EEmcMCData.h"
+#include "StEEmcUtil/EEmcMC/EEmcMCData.h"
 
 #include "StEEmcUtil/EEmcGeom/EEmcGeomDefs.h"
 #include "StEEmcUtil/EEevent/EEeventDst.h"
 #include "StEEmcUtil/EEevent/EEsectorDst.h"
 
-#include "StMessMgr.h"
+#include "St_base/StMessMgr.h"
 
 ClassImp(EEmcMCData)
 

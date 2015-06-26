@@ -8,9 +8,9 @@
 */		
 //******************************************************************************
 
-#include "StEmcDbHandler.h"
-#include "TUnixTime.h"
-#include "StMessMgr.h"
+#include "StEmcUtil/database/StEmcDbHandler.h"
+#include "StarRoot/TUnixTime.h"
+#include "St_base/StMessMgr.h"
 
 #include "TFile.h"
 #include "TTable.h"

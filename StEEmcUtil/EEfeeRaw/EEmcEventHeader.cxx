@@ -1,9 +1,9 @@
 // $Id: EEmcEventHeader.cxx,v 1.11 2007/07/12 19:30:13 fisyak Exp $ 
 
-#include "EEmcEventHeader.h"
+#include "StEEmcUtil/EEfeeRaw/EEmcEventHeader.h"
 #include <string.h>
 
-//#include <Stiostream.h>
+//#include <St_base/Stiostream.h>
 
 ClassImp(EEmcEventHeader)
 

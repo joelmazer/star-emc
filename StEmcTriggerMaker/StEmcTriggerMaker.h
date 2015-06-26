@@ -44,7 +44,7 @@
 #include "emc_def.h"
 #include "StBemcTrigger.h"
 #include "StEmcUtil/database/StBemcTables.h"
-#include "StMessMgr.h"
+#include "St_base/StMessMgr.h"
 
 #include <map>
 using namespace std;

@@ -23,7 +23,7 @@ can be turned off, if desired.
 #ifndef STAR_StEmcMixerMaker
 #define STAR_StEmcMixerMaker
 #include "StMaker.h"
-#include "StMessMgr.h"
+#include "St_base/StMessMgr.h"
 #include <TH1.h>
 #include <TH2.h>
 

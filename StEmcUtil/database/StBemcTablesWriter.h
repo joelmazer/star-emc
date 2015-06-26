@@ -14,8 +14,8 @@ using std::map;
 #include <string> 
 using std::string;
 
-#include "StEmcDbHandler.h"
-#include "StBemcTables.h"
+#include "StEmcUtil/database/StEmcDbHandler.h"
+#include "StEmcUtil/database/StBemcTables.h"
 
 class StBemcTablesWriter : public StBemcTables
 {

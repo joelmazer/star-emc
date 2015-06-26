@@ -5,14 +5,14 @@
 #ifdef __APPLE__
 #include <sys/types.h>
 #endif
-#include <Stiostream.h>
+#include <St_base/Stiostream.h>
 #include <math.h>
 
-#include "StEventTypes.h"
-#include "StEvent.h"
+#include "StEvent/StEventTypes.h"
+#include "StEvent/StEvent.h"
 #include <TTree.h>
 
-#include "St2eemcFeeRawMaker.h"
+#include "StEEmcUtil/St2eemcFeeRawMaker.h"
 
 #include "StEEmcUtil/database/StEEmcDb.h"
 #include "StEEmcUtil/database/EEmcDbItem.h"

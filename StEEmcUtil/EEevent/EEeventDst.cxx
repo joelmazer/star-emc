@@ -2,10 +2,10 @@
 
 #include <cassert>
 #include <TClonesArray.h>
-#include <StMessMgr.h>
+#include <St_base/StMessMgr.h>
 
-#include "EEsectorDst.h"
-#include "EEeventDst.h"
+#include "StEEmcUtil/EEevent/EEsectorDst.h"
+#include "StEEmcUtil/EEevent/EEeventDst.h"
 
 ClassImp(EEeventDst)
 //--------------------------------------------------

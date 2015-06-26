@@ -1,14 +1,14 @@
-#include "StEmcDecoder.h"
+#include "StDaqLib/EMC/StEmcDecoder.h"
 #include <time.h>
 #include <stdlib.h>
-#include <Stiostream.h>
+#include <St_base/Stiostream.h>
 #include <stdio.h>
 #ifdef IN_PANITKIN
 #include <TFile.h>
 #endif
-#include "StMessMgr.h"
+#include "St_base/StMessMgr.h"
 
-#include "StEmcMappingDb.h"
+#include "StEmcUtil/database/StEmcMappingDb.h"
 
 ClassImp(StEmcDecoder)
 
@@ -20,10 +20,10 @@ StEmcDecoder::StEmcDecoder(unsigned date, unsigned time, bool TowerMapBug) {
     // tower swap fixes applied only at analysis level
     for(int i=0;i<4800;i++) TowerBugFixIndex[i] = i+1;
     if(date >= 20040101 && date < 20050101) {
-        #include "TowerBug2004.txt"
+        #include "StEmcUtil/database/TowerBug2004.txt"
     }
     if(date >= 20050101 && date < 20060101) {
-        #include "TowerBug2005.txt"
+        #include "StEmcUtil/database/TowerBug2005.txt"
     }
     for(int i=0;i<4800;i++) {
         int id = i+1;
@@ -36,7 +36,7 @@ StEmcDecoder::StEmcDecoder(unsigned date, unsigned time, bool TowerMapBug) {
     // preshower swap fixes applied only at analysis level
     for(int i=0; i<4800; i++) PreshowerBugFixIndex[i] = i+1;
     if(date >= 20060101 && date < 20071101) {
-        #include "PreshowerBug2007.txt"
+        #include "StEmcUtil/database/PreshowerBug2007.txt"
     }
     for(int i=0; i<4800; i++) {
         int id = i+1;
@@ -49,7 +49,7 @@ StEmcDecoder::StEmcDecoder(unsigned date, unsigned time, bool TowerMapBug) {
     // SMD eta swap fixes applied only at analysis level
     for(int i=0;i<18000;i++) SmdBugFixIndex[i] = i+1;
     if(date >= 20100101 && date < 20110101) {
-        #include "SmdBug2010.txt"
+        #include "StEmcUtil/database/SmdBug2010.txt"
     }
 }
 

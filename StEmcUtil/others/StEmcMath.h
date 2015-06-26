@@ -11,7 +11,7 @@
 #ifndef ROOT_Rtypes
 #include "Rtypes.h"
 #endif
-#include "StDetectorId.h" // see $STAR/include
+#include "StEvent/StDetectorId.h" // see $STAR/include
 
 class StMeasuredPoint;
 class TArrayD;

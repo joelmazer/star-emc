@@ -121,12 +121,12 @@
  * class StEmcGeom was created and maker was remade for new maker scheme
  *
  **************************************************************************/
-#include "StEmcGeom.h"
+#include "StEmcUtil/geometry/StEmcGeom.h"
 #include <assert.h>
 #include <strings.h>
 #include <stdlib.h>
 #include <TROOT.h>
-#include "StMaker.h"
+#include "StChain/StMaker.h"
 #include "StEmcUtil/others/emcInternalDef.h"
 
 ClassImp(StEmcGeom)

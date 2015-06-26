@@ -3,18 +3,18 @@
 
 #include <TDatime.h>
 
-#include "StMaker.h"
+#include "StChain/StMaker.h"
 
-#include "St_DataSetIter.h"
+#include "Star2Root/St_DataSetIter.h"
 
 //#include "St_db_Maker/St_db_Maker.h" // tmp to ovveride time stamp
 
-#include "StEventTypes.h"
+#include "StEvent/StEventTypes.h"
 
-#include "StEEmcDb.h"
+#include "StEEmcUtil/database/StEEmcDb.h"
 
-#include "EEmcDbItem.h"
-#include "EEmcDbCrate.h"
+#include "StEEmcUtil/database/EEmcDbItem.h"
+#include "StEEmcUtil/database/EEmcDbCrate.h"
 #include "StEEmcUtil/EEfeeRaw/EEname2Index.h" 
 
 #include "tables/St_eemcDbADCconf_Table.h"
@@ -27,7 +27,7 @@
 #include "cstructs/eemcConstDB.hh"
 #include "cstructs/kretConstDB.hh"
 
-#include <StMessMgr.h>
+#include <St_base/StMessMgr.h>
 
 ClassImp(StEEmcDb)
 

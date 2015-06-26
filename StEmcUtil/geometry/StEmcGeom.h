@@ -106,14 +106,14 @@
 // StEmcGeom main class for <FONT COLOR="RED"> Geometry of BEMC for OFFline </FONT>      //
 //                                                                      //
 //////////////////////////////////////////////////////////////////////////
-#include <Stiostream.h>
-#include "math_constants.h"
+#include "St_base/Stiostream.h"
+#include "StHbtMaker/doc/Make/math_constants.h"
 #include <math.h>
 #include <TArrayF.h>
 #include <TString.h>
 #include "tables/St_calb_calg_Table.h"
 #include "tables/St_calb_calr_Table.h"
-#include "StMessMgr.h"
+#include "St_base/StMessMgr.h"
 
 class StMaker;
 class TDataSet;

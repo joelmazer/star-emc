@@ -17,9 +17,9 @@
  *
  *****************************************************************/
 
-#include "Stiostream.h"
-#include "StEEmcSmdGeom.h"
-#include "PhysicalConstants.h"
+#include "St_base/Stiostream.h"
+#include "StEEmcUtil/StEEmcSmd/StEEmcSmdGeom.h"
+#include "StarClassLibrary/PhysicalConstants.h"
 
 ClassImp(StEEmcSmdGeom);
 

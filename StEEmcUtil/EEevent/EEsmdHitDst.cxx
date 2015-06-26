@@ -1,8 +1,8 @@
-#include <StMessMgr.h>
+#include <St_base/StMessMgr.h>
 #include <cassert>
 
 
-#include "EEsmdHitDst.h"
+#include "StEEmcUtil/EEevent/EEsmdHitDst.h"
 
 ClassImp(EEsmdHitDst);
 

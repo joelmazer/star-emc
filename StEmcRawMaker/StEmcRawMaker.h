@@ -43,8 +43,8 @@ would set CheckStatus to 0 for BTOW+BSMD+BPSD, and CutOffType to
 #ifndef STAR_StEmcRawMaker
 #define STAR_StEmcRawMaker
 
-#include "StMaker.h"
-#include "StRTSBaseMaker.h"
+#include "StChain/StMaker.h"
+#include "StChain/StRTSBaseMaker.h"
 #include "TH1.h"
 #include "TH2.h"
 #include "tables/St_controlADCtoE_Table.h"

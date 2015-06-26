@@ -8,17 +8,17 @@
 //
 //******************************************************************************
 
-#include "StEmcPosition.h"
+#include "StEmcUtil/projection/StEmcPosition.h"
 #include <math.h>
-#include "SystemOfUnits.h"
-#include "PhysicalConstants.h"
-#include "StPhysicalHelixD.hh"
+#include "StarClassLibrary/SystemOfUnits.h"
+#include "StarClassLibrary/PhysicalConstants.h"
+#include "StarClassLibrary/StPhysicalHelixD.hh"
 
-#include "StMcEvent.hh"
-#include "StMcEventTypes.hh"
+#include "StMcEvent/StMcEvent.hh"
+#include "StMcEvent/StMcEventTypes.hh"
 #include "StMcEventMaker/StMcEventMaker.h"
-#include "StEvent.h"
-#include "StEventTypes.h"
+#include "StEvent/StEvent.h"
+#include "StEvent/StEventTypes.h"
 #include "StEmcUtil/geometry/StEmcGeom.h"
 
 //StMuDstMaker:

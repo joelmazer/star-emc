@@ -3,7 +3,7 @@
 #include <cassert>
 #include <cstdio>
 
-#include "EEname2Index.h"
+#include "StEEmcUtil/EEfeeRaw/EEname2Index.h"
 //__________________________________________________
 //__________________________________________________
 void  EEindexRange(int secID,int &ix1, int &ix2){

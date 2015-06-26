@@ -17,7 +17,7 @@
 #include "TVector3.h"
 #include "TMath.h"
 #include <math.h>
-#include <StMessMgr.h>
+#include "St_base/StMessMgr.h"
 
 class  EEmcGeomSimple : public TObject { 
 public:

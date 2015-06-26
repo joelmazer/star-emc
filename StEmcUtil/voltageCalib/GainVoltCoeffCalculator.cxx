@@ -6,8 +6,8 @@
 /// class is used to hold PMT data and for the actual power 
 /// law fit. 
 ///
-#include "GainVoltCoeffCalculator.h"
-#include "GainVoltPmtParameters.h"
+#include "StEmcUtil/voltageCalib/GainVoltCoeffCalculator.h"
+#include "StEmcUtil/voltageCalib/GainVoltPmtParameters.h"
 using namespace std;
 //ClassImp(GainVoltCoeffCalculator)
 

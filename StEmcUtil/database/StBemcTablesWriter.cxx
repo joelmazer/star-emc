@@ -5,15 +5,15 @@
  *
  ***************************************************************************/
 
-#include "StBemcTablesWriter.h"
+#include "StEmcUtil/database/StBemcTablesWriter.h"
 
 #include "TSystem.h"
 #include "TFile.h"
 #include "TDatime.h"
 
-#include "TUnixTime.h"
+#include "StarRoot/TUnixTime.h"
 #include "StDaqLib/EMC/StEmcDecoder.h"
-#include "StMessMgr.h"
+#include "St_base/StMessMgr.h"
 
 #include "StEmcRawMaker/defines.h"
 

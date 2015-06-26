@@ -11,7 +11,7 @@
 #include "TObject.h"
 #include "TClonesArray.h"
 #include "TVector3.h"
-#include "StThreeVectorF.hh"
+#include "StarClassLibrary/StThreeVectorF.hh"
 #include "TRefArray.h"
 
 #include <vector>

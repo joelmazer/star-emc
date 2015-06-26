@@ -1,8 +1,8 @@
 #include <cassert>
 #include <string.h>
-#include "EEdims.h"
+#include "StEEmcUtil/EEfeeRaw/EEdims.h"
 
-#include "EEfeeDataBlock.h"
+#include "StEEmcUtil/EEfeeRaw/EEfeeDataBlock.h"
 
 ClassImp(EEfeeDataBlock)
 

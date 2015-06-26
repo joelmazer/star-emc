@@ -1,10 +1,10 @@
 #ifndef GainVoltPmtParameters_H_INCLUDED
 #define GainVoltPmtParameters_H_INCLUDED
-#include <Stiostream.h>
+#include "St_base/Stiostream.h"
 #include <vector>
 using std::vector;
-#include "PowerLawFit.h"
-#include "PmtIdentifier.h"
+#include "StEmcUtil/voltageCalib/PowerLawFit.h"
+#include "StEmcUtil/voltageCalib/PmtIdentifier.h"
 
 /// Class used to describe the gain vs bias voltage of a photomultiplier tube.
 /// Input parameters consist of experimentally measured relative gain vs

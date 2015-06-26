@@ -1,4 +1,4 @@
-#include "GainVoltPmtParameters.h"
+#include "StEmcUtil/voltageCalib/GainVoltPmtParameters.h"
 #include <math.h>
 
 int GainVoltPmtParameters::ioMode=2;

@@ -1,5 +1,5 @@
 #include <cassert>
-#include "EEtwHitDst.h"
+#include "StEEmcUtil/EEevent/EEtwHitDst.h"
 
 ClassImp(EEtwHitDst);
 

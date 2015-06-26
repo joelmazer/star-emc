@@ -1,6 +1,6 @@
-#include "EEstarTrig.h"
+#include "StEEmcUtil/EEfeeRaw/EEstarTrig.h"
  
-//#include <Stiostream.h>
+//#include <St_base/Stiostream.h>
 
 ClassImp(EEstarTrig)
 

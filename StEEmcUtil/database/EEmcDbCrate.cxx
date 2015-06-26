@@ -6,7 +6,7 @@
 #include <assert.h>
 #include "TString.h"
 
-#include "EEmcDbCrate.h"
+#include "StEEmcUtil/database/EEmcDbCrate.h"
 
 //--------------------------------------------------
 //--------------------------------------------------

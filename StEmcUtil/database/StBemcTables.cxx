@@ -6,11 +6,11 @@
  *
  ***************************************************************************/
 
-#include "StBemcTables.h"
-#include "Stiostream.h"
+#include "StEmcUtil/database/StBemcTables.h"
+#include "St_base/Stiostream.h"
 #include "StEmcUtil/others/emcDetectorName.h"
 #include "StDaqLib/EMC/StEmcDecoder.h"
-#include "StMaker.h"
+#include "StChain/StMaker.h"
 #include "St_db_Maker/St_db_Maker.h"
 #include "StEmcRawMaker/defines.h"
 

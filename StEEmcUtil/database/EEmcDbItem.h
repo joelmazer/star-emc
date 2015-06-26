@@ -1,7 +1,7 @@
 #ifndef EEMCDBITEM_H
 #define EEMCDBITEM_H
 
-#include "StMessMgr.h"
+#include "St_base/StMessMgr.h"
 #if !defined(ST_NO_NAMESPACES)
 using std::ostream;
 #endif

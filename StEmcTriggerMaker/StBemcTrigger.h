@@ -11,7 +11,7 @@
 #define STAR_StBemcTrigger
 #include "TObject.h"
 
-#include "StMessMgr.h"
+#include "St_base/StMessMgr.h"
 
 #define kNPatches 300
 #define kNJet 12

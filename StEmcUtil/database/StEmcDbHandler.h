@@ -16,7 +16,7 @@ using namespace std;
 
 
 //#include <strstream>
-//#include <Stsstream.h>
+//#include <St_base/Stsstream.h>
 
 #include "TObject.h"
 

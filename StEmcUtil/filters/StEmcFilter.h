@@ -27,10 +27,10 @@ The geant_id is obtained based on the dE/dX cuts set in the filter.
 */
 #ifndef StEmcFilter_HH
 #define StEmcFilter_HH
-#include "BetheBloch.h"
+#include "StarClassLibrary/BetheBloch.h"
 #include "tables/St_emcStatus_Table.h"
 #include "tables/St_smdStatus_Table.h"
-#include <Stiostream.h>
+#include "St_base/Stiostream.h"
 
 #define NTOWER 4800
 

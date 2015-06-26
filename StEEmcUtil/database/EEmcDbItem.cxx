@@ -9,7 +9,7 @@
 
 #include "cstructs/eemcConstDB.hh"
 
-#include "EEmcDbItem.h"
+#include "StEEmcUtil/database/EEmcDbItem.h"
 
 //--------------------------------------------------
 //--------------------------------------------------

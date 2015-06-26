@@ -1,5 +1,5 @@
-#include "EEmcSmdMap.h"
-#include "EEmcSmd2SmdMapItem.h"
+#include "StEEmcUtil/EEmcSmdMap/EEmcSmdMap.h"
+#include "StEEmcUtil/EEmcSmdMap/EEmcSmd2SmdMapItem.h"
 
 /////////////////////////////////////////////////////////////////////////////
 

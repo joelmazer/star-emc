@@ -1,10 +1,10 @@
 #include <cassert>
 #include <ctime>
 
-#include "EEfeeDataBlock.h"
-#include "EEfeeRawEvent.h"
+#include "StEEmcUtil/EEfeeRaw/EEfeeDataBlock.h"
+#include "StEEmcUtil/EEfeeRaw/EEfeeRawEvent.h"
 
-#include "EEfeeRawEvent.h"
+#include "StEEmcUtil/EEfeeRaw/EEfeeRawEvent.h"
 ClassImp(EEfeeRawEvent)
 
 

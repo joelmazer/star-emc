@@ -1,6 +1,6 @@
 #include <cmath>
 #include <TArrayD.h>
-#include "StEmcMath.h"
+#include "StEmcUtil/others/StEmcMath.h"
 #include "StEvent/StMeasuredPoint.h"
 #include "StarClassLibrary/StThreeVectorF.hh"
 #include "StEmcUtil/others/emcInternalDef.h"

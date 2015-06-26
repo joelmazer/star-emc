@@ -1,4 +1,4 @@
-#include "LinearFit.h"
+#include "StEmcUtil/voltageCalib/LinearFit.h"
 
 template<typename Number>
 class PowerLawFit : public LinearFit<Number>

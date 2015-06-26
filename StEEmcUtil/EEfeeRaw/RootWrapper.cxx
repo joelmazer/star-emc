@@ -8,9 +8,9 @@
 #include "TBranch.h"
 
 
-#include "EEfeeDataBlock.h"
-#include "EEfeeRawEvent.h"
-#include "EEmcEventHeader.h"
+#include "StEEmcUtil/EEfeeRaw/EEfeeDataBlock.h"
+#include "StEEmcUtil/EEfeeRaw/EEfeeRawEvent.h"
+#include "StEEmcUtil/EEfeeRaw/EEmcEventHeader.h"
 
 
 // A simple wrapper for Fortran xsort program

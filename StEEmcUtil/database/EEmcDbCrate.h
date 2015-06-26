@@ -1,7 +1,7 @@
 #ifndef EEMCDB_CRATE_H
 #define EEMCDB_CRATE_H
 
-#include "StMessMgr.h"
+#include "St_base/StMessMgr.h"
 
 class EEmcDbCrate {
  private:

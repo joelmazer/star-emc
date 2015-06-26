@@ -29,10 +29,10 @@
 ///
 ///\author Claude A Pruneau, Wayne State University
 ///
-#include "VoltCalibrator.h"
-#include "GainVoltCoeffCalculator.h"
-#include "PmtIdentifier.h"
-#include "GainVoltPmtParameters.h"
+#include "StEmcUtil/voltageCalib/VoltCalibrator.h"
+#include "StEmcUtil/voltageCalib/GainVoltCoeffCalculator.h"
+#include "StEmcUtil/voltageCalib/PmtIdentifier.h"
+#include "StEmcUtil/voltageCalib/GainVoltPmtParameters.h"
 ClassImp(VoltCalibrator)
 
 VoltCalibrator::VoltCalibrator()

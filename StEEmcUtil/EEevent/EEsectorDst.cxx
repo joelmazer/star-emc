@@ -2,11 +2,11 @@
 
 #include <cassert>
 #include <TClonesArray.h>
-#include <StMessMgr.h>
+#include <St_base/StMessMgr.h>
 
-#include "EEtwHitDst.h"
-#include "EEsmdHitDst.h"
-#include "EEsectorDst.h"
+#include "StEEmcUtil/EEevent/EEtwHitDst.h"
+#include "StEEmcUtil/EEevent/EEsmdHitDst.h"
+#include "StEEmcUtil/EEevent/EEsectorDst.h"
 
 ClassImp(EEsectorDst)
 

@@ -32,14 +32,14 @@
     \author Wei-Ming Zhang
 
 */
-#include "Stiostream.h"
-#include "EEmcSmdGeom.h"
-#include "EEmcStripGeom.h"
+#include "St_base/Stiostream.h"
+#include "StEEmcUtil/StEEmcSmd/EEmcSmdGeom.h"
+#include "StEEmcUtil/StEEmcSmd/EEmcStripGeom.h"
 #include <assert.h>
 #include <TMath.h>
 
 // decouple from StarClassLibrary
-//#include "PhysicalConstants.h"  
+//#include "StarClassLibrary/PhysicalConstants.h"  
 #ifndef HEP_SYSTEM_OF_UNITS_H
 static const double     radian      = 1.;
 static const double     pi          = M_PI; // from <math.h>
@@ -47,7 +47,7 @@ static const double     degree      = (M_PI/180.0)*radian;
 #endif
 
 
-#include "StMessMgr.h"
+#include "St_base/StMessMgr.h"
 
 
 /// defaulty constructor

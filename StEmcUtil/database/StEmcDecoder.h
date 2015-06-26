@@ -22,8 +22,8 @@ The current id's definitions are:<br>
             - 0 <= index           <= 4799
             
 */
-#include <Stiostream.h>
-#include "Stiostream.h"
+#include "St_base/Stiostream.h"
+#include "St_base/Stiostream.h"
 
 #ifndef StEmcDecoder_HH
 #define StEmcDecoder_HH

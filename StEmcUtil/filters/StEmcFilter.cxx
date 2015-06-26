@@ -8,19 +8,19 @@
 //
 //******************************************************************************
 
-#include "StEmcFilter.h"
-#include "StMcEventTypes.hh"
-#include "StEventTypes.h"
-#include "StMcEvent.hh"
-#include "StEvent.h"
+#include "StEmcUtil/filters/StEmcFilter.h"
+#include "StMcEvent/StMcEventTypes.hh"
+#include "StEvent/StEventTypes.h"
+#include "StMcEvent/StMcEvent.hh"
+#include "StEvent/StEvent.h"
 #include <math.h>
 #include "TFile.h"
-#include "StTpcDedxPidAlgorithm.h"
+#include "StEvent/StTpcDedxPidAlgorithm.h"
 #include "StEventUtilities/StuRefMult.hh"
 #include "StEmcUtil/geometry/StEmcGeom.h"
-#include "StEmcPosition.h"
+#include "StEmcUtil/projection/StEmcPosition.h"
 #include "StarClassLibrary/SystemOfUnits.h"
-#include "StuProbabilityPidAlgorithm.h"
+#include "StEventUtilities/StuProbabilityPidAlgorithm.h"
 #include "TString.h"
 #ifndef ST_NO_NAMESPACES
 using units::tesla;

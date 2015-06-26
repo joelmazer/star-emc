@@ -1,10 +1,10 @@
 // $Id: StEmcMappingDb.cxx,v 1.9 2010/01/28 13:45:06 mattheww Exp $
 
-#include "StEmcMappingDb.h"
+#include "StEmcUtil/database/StEmcMappingDb.h"
 
-#include "TUnixTime.h"
-#include "StMessMgr.h"
-#include "StMaker.h"
+#include "StarRoot/TUnixTime.h"
+#include "St_base/StMessMgr.h"
+#include "StChain/StMaker.h"
 #include "St_db_Maker/St_db_Maker.h"
 
 #include "StDbLib/StDbManager.hh"

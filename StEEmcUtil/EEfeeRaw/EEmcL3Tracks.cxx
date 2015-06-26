@@ -29,9 +29,9 @@
 // new additions for ..... :)
 //
 
-//#include <Stiostream.h>
+//#include <St_base/Stiostream.h>
 #include <cmath>
-#include "EEmcL3Tracks.h"
+#include "StEEmcUtil/EEfeeRaw/EEmcL3Tracks.h"
 
 ClassImp(EEmcHelix)
 
