@@ -107,7 +107,7 @@
 //                                                                      //
 //////////////////////////////////////////////////////////////////////////
 #include "St_base/Stiostream.h"
-#include "StHbtMaker/doc/Make/math_constants.h"
+#include "math_constants.h"
 #include <math.h>
 #include <TArrayF.h>
 #include <TString.h>
