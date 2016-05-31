@@ -14,6 +14,8 @@ using std::map;
 #include <string> 
 using std::string;
 
+#include "TFile.h"
+
 #include "StEmcUtil/database/StEmcDbHandler.h"
 #include "StEmcUtil/database/StBemcTables.h"
 
