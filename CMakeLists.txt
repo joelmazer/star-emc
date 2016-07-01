@@ -67,7 +67,11 @@ add_library(StEmcUtil SHARED
 )
 
 
+# A collective target to build all libraries in this project. Can be used to
+# build all specified targets from a parent project
+add_custom_target(star-emc DEPENDS StEmcUtil)
+
 
 # Installation section
 install(TARGETS StEmcUtil
-        DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
+	DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL)
